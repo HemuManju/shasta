@@ -1,0 +1,55 @@
+<?xml version="1.0" ?>
+<robot name="environment">
+<link name="buildings">
+  <inertial>
+    <origin rpy="0 0 4.71238898" xyz="0 0 0"/>
+    <mass value="1"/>
+    <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 4.71238898" xyz="0 0 0"/>
+    <geometry>
+      <mesh filename="./meshes/exact_map.obj"/>
+    </geometry>
+    <material name="silver">
+      <color rgba="0.75 0.75 0.75 1"/>
+    </material>
+  </visual>
+  <collision>
+      <origin rpy="0 0 4.71238898" xyz="0 0 0" />
+      <geometry>
+      <mesh filename="./meshes/exact_map_output.obj"/>
+    </geometry>
+  </collision>
+</link>
+<!--
+<joint name="buildings_roads" type="fixed">
+    <parent link="buildings"/>
+    <child link="roads"/>
+</joint>
+
+<link name="roads">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <mass value="1"/>
+    <inertia ixx="0" ixy="0" ixz="0" iyy="0" iyz="0" izz="0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <geometry>
+      <mesh filename="./meshes/roads.obj"  scale="0.1 0.1 0.1" />
+    </geometry>
+    <material name="silver">
+      <color rgba="0.5 0.5 0.5 1"/>
+    </material>
+  </visual>
+  <collision>
+      <origin rpy="0 0 0" xyz="0 0 0" />
+      <geometry>
+      <mesh filename="./meshes/roads_collision.obj"  scale="0.1 0.1 0.1" />
+    </geometry>
+  </collision>
+</link> -->
+
+
+</robot>
