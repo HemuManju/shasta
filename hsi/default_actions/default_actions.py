@@ -83,9 +83,6 @@ def red_team_actions(config, team_type=None):
 
     attr = yaml.load(open(str(read_path)), Loader=yaml.SafeLoader)
 
-    # Get information about nodes
-    nodes = initial_nodes_setup(config)
-
     # Setup the uav platoons
     ids = 0
     for i in range(config['simulation']['n_uav_platoons']):
@@ -99,14 +96,6 @@ def red_team_actions(config, team_type=None):
         vehicles_id = list(range(ids, ids + n_vehicles))
         ids = ids + n_vehicles
         actions_uav['vehicles_id'] = vehicles_id
-
-        # Patrolling attributes
-        if attr['uav_primitives']['primitives'][i] == 'patrolling':
-            source_id = attr['uav_primitives']['patrolling_nodes'][i][0]
-            sink_id = attr['uav_primitives']['patrolling_nodes'][i][1]
-            actions_uav['source_pos'] = nodes[source_id]['position']
-            actions_uav['sink_pos'] = nodes[sink_id]['position']
-            actions_uav['primitive'] = 'patrolling'
 
         # Update the uav action
         default_actions['uav'][key] = actions_uav
@@ -124,15 +113,6 @@ def red_team_actions(config, team_type=None):
         vehicles_id = list(range(ids, ids + n_vehicles))
         ids = ids + n_vehicles
         actions_ugv['vehicles_id'] = vehicles_id
-
-        # Patrolling attributes
-        if attr['ugv_primitives']['primitives'][i] == 'patrolling':
-            actions_ugv['primitive'] = 'patrolling'
-            source_id = attr['ugv_primitives']['patrolling_nodes'][i][0]
-            sink_id = attr['ugv_primitives']['patrolling_nodes'][i][1]
-            actions_ugv['source_pos'] = nodes[source_id]['position']
-            actions_ugv['sink_pos'] = nodes[sink_id]['position']
-            actions_uav['primitive'] = 'patrolling'
 
         # Update the ugv action
         default_actions['ugv'][key] = actions_ugv

@@ -39,12 +39,18 @@ class StateManager():
         """Performs initial nodes setup
         """
         # Nodes setup
-        read_path = self.config['map_data_path'] + 'map.osm'
+        read_path = '/'.join([
+            self.config['map_data_path'], self.config['simulation']['map'],
+            'map.osm'
+        ])
         G = ox.graph_from_xml(read_path, simplify=True, bidirectional='walk')
         self.G = nx.convert_node_labels_to_integers(G)
 
         # Transformation matrix
-        read_path = self.config['map_data_path'] + 'coordinates.csv'
+        read_path = '/'.join([
+            self.config['map_data_path'], self.config['simulation']['map'],
+            'coordinates.csv'
+        ])
         points = pd.read_csv(read_path)
         target = points[['x', 'z']].values
         source = points[['lat', 'lon']].values
@@ -59,7 +65,10 @@ class StateManager():
     def _initial_buildings_setup(self):
         """Perfrom initial building setup.
         """
-        read_path = self.config['map_data_path'] + 'buildings.csv'
+        read_path = '/'.join([
+            self.config['map_data_path'], self.config['simulation']['map'],
+            'buildings.csv'
+        ])
         if Path(read_path).is_file():
             buildings = pd.read_csv(read_path)
         else:
@@ -80,7 +89,10 @@ class StateManager():
             buildings['id'] = np.arange(len(buildings_proj))
 
             # Save the building info
-            save_path = self.config['map_data_path'] + 'buildings.csv'
+            save_path = read_path = '/'.join([
+                self.config['map_data_path'], self.config['simulation']['map'],
+                'buildings.csv'
+            ])
             buildings.to_csv(save_path, index=False)
 
         self.buildings = buildings

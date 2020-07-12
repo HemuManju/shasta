@@ -1,5 +1,3 @@
-from pathlib import Path
-
 import numpy as np
 from .sensors import Sensors
 
@@ -38,12 +36,17 @@ class UgV(object):
     def _initial_setup(self, team_type):
         """Initial step of objects and constraints
         """
+        # Load the environment
         if self.config['simulation']['collision_free']:
-            path = Path(__file__).parents[
-                0] / 'urdf/ground_vehicle_collision_free.urdf'
+            path = '/'.join([
+                self.config['map_data_path'], 'vehicles',
+                'ground_vehicle_collision_free.urdf'
+            ])
         else:
-            path = Path(__file__).parents[0] / 'urdf/ground_vehicle.urdf'
-        self.object = self.p.loadURDF(str(path), self.init_pos,
+            path = '/'.join([
+                self.config['map_data_path'], 'vehicles', 'ground_vehicle.urdf'
+            ])
+        self.object = self.p.loadURDF(path, self.init_pos,
                                       self.init_orientation)
         if team_type == 'blue':  # Change the color
             self.p.changeVisualShape(self.object, -1, rgbaColor=[0, 0, 1, 1])
@@ -154,12 +157,18 @@ class UaV(object):
     def _initial_setup(self, team_type):
         """Initial step of objects and constraints
         """
+        # Load the environment
         if self.config['simulation']['collision_free']:
-            path = Path(
-                __file__).parents[0] / 'urdf/arial_vehicle_collision_free.urdf'
+            path = '/'.join([
+                self.config['map_data_path'], 'vehicles',
+                'arial_vehicle_collision_free.urdf'
+            ])
         else:
-            path = Path(__file__).parents[0] / 'urdf/arial_vehicle.urdf'
-        self.object = self.p.loadURDF(str(path), self.init_pos,
+            path = '/'.join([
+                self.config['map_data_path'], 'vehicles', 'arial_vehicle.urdf'
+            ])
+
+        self.object = self.p.loadURDF(path, self.init_pos,
                                       self.init_orientation)
         if team_type == 'blue':  # Change the color
             self.p.changeVisualShape(self.object, -1, rgbaColor=[0, 0, 1, 1])
@@ -229,7 +238,7 @@ class UaV(object):
             The position to which the vehicle should be moved.
         """
         self.current_pos, _ = self.get_pos_and_orientation()
-        position[2] = 9.5
+        position[2] = 20.0
         self.p.changeConstraint(self.constraint, position)
         return None
 

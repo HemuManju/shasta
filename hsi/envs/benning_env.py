@@ -1,6 +1,5 @@
 import time
 import numpy as np
-from pathlib import Path
 
 from .base_env import BaseEnv
 
@@ -14,15 +13,20 @@ class BenningEnv(BaseEnv):
     def __init__(self, config):
         # Initialise the base environment
         super().__init__(config)
+        self.config = config
 
         # Load the environment
         if self.config['simulation']['collision_free']:
-            path = Path(
-                __file__).parents[0] / 'urdf/environment_collision_free.urdf'
+            path = '/'.join([
+                self.config['map_data_path'], self.config['simulation']['map'],
+                'environment_collision_free.urdf'
+            ])
         else:
-            path = Path(__file__).parents[0] / 'urdf/environment.urdf'
-
-        self.p.loadURDF(str(path), [0, 0, 0],
+            path = '/'.join([
+                self.config['map_data_path'], self.config['simulation']['map'],
+                'environment.urdf'
+            ])
+        self.p.loadURDF(path, [0, 0, 0],
                         self.p.getQuaternionFromEuler([np.pi / 2, 0, 0]),
                         flags=self.p.URDF_USE_MATERIAL_COLORS_FROM_MTL,
                         useFixedBase=True)

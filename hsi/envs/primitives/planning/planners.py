@@ -199,9 +199,11 @@ class PathPlanning():
     Generates a spline path
     """
     def __init__(self, config):
-        self.G = ox.graph_from_xml(config['map_data_path'] + 'map.osm',
+        read_path = '/'.join(
+            [config['map_data_path'], config['simulation']['map'], 'map.osm'])
+        self.G = ox.graph_from_xml(read_path,
                                    simplify=True,
-                                   bidirectional='walk')
+                                   bidirectional='drive')
         self.find_homogenous_affine_transformation(config)
         return None
 
@@ -209,7 +211,10 @@ class PathPlanning():
         """Find the affine transfromation from source points to target points
         source = A*target
         """
-        read_path = config['map_data_path'] + 'coordinates.csv'
+        read_path = '/'.join([
+            config['map_data_path'], config['simulation']['map'],
+            'coordinates.csv'
+        ])
         points = pd.read_csv(read_path)
         target = points[['x', 'z']].values
         source = points[['lat', 'lon']].values
