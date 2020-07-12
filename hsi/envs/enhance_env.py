@@ -9,7 +9,7 @@ from .red_team.red_base import RedTeam
 from .interaction_manager import InteractionManager
 
 
-class BenningEnv(BaseEnv):
+class EnhanceEnv(BaseEnv):
     def __init__(self, config):
         # Initialise the base environment
         super().__init__(config)

@@ -1,7 +1,7 @@
 import yaml
 from pathlib import Path
 
-from envs.benning_env import BenningEnv
+from envs.enhance_env import EnhanceEnv
 from default_actions.default_actions import blue_team_actions, red_team_actions
 
 from utils import skip_run
@@ -14,5 +14,5 @@ with skip_run('run', 'Test New Framework') as check, check():
     blue_actions = blue_team_actions(config)
     red_actions = red_team_actions(config)
 
-    env = BenningEnv(config)
+    env = EnhanceEnv(config)
     env.step(blue_actions, red_actions)

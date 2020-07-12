@@ -19,7 +19,7 @@ simulation:
   n_ugv_clusters: 3
   n_uav_platoons: 3
   n_ugv_platoons: 3
-  map: 'rochester' #buffalo_down_town
+  map: 'buffalo'
 
 ##---------------------------------------------------------------------##
 experiment:
