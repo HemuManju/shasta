@@ -18,13 +18,14 @@ class BenningEnv(BaseEnv):
         # Load the environment
         if self.config['simulation']['collision_free']:
             path = '/'.join([
-                self.config['map_data_path'], self.config['simulation']['map'],
+                self.config['urdf_data_path'],
+                self.config['simulation']['map'],
                 'environment_collision_free.urdf'
             ])
         else:
             path = '/'.join([
-                self.config['map_data_path'], self.config['simulation']['map'],
-                'environment.urdf'
+                self.config['urdf_data_path'],
+                self.config['simulation']['map'], 'environment.urdf'
             ])
         self.p.loadURDF(path, [0, 0, 0],
                         self.p.getQuaternionFromEuler([np.pi / 2, 0, 0]),

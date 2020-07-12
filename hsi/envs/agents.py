@@ -39,12 +39,13 @@ class UgV(object):
         # Load the environment
         if self.config['simulation']['collision_free']:
             path = '/'.join([
-                self.config['map_data_path'], 'vehicles',
+                self.config['urdf_data_path'], 'vehicles',
                 'ground_vehicle_collision_free.urdf'
             ])
         else:
             path = '/'.join([
-                self.config['map_data_path'], 'vehicles', 'ground_vehicle.urdf'
+                self.config['urdf_data_path'], 'vehicles',
+                'ground_vehicle.urdf'
             ])
         self.object = self.p.loadURDF(path, self.init_pos,
                                       self.init_orientation)
@@ -160,12 +161,12 @@ class UaV(object):
         # Load the environment
         if self.config['simulation']['collision_free']:
             path = '/'.join([
-                self.config['map_data_path'], 'vehicles',
+                self.config['urdf_data_path'], 'vehicles',
                 'arial_vehicle_collision_free.urdf'
             ])
         else:
             path = '/'.join([
-                self.config['map_data_path'], 'vehicles', 'arial_vehicle.urdf'
+                self.config['urdf_data_path'], 'vehicles', 'arial_vehicle.urdf'
             ])
 
         self.object = self.p.loadURDF(path, self.init_pos,

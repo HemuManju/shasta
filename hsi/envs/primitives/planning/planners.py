@@ -200,7 +200,7 @@ class PathPlanning():
     """
     def __init__(self, config):
         read_path = '/'.join(
-            [config['map_data_path'], config['simulation']['map'], 'map.osm'])
+            [config['urdf_data_path'], config['simulation']['map'], 'map.osm'])
         self.G = ox.graph_from_xml(read_path,
                                    simplify=True,
                                    bidirectional='drive')
@@ -212,7 +212,7 @@ class PathPlanning():
         source = A*target
         """
         read_path = '/'.join([
-            config['map_data_path'], config['simulation']['map'],
+            config['urdf_data_path'], config['simulation']['map'],
             'coordinates.csv'
         ])
         points = pd.read_csv(read_path)

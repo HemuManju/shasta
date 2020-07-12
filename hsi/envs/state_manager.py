@@ -40,7 +40,7 @@ class StateManager():
         """
         # Nodes setup
         read_path = '/'.join([
-            self.config['map_data_path'], self.config['simulation']['map'],
+            self.config['urdf_data_path'], self.config['simulation']['map'],
             'map.osm'
         ])
         G = ox.graph_from_xml(read_path, simplify=True, bidirectional='walk')
@@ -48,7 +48,7 @@ class StateManager():
 
         # Transformation matrix
         read_path = '/'.join([
-            self.config['map_data_path'], self.config['simulation']['map'],
+            self.config['urdf_data_path'], self.config['simulation']['map'],
             'coordinates.csv'
         ])
         points = pd.read_csv(read_path)
@@ -66,7 +66,7 @@ class StateManager():
         """Perfrom initial building setup.
         """
         read_path = '/'.join([
-            self.config['map_data_path'], self.config['simulation']['map'],
+            self.config['urdf_data_path'], self.config['simulation']['map'],
             'buildings.csv'
         ])
         if Path(read_path).is_file():
@@ -85,13 +85,17 @@ class StateManager():
             buildings['lat'] = gdf['geometry'].centroid.y
             buildings['area'] = buildings_proj.area
             buildings['perimeter'] = buildings_proj.length
-            buildings['height'] = buildings_proj['height']
+            try:
+                buildings['height'] = buildings_proj['height']
+            except KeyError:
+                buildings['height'] = 10  # assumption
+
             buildings['id'] = np.arange(len(buildings_proj))
 
             # Save the building info
             save_path = read_path = '/'.join([
-                self.config['map_data_path'], self.config['simulation']['map'],
-                'buildings.csv'
+                self.config['urdf_data_path'],
+                self.config['simulation']['map'], 'buildings.csv'
             ])
             buildings.to_csv(save_path, index=False)
 

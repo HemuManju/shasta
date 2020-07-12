@@ -10,7 +10,7 @@ def initial_nodes_setup(config):
     """
     # Nodes setup
     nodes = []
-    path = config['map_data_path'] + 'nodes.csv'
+    path = config['urdf_data_path'] + 'nodes.csv'
     position_data = genfromtxt(path, delimiter=',')
     for i in range(config['simulation']['n_nodes']):
         info = {}

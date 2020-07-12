@@ -92,7 +92,7 @@ blue_team:
   init_nodes: [12, 13, 14]
 ##---------------------------------------------------------------------##
 # Paths
-map_data_path: 'data/processed/map_data/'
+urdf_data_path: 'data/processed/map_data/'
 map_save_path: 'data/processed/map_data/'
 log_path: 'data/log/'
 rrt_data_path: 'data/processed/map_data/rrt'
