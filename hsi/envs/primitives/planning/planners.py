@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 import networkx as nx
 import matplotlib.pyplot as plt
+import osmnx as ox
 
 from .sknw import build_sknw
 
@@ -191,3 +192,98 @@ class SkeletonPlanning():
         plt.imshow(self.full_map, origin='lower')
         plt.show()
         return None
+
+
+class PathPlanning():
+    """Path planner based on the skeleton of the image.
+    Generates a spline path
+    """
+    def __init__(self, config):
+        self.G = ox.graph_from_xml(config['map_data_path'] + 'map.osm',
+                                   simplify=True,
+                                   bidirectional='walk')
+        self.find_homogenous_affine_transformation(config)
+        return None
+
+    def find_homogenous_affine_transformation(self, config):
+        """Find the affine transfromation from source points to target points
+        source = A*target
+        """
+        read_path = config['map_data_path'] + 'coordinates.csv'
+        points = pd.read_csv(read_path)
+        target = points[['x', 'z']].values
+        source = points[['lat', 'lon']].values
+
+        # Pad the points with ones
+        X = np.hstack((source, np.ones((source.shape[0], 1))))
+        Y = np.hstack((target, np.ones((target.shape[0], 1))))
+        self.A, res, rank, s = np.linalg.lstsq(X, Y, rcond=None)
+        return None
+
+    def linear_refine_implicit(self, x, n):
+        """Given a 2D ndarray (npt, m) of npt coordinates in m dimension,
+        insert 2**(n-1) additional points on each trajectory segment
+        Returns an (npt*2**(n-1), m) ndarray
+        """
+        if n > 1:
+            m = 0.5 * (x[:-1] + x[1:])
+            if x.ndim == 2:
+                msize = (x.shape[0] + m.shape[0], x.shape[1])
+            else:
+                raise NotImplementedError
+
+            x_new = np.empty(msize, dtype=x.dtype)
+            x_new[0::2] = x
+            x_new[1::2] = m
+            return self.linear_refine_implicit(x_new, n - 1)
+        elif n == 1:
+            return x
+        else:
+            raise ValueError
+
+    def convert_to_lat_lon(self, point):
+        point[2] = 1
+        lat_lon = np.dot(point, np.linalg.inv(self.A))
+        return lat_lon
+
+    def find_path(self, start, end, n_splits=1):
+        x = []
+        y = []
+
+        # Convert the node index to node ID
+        if not isinstance(start, int):
+            start_lat_lon = self.convert_to_lat_lon(start)
+            start = ox.get_nearest_node(self.G, start_lat_lon)
+        if not isinstance(end, int):
+            # end_lat_lon = self.convert_to_lat_lon(end)
+            end = ox.get_nearest_node(self.G, end)
+
+        # TODO: Very dirty way to implement
+        route = nx.shortest_path(self.G, start, end, weight='length')
+        for u, v in zip(route[:-1], route[1:]):
+            # if there are parallel edges, select the shortest in length
+            data = min(self.G.get_edge_data(u, v).values(),
+                       key=lambda d: d["length"])
+            if "geometry" in data:
+                # if geometry attribute exists, add all its coords to list
+                xs, ys = data["geometry"].xy
+                x.extend(xs)
+                y.extend(ys)
+            else:
+                # otherwise, the edge is a straight line from node to node
+                x.extend((self.G.nodes[u]["x"], self.G.nodes[v]["x"]))
+                y.extend((self.G.nodes[u]["y"], self.G.nodes[v]["y"]))
+
+        # Add more path points for smooth travel
+        lat_lon = np.array((x, y)).T
+        refined_points = self.linear_refine_implicit(lat_lon, n=n_splits)
+        refined_points = np.hstack(
+            (refined_points, np.ones((refined_points.shape[0], 1))))
+
+        # Exchange x and z as they are reversed in pybullet
+        refined_points[:, [1, 0]] = refined_points[:, [0, 1]]
+
+        # Convert the lat lon to pybullet co-ordinates
+        path_points = np.dot(refined_points, self.A)
+
+        return path_points

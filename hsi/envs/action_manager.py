@@ -1,13 +1,16 @@
+from .primitive_manager import PrimitiveManager
+
+
 class ActionManager(object):
-    def __init__(self, state_manager, PrimitiveManager):
-        self.state_manager = state_manager
+    def __init__(self, state_manager, physics_client):
         self.config = state_manager.config
+        self.state_manager = state_manager
 
         # Setup the platoons
-        self._init_platoons_setup(PrimitiveManager)
+        self._init_platoons_setup(physics_client)
         return None
 
-    def _init_platoons_setup(self, PrimitiveManager):
+    def _init_platoons_setup(self, physics_client):
         """Initial setup of platoons with primitive execution class.
             Each platoon name is given as uxv_p_* where * is the platoon number
             and x is either 'a' or 'g' depending on platoon type.
@@ -19,12 +22,14 @@ class ActionManager(object):
         self.uav_platoons = {}  # A container for platoons
         for i in range(self.config['simulation']['n_uav_platoons']):
             key = 'uav_p_' + str(i + 1)
-            self.uav_platoons[key] = PrimitiveManager(self.state_manager)
+            self.uav_platoons[key] = PrimitiveManager(self.state_manager,
+                                                      physics_client)
 
         self.ugv_platoons = {}
         for i in range(self.config['simulation']['n_ugv_platoons']):
             key = 'ugv_p_' + str(i + 1)
-            self.ugv_platoons[key] = PrimitiveManager(self.state_manager)
+            self.ugv_platoons[key] = PrimitiveManager(self.state_manager,
+                                                      physics_client)
         return None
 
     def platoon_attributes(self, attributes):
@@ -198,7 +203,6 @@ class ActionManager(object):
             Whether hand coded tactics are being used or not
         """
 
-        primitives_done = []
         # Update all the ugv vehicles
         primitives_done = [
             platoon.execute_primitive()

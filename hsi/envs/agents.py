@@ -103,8 +103,7 @@ class UgV(object):
         dict
             A dictionary containing all the information
         """
-        info = self.__dict__
-        return info
+        return self.__dict__
 
     def set_position(self, position):
         """This function moves the vehicles to given position
@@ -114,8 +113,7 @@ class UgV(object):
         position : array
             The position to which the vehicle should be moved.
         """
-        pos, _ = self.get_pos_and_orientation()
-        self.current_pos = pos
+        self.current_pos, _ = self.get_pos_and_orientation()
         position[2] = 1.0  # Near ground
         self.p.changeConstraint(self.constraint, position)
         return None
@@ -220,8 +218,7 @@ class UaV(object):
         dict
             A dictionary containing all the information
         """
-        info = self.__dict__
-        return info
+        return self.__dict__
 
     def set_position(self, position):
         """This function moves the vehicles to given position
@@ -231,8 +228,7 @@ class UaV(object):
         position : array
             The position to which the vehicle should be moved.
         """
-        pos, _ = self.get_pos_and_orientation()
-        self.current_pos = pos
+        self.current_pos, _ = self.get_pos_and_orientation()
         position[2] = 9.5
         self.p.changeConstraint(self.constraint, position)
         return None

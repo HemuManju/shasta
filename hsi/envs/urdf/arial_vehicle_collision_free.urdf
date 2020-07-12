@@ -9,7 +9,7 @@
   <visual>
     <origin rpy="0 0 0" xyz="0 0 0"/>
     <geometry>
-      <sphere radius="0.5"/>
+      <sphere radius="0.75"/>
     </geometry>
     <material name="silver">
       <color rgba="1 0 0 1"/>

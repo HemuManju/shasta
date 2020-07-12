@@ -2,25 +2,23 @@ import yaml
 from pathlib import Path
 import numpy as np
 
-from .primitive_manager import PrimitiveManager
-
 from ..state_manager import StateManager
 from ..action_manager import ActionManager
 
 from ..agents import UaV, UgV
 
 
-def get_initial_positions(init_pos, r, n):
+def get_initial_positions(cartesian_pos, r, n):
     positions = []
     t = np.linspace(0, 2 * np.pi, n)
-    x = init_pos[0] + r * np.cos(t)
-    y = init_pos[1] + r * np.sin(t)
-    positions = np.asarray([x, y, x * 0 + 5]).T.tolist()
+    x = cartesian_pos[0] + r * np.cos(t)
+    y = cartesian_pos[1] + r * np.sin(t)
+    positions = np.asarray([x, y, x * 0 + 1]).T.tolist()
     return positions
 
 
 class BlueTeam(object):
-    def __init__(self, p, config):
+    def __init__(self, physics_client, config):
         # Environment parameters
         self.current_time = config['simulation']['current_time']
         self.done = False
@@ -28,34 +26,44 @@ class BlueTeam(object):
 
         # Initialize the state and action components
         self.state_manager = StateManager(self.current_time, self.config)
-        uav, ugv = self._initial_uxv_setup(p)
+        uav, ugv = self._initial_uxv_setup(physics_client)
         self.state_manager._initial_uxv(uav, ugv)  # Append the UxV
-        self.action_manager = ActionManager(self.state_manager, PrimitiveManager)
+        self.action_manager = ActionManager(self.state_manager, physics_client)
 
-    def _initial_uxv_setup(self, p):
+    def _initial_uxv_setup(self, physics_client):
         # Read the configuration of platoons
-        read_path = Path(__file__).parents[1] / 'blue_team_config.yml'
+        read_path = Path(
+            __file__).parents[2] / 'config/blue_team_config_baseline.yml'
         config = yaml.load(open(str(read_path)), Loader=yaml.SafeLoader)
 
         # Containers
         ugv, uav = [], []
-        init_orient = p.getQuaternionFromEuler([np.pi / 2, 0, 0])
+        init_orient = physics_client.getQuaternionFromEuler([np.pi / 2, 0, 0])
 
         for i, node in enumerate(config['ugv_platoon']['initial_nodes_pos']):
-            init_pos = self.state_manager.node_info(node)['position']
+            lat = self.state_manager.node_info(node)['y']
+            lon = self.state_manager.node_info(node)['x']
+            cartesian_pos = np.dot([lat, lon, 1], self.state_manager.A)
+
             n_vehicles = config['ugv_platoon']['n_vehicles'][i]
-            positions = get_initial_positions(init_pos, 4, n_vehicles)
+            positions = get_initial_positions(cartesian_pos, 4, n_vehicles)
             for j, position in enumerate(positions):
                 ugv.append(
-                    UgV(p, position, init_orient, j, self.config, 'blue'))
+                    UgV(physics_client, position, init_orient, j, self.config,
+                        'blue'))
 
         for i, node in enumerate(config['uav_platoon']['initial_nodes_pos']):
-            init_pos = self.state_manager.node_info(node)['position']
+            lat = self.state_manager.node_info(node)['y']
+            lon = self.state_manager.node_info(node)['x']
+            cartesian_pos = np.dot([lat, lon, 1], self.state_manager.A)
+
+            # Get initial positions of all vehicles
             n_vehicles = config['uav_platoon']['n_vehicles'][i]
-            positions = get_initial_positions(init_pos, 4, n_vehicles)
+            positions = get_initial_positions(cartesian_pos, 5, n_vehicles)
             for j, position in enumerate(positions):
                 uav.append(
-                    UaV(p, position, init_orient, j, self.config, 'blue'))
+                    UaV(physics_client, position, init_orient, j, self.config,
+                        'blue'))
 
         return uav, ugv
 

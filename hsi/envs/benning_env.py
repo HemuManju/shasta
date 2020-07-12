@@ -1,5 +1,5 @@
 import time
-import math
+import numpy as np
 from pathlib import Path
 
 from .base_env import BaseEnv
@@ -22,11 +22,8 @@ class BenningEnv(BaseEnv):
         else:
             path = Path(__file__).parents[0] / 'urdf/environment.urdf'
 
-        self.p.loadURDF(str(path), [25, 140, 44],
-                        self.p.getQuaternionFromEuler([
-                            -0.45 * math.pi / 180, -24.5 * math.pi / 180,
-                            -20.0 * math.pi / 180
-                        ]),
+        self.p.loadURDF(str(path), [0, 0, 0],
+                        self.p.getQuaternionFromEuler([np.pi / 2, 0, 0]),
                         flags=self.p.URDF_USE_MATERIAL_COLORS_FROM_MTL,
                         useFixedBase=True)
 
@@ -38,11 +35,12 @@ class BenningEnv(BaseEnv):
         return None
 
     def _initial_team_setup(self):
+        # Blue team
+        self.blue_team = BlueTeam(self.p, self.config)
+
         # Red team
         self.red_team = RedTeam(self.p, self.config)
 
-        # Blue team
-        self.blue_team = BlueTeam(self.p, self.config)
         return None
 
     def reset(self):
@@ -50,7 +48,7 @@ class BenningEnv(BaseEnv):
             time.sleep(1 / 240)
             self.p.stepSimulation()
 
-    def step(self, actions_uav_b, actions_ugv_b, actions_uav_r, actions_ugv_r):
+    def step(self, blue_actions, red_actions):
         # Roll the actions
         done_rolling_actions = False
         simulation_count = 0
@@ -60,29 +58,29 @@ class BenningEnv(BaseEnv):
 
         # Perform action allocation for blue and red team respectively
         self.blue_team.action_manager.perform_action_allocation(
-            actions_uav_b, actions_ugv_b)
+            blue_actions['uav'], blue_actions['ugv'])
 
         self.red_team.action_manager.perform_action_allocation(
-            actions_uav_r, actions_ugv_r)
+            red_actions['uav'], red_actions['ugv'])
 
         # Run the simulation
         while not done_rolling_actions and current_time <= duration:
             simulation_count += 1
             current_time = time.time() - start_time
-            # Run the blue team (these can be made parallel)
-            t = time.time()
-            self.blue_team.execute()
-            print(time.time() - t)
 
-            # image = self.red_team.action_manager.get_image(1, 'uav', 0,'all')
-            # self.images.append(image)
+            # Run the blue team (these can be made parallel)
+            self.blue_team.execute()
+            # Perform a step in simulation to update
+            self.base_env_step()
+
             # Run the red team (these can be made parallel)
             self.red_team.execute()
+            # Perform a step in simulation to update
+            self.base_env_step()
 
             # # Interaction Manager (this over-rides the given actions)
-            self.interaction_manager.update_actions(self.blue_team,
-                                                    self.red_team)
-
+            # self.interaction_manager.update_actions(self.blue_team,
+            #                                         self.red_team)
             # Perform a step in simulation to update
             self.base_env_step()
 
