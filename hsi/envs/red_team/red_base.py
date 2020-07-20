@@ -40,7 +40,7 @@ class RedTeam(object):
         ugv, uav = [], []
         init_orient = physics_client.getQuaternionFromEuler([np.pi / 2, 0, 0])
 
-        for i, node in enumerate(config['ugv_platoon']['initial_nodes_pos']):
+        for i, node in enumerate(config['ugv_platoon']['initial_pos']):
             lat = self.state_manager.node_info(node)['y']
             lon = self.state_manager.node_info(node)['x']
             init_pos = np.dot([lat, lon, 1], self.state_manager.A)
@@ -49,10 +49,10 @@ class RedTeam(object):
             positions = get_initial_positions(init_pos, 10, n_vehicles)
             for j, position in enumerate(positions):
                 ugv.append(
-                    UgV(physics_client, position, init_orient, j, self.config,
-                        'red'))
+                    UgV(physics_client, position, init_orient, i, j,
+                        self.config, 'red'))
 
-        for i, node in enumerate(config['uav_platoon']['initial_nodes_pos']):
+        for i, node in enumerate(config['uav_platoon']['initial_pos']):
             lat = self.state_manager.node_info(node)['y']
             lon = self.state_manager.node_info(node)['x']
             init_pos = np.dot([lat, lon, 1], self.state_manager.A)
@@ -61,8 +61,8 @@ class RedTeam(object):
             positions = get_initial_positions(init_pos, 10, n_vehicles)
             for j, position in enumerate(positions):
                 uav.append(
-                    UaV(physics_client, position, init_orient, j, self.config,
-                        'red'))
+                    UaV(physics_client, position, init_orient, i, j,
+                        self.config, 'red'))
         return uav, ugv
 
     def reset(self):
@@ -79,7 +79,7 @@ class RedTeam(object):
         return done
 
     def get_attributes(self, attributes):
-        return self.action_manager.platoon_attributes(attributes)
+        return self.action_manager.get_actions(attributes)
 
     def execute(self):
         """Execute the actions of uav and ugv

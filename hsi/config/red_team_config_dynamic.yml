@@ -2,12 +2,12 @@
 # Simulation parameters
 uav_platoon:
   n_vehicles: [10, 10, 10]
-  initial_nodes_pos: [17, 19, 1]
+  initial_pos: [17, 19, 1]
   chase_distance: 10
 
 ugv_platoon:
   n_vehicles: [7, 8, 10]
-  initial_nodes_pos: [14, 5, 29]
+  initial_pos: [14, 5, 29]
   chase_distance: 10
 
 ##---------------------------------------------------------------------##

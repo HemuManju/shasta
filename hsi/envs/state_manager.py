@@ -15,10 +15,11 @@ class StateManager():
         self.found_goal = False
 
         # Initial setup
+        self._affine_transformation_and_graph()
         self._initial_mission_setup()
-        self._initial_nodes_setup()
         self._initial_buildings_setup()
         self._initial_target_setup()
+
         return None
 
     def _initial_uxv(self, uav, ugv):
@@ -35,10 +36,10 @@ class StateManager():
         self.n_keep_in_pareto = self.config['state']['n_keep_in_pareto']
         return None
 
-    def _initial_nodes_setup(self):
-        """Performs initial nodes setup
+    def _affine_transformation_and_graph(self):
+        """Performs initial conversion of the lat lon to cartesian
         """
-        # Nodes setup
+        # Graph
         read_path = '/'.join([
             self.config['urdf_data_path'], self.config['simulation']['map'],
             'map.osm'
@@ -69,6 +70,7 @@ class StateManager():
             self.config['urdf_data_path'], self.config['simulation']['map'],
             'buildings.csv'
         ])
+        # Check if building information is already generated
         if Path(read_path).is_file():
             buildings = pd.read_csv(read_path)
         else:
@@ -79,7 +81,7 @@ class StateManager():
                 polygon, footprint_type='building')
             buildings_proj = ox.project_gdf(gdf)
 
-            # Save the dataframe
+            # Save the dataframe representing buildings
             buildings = pd.DataFrame()
             buildings['lon'] = gdf['geometry'].centroid.x
             buildings['lat'] = gdf['geometry'].centroid.y
@@ -89,7 +91,6 @@ class StateManager():
                 buildings['height'] = buildings_proj['height']
             except KeyError:
                 buildings['height'] = 10  # assumption
-
             buildings['id'] = np.arange(len(buildings_proj))
 
             # Save the building info
@@ -159,3 +160,35 @@ class StateManager():
                 A dictionary containing all the information about the building.
             """
         return self.buildings.loc[self.buildings['id'] == idx]
+
+    def get_image(self, platoon_id, platoon_type, vehicle_id, image_type):
+        """Get the image of the agent
+
+        Parameters
+        ----------
+        platoon_id : int
+            The platoon ID to vehicle belongs to.
+        platoon_type : str
+            Platoon type 'uav' or 'ugv'
+        vehicle_id : int
+            Vehicle ID from which image is acquired
+        image_type : str
+            Type of image to return rgb, seg, depth
+
+        Returns
+        -------
+        array
+            A image from the vehicle of required type
+        """
+        if platoon_type == 'uav':
+            platoon_key = 'uav_p_' + str(platoon_id)
+            image = self.uav_platoons[platoon_key].get_camera_image(
+                vehicle_id, image_type)
+        else:
+            platoon_key = 'ugv_p_' + str(platoon_id)
+            image = self.ugv_platoons[platoon_key].get_camera_image(
+                vehicle_id, image_type)
+        return image
+
+    def get_states(self):
+        return self.__dict__

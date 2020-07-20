@@ -14,6 +14,9 @@ class BaseEnv(object):
                                               cameraYaw=0,
                                               cameraPitch=-89.999,
                                               cameraTargetPosition=[0, 80, 0])
+            self.p.configureDebugVisualizer(self.p.COV_ENABLE_GUI, 0)
+            # self.p.configureDebugVisualizer(shadowMapWorldSize=100)
+
         # Set gravity
         self.p.setGravity(0, 0, -9.81)
 
@@ -22,7 +25,7 @@ class BaseEnv(object):
             fixedTimeStep=config['simulation']['time_step'] / 10,
             numSubSteps=1,
             numSolverIterations=5)
-        self.p.configureDebugVisualizer(self.p.COV_ENABLE_GUI, 0)
+
         return None
 
     def base_env_step(self):

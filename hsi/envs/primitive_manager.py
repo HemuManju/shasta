@@ -41,8 +41,11 @@ class PrimitiveManager(object):
             'formation': self.formation_primitive,
             'shooting': self.shooting_primitive
         }
-        if self.action['execute']:
+        if self.action['execute'] and self.action[
+                'primitive'] in primitives.keys():
             done = primitives[self.action['primitive']]()
+        else:
+            raise NotImplementedError
         return done
 
     def make_vehicles_idle(self):

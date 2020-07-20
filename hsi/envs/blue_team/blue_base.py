@@ -40,7 +40,7 @@ class BlueTeam(object):
         ugv, uav = [], []
         init_orient = physics_client.getQuaternionFromEuler([np.pi / 2, 0, 0])
 
-        for i, node in enumerate(config['ugv_platoon']['initial_nodes_pos']):
+        for i, node in enumerate(config['ugv_platoon']['initial_pos']):
             lat = self.state_manager.node_info(node)['y']
             lon = self.state_manager.node_info(node)['x']
             cartesian_pos = np.dot([lat, lon, 1], self.state_manager.A)
@@ -49,10 +49,10 @@ class BlueTeam(object):
             positions = get_initial_positions(cartesian_pos, 4, n_vehicles)
             for j, position in enumerate(positions):
                 ugv.append(
-                    UgV(physics_client, position, init_orient, j, self.config,
-                        'blue'))
+                    UgV(physics_client, position, init_orient, i, j,
+                        self.config, 'blue'))
 
-        for i, node in enumerate(config['uav_platoon']['initial_nodes_pos']):
+        for i, node in enumerate(config['uav_platoon']['initial_pos']):
             lat = self.state_manager.node_info(node)['y']
             lon = self.state_manager.node_info(node)['x']
             cartesian_pos = np.dot([lat, lon, 1], self.state_manager.A)
@@ -62,8 +62,8 @@ class BlueTeam(object):
             positions = get_initial_positions(cartesian_pos, 5, n_vehicles)
             for j, position in enumerate(positions):
                 uav.append(
-                    UaV(physics_client, position, init_orient, j, self.config,
-                        'blue'))
+                    UaV(physics_client, position, init_orient, i, j,
+                        self.config, 'blue'))
 
         return uav, ugv
 
@@ -81,7 +81,7 @@ class BlueTeam(object):
         return done
 
     def get_attributes(self, attributes):
-        return self.action_manager.platoon_attributes(attributes)
+        return self.action_manager.get_actions(attributes)
 
     def execute(self):
         """Take a step in the environement

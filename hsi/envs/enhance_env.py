@@ -88,6 +88,8 @@ class EnhanceEnv(BaseEnv):
             #                                         self.red_team)
             # Perform a step in simulation to update
             self.base_env_step()
+        # TODO: Need to implement state, action, and reward
+        return None
 
     def get_reward(self):
         """Update reward of all the agents

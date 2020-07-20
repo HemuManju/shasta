@@ -11,8 +11,8 @@ config = yaml.load(open(str(config_path)), Loader=yaml.SafeLoader)
 
 with skip_run('run', 'Test New Framework') as check, check():
 
-    blue_actions = blue_team_actions(config)
-    red_actions = red_team_actions(config)
+    default_blue_actions = blue_team_actions(config)
+    default_red_actions = red_team_actions(config)
 
     env = EnhanceEnv(config)
-    env.step(blue_actions, red_actions)
+    env.step(default_blue_actions, default_red_actions)

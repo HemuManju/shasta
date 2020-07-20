@@ -5,19 +5,20 @@ from .sensors import Sensors
 class UgV(object):
     """This the base class for single UGV robot
     """
-    def __init__(self, pb, init_pos, init_orientation, robot_id, config,
-                 team_type):
-        self.p = pb
+    def __init__(self, physics_client, init_pos, init_orientation, platoon_id,
+                 robot_id, config, team_type):
+        self.physics_client = physics_client
 
         # Properties UGV
         self.vehicle_id = robot_id
+        self.platoon_id = platoon_id
         self.init_pos = init_pos
         self.current_pos = init_pos
         self.updated_pos = init_pos
         self.init_orientation = init_orientation
-        self.cluster_id = 0
         self.idle = True
         self.ammo = 100
+        self.battery = 100
         self.functional = True
         self.speed = config['ugv']['speed']
         self.search_speed = config['ugv']['search_speed']
@@ -29,7 +30,8 @@ class UgV(object):
         # Simulation parameters
         self.reward = 0
 
-        self.sensors = Sensors(pb)
+        # Add sensor class
+        self.sensors = Sensors(physics_client)
         self._initial_setup(team_type)
         return None
 
@@ -47,21 +49,20 @@ class UgV(object):
                 self.config['urdf_data_path'], 'vehicles',
                 'ground_vehicle.urdf'
             ])
-        self.object = self.p.loadURDF(path, self.init_pos,
-                                      self.init_orientation)
+        self.object = self.physics_client.loadURDF(path, self.init_pos,
+                                                   self.init_orientation)
         if team_type == 'blue':  # Change the color
-            self.p.changeVisualShape(self.object, -1, rgbaColor=[0, 0, 1, 1])
+            self.physics_client.changeVisualShape(self.object,
+                                                  -1,
+                                                  rgbaColor=[0, 0, 1, 1])
 
-        self.constraint = self.p.createConstraint(self.object, -1, -1, -1,
-                                                  self.p.JOINT_FIXED,
-                                                  [0, 0, 0], [0, 0, 0],
-                                                  self.init_pos)
+        self.constraint = self.physics_client.createConstraint(
+            self.object, -1, -1, -1, self.physics_client.JOINT_FIXED,
+            [0, 0, 0], [0, 0, 0], self.init_pos)
 
         # Camera parameters
-        self.projectionMatrix = self.p.computeProjectionMatrixFOV(fov=45.0,
-                                                                  aspect=1.0,
-                                                                  nearVal=0.1,
-                                                                  farVal=50.0)
+        self.projectionMatrix = self.physics_client.computeProjectionMatrixFOV(
+            fov=45.0, aspect=1.0, nearVal=0.1, farVal=50.0)
         self.image_size = [128, 128]
         return None
 
@@ -86,7 +87,7 @@ class UgV(object):
     def reset(self):
         """Moves the robot back to its initial position
         """
-        self.p.changeConstraint(self.constraint, self.init_pos)
+        self.physics_client.changeConstraint(self.constraint, self.init_pos)
         self.current_pos = self.init_pos
         self.updated_pos = self.init_pos
         return None
@@ -95,8 +96,9 @@ class UgV(object):
         """
         Returns the position and orientation (as Yaw angle) of the robot.
         """
-        pos, rot = self.p.getBasePositionAndOrientation(self.object)
-        euler = self.p.getEulerFromQuaternion(rot)
+        pos, rot = self.physics_client.getBasePositionAndOrientation(
+            self.object)
+        euler = self.physics_client.getEulerFromQuaternion(rot)
         return np.array(pos), euler[2]
 
     def get_info(self):
@@ -118,28 +120,30 @@ class UgV(object):
             The position to which the vehicle should be moved.
         """
         self.current_pos, _ = self.get_pos_and_orientation()
-        position[2] = 1.0  # Near ground
-        self.p.changeConstraint(self.constraint, position)
+        position[2] = 0.5  # Near ground
+        self.physics_client.changeConstraint(self.constraint, position)
         return None
 
     def remove_self(self):
-        self.p.removeBody(self.object)
+        self.physics_client.removeBody(self.object)
 
 
 class UaV(object):
     """This the base class for single UGV robot
     """
-    def __init__(self, pb, init_pos, init_orientation, robot_id, config,
-                 team_type):
-        self.p = pb
+    def __init__(self, physics_client, init_pos, init_orientation, platoon_id,
+                 robot_id, config, team_type):
+        self.physics_client = physics_client
+
         # Properties UGV
         self.vehicle_id = robot_id
+        self.platoon_id = platoon_id
         self.init_pos = init_pos
         self.current_pos = init_pos
         self.updated_pos = init_pos
         self.init_orientation = init_orientation
-        self.cluster_id = 0
         self.idle = True
+        self.ammo = 100
         self.battery = 100
         self.functional = True
         self.speed = config['uav']['speed']
@@ -151,7 +155,7 @@ class UaV(object):
         # Simulation parameters
         self.reward = 0
 
-        self.sensors = Sensors(pb)
+        self.sensors = Sensors(physics_client)
         self._initial_setup(team_type)
         return None
 
@@ -169,21 +173,20 @@ class UaV(object):
                 self.config['urdf_data_path'], 'vehicles', 'arial_vehicle.urdf'
             ])
 
-        self.object = self.p.loadURDF(path, self.init_pos,
-                                      self.init_orientation)
+        self.object = self.physics_client.loadURDF(path, self.init_pos,
+                                                   self.init_orientation)
         if team_type == 'blue':  # Change the color
-            self.p.changeVisualShape(self.object, -1, rgbaColor=[0, 0, 1, 1])
+            self.physics_client.changeVisualShape(self.object,
+                                                  -1,
+                                                  rgbaColor=[0, 0, 1, 1])
 
-        self.constraint = self.p.createConstraint(self.object, -1, -1, -1,
-                                                  self.p.JOINT_FIXED,
-                                                  [0, 0, 0], [0, 0, 0],
-                                                  self.init_pos)
+        self.constraint = self.physics_client.createConstraint(
+            self.object, -1, -1, -1, self.physics_client.JOINT_FIXED,
+            [0, 0, 0], [0, 0, 0], self.init_pos)
 
         # Camera parameters
-        self.projectionMatrix = self.p.computeProjectionMatrixFOV(fov=45.0,
-                                                                  aspect=1.0,
-                                                                  nearVal=0.1,
-                                                                  farVal=50.0)
+        self.projectionMatrix = self.physics_client.computeProjectionMatrixFOV(
+            fov=45.0, aspect=1.0, nearVal=0.1, farVal=50.0)
         self.image_size = [256, 256]
         return None
 
@@ -208,7 +211,7 @@ class UaV(object):
     def reset(self):
         """Moves the robot back to its initial position
         """
-        self.p.changeConstraint(self.constraint, self.init_pos)
+        self.physics_client.changeConstraint(self.constraint, self.init_pos)
         self.current_pos = self.init_pos
         self.updated_pos = self.init_pos
         return None
@@ -216,8 +219,9 @@ class UaV(object):
     def get_pos_and_orientation(self):
         """Returns the position and orientation (as Yaw angle) of the robot.
         """
-        pos, rot = self.p.getBasePositionAndOrientation(self.object)
-        euler = self.p.getEulerFromQuaternion(rot)
+        pos, rot = self.physics_client.getBasePositionAndOrientation(
+            self.object)
+        euler = self.physics_client.getEulerFromQuaternion(rot)
         return np.array(pos), euler[2]
 
     def get_info(self):
@@ -240,8 +244,8 @@ class UaV(object):
         """
         self.current_pos, _ = self.get_pos_and_orientation()
         position[2] = 20.0
-        self.p.changeConstraint(self.constraint, position)
+        self.physics_client.changeConstraint(self.constraint, position)
         return None
 
     def remove_self(self):
-        self.p.removeBody(self.object)
+        self.physics_client.removeBody(self.object)
