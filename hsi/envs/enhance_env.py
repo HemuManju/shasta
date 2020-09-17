@@ -19,13 +19,13 @@ class EnhanceEnv(BaseEnv):
         if self.config['simulation']['collision_free']:
             path = '/'.join([
                 self.config['urdf_data_path'],
-                self.config['simulation']['map'],
+                self.config['simulation']['map_to_use'],
                 'environment_collision_free.urdf'
             ])
         else:
             path = '/'.join([
                 self.config['urdf_data_path'],
-                self.config['simulation']['map'], 'environment.urdf'
+                self.config['simulation']['map_to_use'], 'environment.urdf'
             ])
         self.p.loadURDF(path, [0, 0, 0],
                         self.p.getQuaternionFromEuler([np.pi / 2, 0, 0]),

@@ -46,7 +46,7 @@ class BlueTeam(object):
             cartesian_pos = np.dot([lat, lon, 1], self.state_manager.A)
 
             n_vehicles = config['ugv_platoon']['n_vehicles'][i]
-            positions = get_initial_positions(cartesian_pos, 4, n_vehicles)
+            positions = get_initial_positions(cartesian_pos, 10, n_vehicles)
             for j, position in enumerate(positions):
                 ugv.append(
                     UgV(physics_client, position, init_orient, i, j,
@@ -59,7 +59,7 @@ class BlueTeam(object):
 
             # Get initial positions of all vehicles
             n_vehicles = config['uav_platoon']['n_vehicles'][i]
-            positions = get_initial_positions(cartesian_pos, 5, n_vehicles)
+            positions = get_initial_positions(cartesian_pos, 10, n_vehicles)
             for j, position in enumerate(positions):
                 uav.append(
                     UaV(physics_client, position, init_orient, i, j,

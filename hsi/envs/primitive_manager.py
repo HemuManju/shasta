@@ -95,7 +95,7 @@ class PrimitiveManager(object):
             distance = np.linalg.norm(self.action['centroid_pos'][0:2] -
                                       self.action['next_pos'][0:2])
 
-            if len(self.path_points) > 2 and distance < 1:
+            if len(self.path_points) > 1 and distance < 0.5:
                 self.path_points = np.delete(self.path_points, 0, 0)
                 self.action['next_pos'] = self.path_points[0]
 

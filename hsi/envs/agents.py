@@ -243,7 +243,7 @@ class UaV(object):
             The position to which the vehicle should be moved.
         """
         self.current_pos, _ = self.get_pos_and_orientation()
-        position[2] = 20.0
+        position[2] = 10.0
         self.physics_client.changeConstraint(self.constraint, position)
         return None
 

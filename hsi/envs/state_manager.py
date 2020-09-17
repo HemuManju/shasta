@@ -17,8 +17,8 @@ class StateManager():
         # Initial setup
         self._affine_transformation_and_graph()
         self._initial_mission_setup()
-        self._initial_buildings_setup()
-        self._initial_target_setup()
+        # self._initial_buildings_setup()
+        # self._initial_target_setup()
 
         return None
 
@@ -41,16 +41,16 @@ class StateManager():
         """
         # Graph
         read_path = '/'.join([
-            self.config['urdf_data_path'], self.config['simulation']['map'],
-            'map.osm'
+            self.config['urdf_data_path'],
+            self.config['simulation']['map_to_use'], 'map.osm'
         ])
         G = ox.graph_from_xml(read_path, simplify=True, bidirectional='walk')
         self.G = nx.convert_node_labels_to_integers(G)
 
         # Transformation matrix
         read_path = '/'.join([
-            self.config['urdf_data_path'], self.config['simulation']['map'],
-            'coordinates.csv'
+            self.config['urdf_data_path'],
+            self.config['simulation']['map_to_use'], 'coordinates.csv'
         ])
         points = pd.read_csv(read_path)
         target = points[['x', 'z']].values
@@ -67,18 +67,25 @@ class StateManager():
         """Perfrom initial building setup.
         """
         read_path = '/'.join([
-            self.config['urdf_data_path'], self.config['simulation']['map'],
-            'buildings.csv'
+            self.config['urdf_data_path'],
+            self.config['simulation']['map_to_use'], 'buildings.csv'
         ])
+
         # Check if building information is already generated
         if Path(read_path).is_file():
             buildings = pd.read_csv(read_path)
         else:
-            nodes, streets = ox.graph_to_gdfs(self.G)
+            read_path = '/'.join([
+                self.config['urdf_data_path'],
+                self.config['simulation']['map_to_use'], 'map.osm'
+            ])
+            G = ox.graph_from_xml(read_path)
+            # TODO: This method doesn't work if the building info is not there in OSM
+            nodes, streets = ox.graph_to_gdfs(G)
+
             west, north, east, south = nodes.geometry.total_bounds
             polygon = ox.utils_geo.bbox_to_poly(north, south, east, west)
-            gdf = ox.footprints.footprints_from_polygon(
-                polygon, footprint_type='building')
+            gdf = ox.footprints.footprints_from_polygon(polygon)
             buildings_proj = ox.project_gdf(gdf)
 
             # Save the dataframe representing buildings
@@ -96,7 +103,7 @@ class StateManager():
             # Save the building info
             save_path = read_path = '/'.join([
                 self.config['urdf_data_path'],
-                self.config['simulation']['map'], 'buildings.csv'
+                self.config['simulation']['map_to_use'], 'buildings.csv'
             ])
             buildings.to_csv(save_path, index=False)
 

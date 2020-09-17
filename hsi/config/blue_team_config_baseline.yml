@@ -2,7 +2,7 @@
 # Simulation parameters
 uav_platoon:
   n_vehicles: [15, 15, 15]
-  initial_pos: [341, 342, 343]
+  initial_pos: [1, 2, 3]
   chase_distance: 5
 
 ugv_platoon:
@@ -21,7 +21,7 @@ ugv_primitives:
 uav:
   primitive: 'planning'
   n_vehicles: []
-  target_pos: [42.8861, -78.8765, 1]
+  target_pos: [47.0304158, -122.5515944, 1]
   vehicles_id: []
   vehicles_type: 'uav'
   vehicles: []
@@ -33,9 +33,9 @@ uav:
   casualities: []
 ##---------------------------------------------------------------------##
 ugv:
-  primitive: 'formation'
+  primitive: 'planning'
   n_vehicles: []
-  target_pos: 46
+  target_pos: [47.0304158, -122.5515944, 1]
   vehicles_id: []
   vehicles_type: 'ugv'
   vehicles: []

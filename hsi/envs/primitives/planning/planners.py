@@ -9,11 +9,13 @@ class PathPlanning():
     Generates a spline path
     """
     def __init__(self, config):
-        read_path = '/'.join(
-            [config['urdf_data_path'], config['simulation']['map'], 'map.osm'])
+        read_path = '/'.join([
+            config['urdf_data_path'], config['simulation']['map_to_use'],
+            'map.osm'
+        ])
         self.G = ox.graph_from_xml(read_path,
                                    simplify=True,
-                                   bidirectional='drive')
+                                   bidirectional='walk')
         self.A = self.find_homogenous_affine_transformation(config)
         return None
 
@@ -32,7 +34,7 @@ class PathPlanning():
             A numpy array such that source = A*target
         """
         read_path = '/'.join([
-            config['urdf_data_path'], config['simulation']['map'],
+            config['urdf_data_path'], config['simulation']['map_to_use'],
             'coordinates.csv'
         ])
         points = pd.read_csv(read_path)

@@ -1,5 +1,5 @@
 import pybullet as p
-from pybullet_utils import bullet_client
+from pybullet_utils import bullet_client as bc
 
 
 class BaseEnv(object):
@@ -7,15 +7,17 @@ class BaseEnv(object):
         self.config = config
         # Usage mode
         if config['simulation']['headless']:
-            self.p = bullet_client.BulletClient(connection_mode=p.DIRECT)
+            self.p = bc.BulletClient(connection_mode=p.DIRECT)
         else:
-            self.p = bullet_client.BulletClient(connection_mode=p.GUI)
+            options = '--background_color_red=0.85 --background_color_green=0.85 --background_color_blue=0.85'  # noqa
+            self.p = bc.BulletClient(connection_mode=p.GUI, options=options)
             self.p.resetDebugVisualizerCamera(cameraDistance=150,
                                               cameraYaw=0,
                                               cameraPitch=-89.999,
-                                              cameraTargetPosition=[0, 80, 0])
+                                              cameraTargetPosition=[0, 0, 0])
             self.p.configureDebugVisualizer(self.p.COV_ENABLE_GUI, 0)
-            # self.p.configureDebugVisualizer(shadowMapWorldSize=100)
+            self.p.configureDebugVisualizer(shadowMapWorldSize=10)
+            # self.p.configureDebugVisualizer(lightPosition=[0, 0, 500])
 
         # Set gravity
         self.p.setGravity(0, 0, -9.81)

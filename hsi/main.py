@@ -2,7 +2,8 @@ import yaml
 from pathlib import Path
 
 from envs.enhance_env import EnhanceEnv
-from default_actions.default_actions import blue_team_actions, red_team_actions
+from default_actions.default_actions import (blue_team_actions,
+                                             red_team_actions)
 
 from utils import skip_run
 
