@@ -71,7 +71,7 @@ class FormationControl(object):
             vel = (vel / speed) * vmax
 
         # New position
-        vehicle.updated_pos[0:2] = vehicle.current_pos[0:2] + (vel) * dt
+        vehicle.desired_pos[0:2] = vehicle.current_pos[0:2] + (vel) * dt
 
         return vehicle, speed
 

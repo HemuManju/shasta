@@ -27,7 +27,6 @@ class BaseEnv(object):
             fixedTimeStep=config['simulation']['time_step'] / 10,
             numSubSteps=1,
             numSolverIterations=5)
-
         return None
 
     def base_env_step(self):

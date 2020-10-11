@@ -6,7 +6,7 @@ simulation:
   use_real_time: False
   time_step: 1.0
   headless: True
-  collision_free: True
+  detailed_model: True
   episodes: 100
   n_buildings: 15
   n_nodes: 53

@@ -5,7 +5,8 @@ import numpy as np
 from ..state_manager import StateManager
 from ..action_manager import ActionManager
 
-from ..agents import UaV, UgV
+from ..agents.uav import UaV
+from ..agents.ugv import UgV
 
 
 def get_initial_positions(init_pos, r, n):

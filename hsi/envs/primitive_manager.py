@@ -120,7 +120,7 @@ class PrimitiveManager(object):
             self.action['centroid_pos'], self.dt, 'solid')
 
         for vehicle in self.action['vehicles']:
-            vehicle.set_position(vehicle.updated_pos)
+            vehicle.set_position(vehicle.desired_pos)
         return done_rolling
 
     def plot_path(self):

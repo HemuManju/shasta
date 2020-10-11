@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from .core.obj import Obj
 from .core.user import User
 
-from .core.buttons import Timer, ImageView
+from .core.information import Timer, ImageView
 
 
 def get_layout(window_width, window_height, show=False):
