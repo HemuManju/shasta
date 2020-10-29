@@ -1,7 +1,7 @@
 ##---------------------------------------------------------------------##
 # Simulation parameters
 simulation:
-  total_time: 600
+  total_time: 10
   current_time: 0
   use_real_time: False
   time_step: 1.0

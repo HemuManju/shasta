@@ -173,20 +173,19 @@ class ActionManager(object):
         hand_coded : bool
             Whether hand coded tactics are being used or not
         """
+        primitives_done = []
 
         # Update all the ugv vehicles
-        primitives_done = [
-            platoon.execute_primitive()
-            for _, platoon in self.ugv_platoons.items()
-        ]
+        for _, platoon in self.ugv_platoons.items():
+            done = platoon.execute_primitive()
+            primitives_done.append(done)
 
         # Update all the uav vehicles
-        primitives_done = [
-            platoon.execute_primitive()
-            for _, platoon in self.uav_platoons.items()
-        ]
-        # TODO: Find a way to append preimitives done
-        if all(item for item in primitives_done):
+        for _, platoon in self.uav_platoons.items():
+            done = platoon.execute_primitive()
+            primitives_done.append(done)
+
+        if all(primitives_done):
             done_rolling = True
         else:
             done_rolling = False

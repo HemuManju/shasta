@@ -30,6 +30,13 @@ def blue_team_actions(config):
         __file__).parents[1] / 'config/blue_team_config_baseline.yml'
     attr = yaml.load(open(str(read_path)), Loader=yaml.SafeLoader)
 
+    # For experimentation
+    if config['experiment']['platoon_size'] > 0:
+        for i in range(3):
+            attr['uav_platoon']['n_vehicles'][i] = config['experiment'][
+                'platoon_size']
+            attr['ugv_platoon']['n_vehicles'][i] = config['experiment'][
+                'platoon_size']
     # Setup the uav platoons
     ids = 0
     for i in range(config['simulation']['n_uav_platoons']):

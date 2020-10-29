@@ -44,8 +44,7 @@ class PrimitiveManager(object):
         if self.action['execute'] and self.action[
                 'primitive'] in primitives.keys():
             done = primitives[self.action['primitive']]()
-        else:
-            raise NotImplementedError
+
         return done
 
     def make_vehicles_idle(self):
@@ -99,10 +98,11 @@ class PrimitiveManager(object):
                 self.path_points = np.delete(self.path_points, 0, 0)
                 self.action['next_pos'] = self.path_points[0]
 
+            if len(self.path_points) <= 1:
+                done_rolling = True
+
             # Run formation control
             self.formation_primitive()
-            if distance < 1:
-                done_rolling = True
 
         if done_rolling:
             self.make_vehicles_idle()

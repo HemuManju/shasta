@@ -2,7 +2,7 @@ import pywavefront
 import pyglet
 from pyglet.window import key, mouse
 import pyglet.gl as gl
-
+import numpy as np
 from pywavefront import visualization
 
 from .shape_utils import Sphere
@@ -25,7 +25,30 @@ class Obj():
         self.zoom_level = 4
 
         self.meshes = pywavefront.Wavefront(obj_path)
-        self.sphere = Sphere(0, 0, 2, color=(0, 0, 1, 0))
+        self.spheres = []
+        t = np.linspace(0, 2 * np.pi, 10)
+
+        # Just for plotting
+        for i in range(10):
+            x = 0 + 5 * np.cos(t[i])
+            y = 0 + 5 * np.sin(t[i])
+            self.spheres.append(Sphere(x, y=y, z=5.0, color=(0, 0, 1, 0)))
+
+        for i in range(10):
+            x = 20 + 5 * np.cos(t[i])
+            y = 5 + 5 * np.sin(t[i])
+            self.spheres.append(Sphere(x, y=y, z=5.0, color=(1, 0, 0, 0)))
+
+        for i in range(10):
+            x = -40 + 3 * np.cos(t[i])
+            y = -70 + 3 * np.sin(t[i])
+            self.spheres.append(Sphere(x, y=y, z=5.0, color=(1, 0, 0, 0)))
+
+        t = np.linspace(0, 2 * np.pi, 5)
+        for i in range(5):
+            x = -30 + 3 * np.cos(t[i])
+            y = -50 + 3 * np.sin(t[i])
+            self.spheres.append(Sphere(x, y=y, z=5.0, color=(0, 0, 1, 0)))
 
         # Drawing
         self.w = 0
@@ -139,9 +162,6 @@ class Obj():
         self.apply_transformation()
         visualization.draw(self.meshes)
 
-        # Draw UxV
-        self.sphere.draw()
-
         if self.active:
             self.prepare_projection()
             if self.vertex_list is not None:
@@ -153,5 +173,5 @@ class Obj():
         visualization.draw(self.meshes)
 
         # # Draw UxV
-        self.sphere.draw()
-        # pass
+        for i, sphere in enumerate(self.spheres):
+            sphere.draw()

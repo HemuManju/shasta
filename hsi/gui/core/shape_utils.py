@@ -66,16 +66,19 @@ class BaseObject(object):
         """
         # self.enable_lightning()
         # sets the position
+        # gl.glLoadIdentity()
         gl.glTranslatef(self.tx, self.ty, self.tz)
 
         # sets the rotation
         gl.glRotatef(self.rx, 1, 0, 0)
         gl.glRotatef(self.ry, 0, 1, 0)
         gl.glRotatef(self.rz, 0, 0, 1)
-        gl.glRotatef(90, 1, 0, 0)
 
         # sets the color
         gl.glColor4f(*self.color)
+
+        # Clear any previous transformations
+        gl.glPushMatrix()
 
 
 class Rectangle(BaseObject):
@@ -187,11 +190,14 @@ class Sphere(BaseObject):
     """
     Represents a circle in the virtual world.
     """
-    def __init__(self, x, y, radius, color):
+    def __init__(self, x, y, z=50, radius=1, color=(0, 0, 1, 0)):
         super(Sphere, self).__init__(color)
         self.x = x
-        self.y = y
+        # Need to swap y and z (y is up)
+        self.y = z
+        self.z = y
         self.radius = radius
+        self.sphere = gl.gluNewQuadric()
 
     def draw(self):
         """
@@ -199,6 +205,9 @@ class Sphere(BaseObject):
         """
         self.before_draw()
 
-        sphere = gl.gluNewQuadric()
-        gl.glTranslatef(self.x, self.y, -10)
-        gl.gluSphere(sphere, self.radius, 25, 25)
+        # Draw
+        gl.glTranslatef(self.x, self.y, self.z)
+        gl.gluSphere(self.sphere, self.radius, 25, 25)
+
+        # Restore the transformation matrix
+        gl.glPopMatrix()

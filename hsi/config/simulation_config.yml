@@ -1,12 +1,12 @@
 ##---------------------------------------------------------------------##
 # Simulation parameters
 simulation:
-  total_time: 600
+  total_time: 300
   current_time: 0
   use_real_time: False
   time_step: 1.0
   headless: False
-  detailed_model: False
+  detailed_model: True
   dynamic: False
   episodes: 100
   n_buildings: 15
@@ -28,6 +28,7 @@ experiment:
   step_frames: 10
   attack_distance: 10
   detection_range: 35
+  platoon_size: 15
 ##---------------------------------------------------------------------##
 # UAV and UGV parameters
 uav:

@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from .core.obj import Obj
 from .core.user import User
 
-from .core.information import Timer, ImageView
+from .core.information import Timer, ImageView, Text
 
 
 def get_layout(window_width, window_height, show=False):
@@ -59,9 +59,13 @@ class MainGUI(pyglet.window.Window):
             self.panels.append(Obj(ax[key], path))
 
         self.info = Timer(ax['info'])
+        self.enemy_info = Text(ax['info'])
         self.control = ImageView(ax['cont'])
 
-        self.user = User([self.main, self.panels[0], self.panels[1]])
+        self.user = User([
+            self.main, self.panels[0], self.panels[1], self.panels[2],
+            self.panels[3], self.panels[4], self.panels[5]
+        ])
         self.alive = True
         return None
 
@@ -91,8 +95,11 @@ class MainGUI(pyglet.window.Window):
 
             self.control.update()
             self.info.update()
+            self.enemy_info.update('Enemy Attack', 0, 100)
 
             # Update the user
             self.user.draw()
+            self.main.update()
+            # time.sleep(2)
 
             self.push_events()

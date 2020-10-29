@@ -37,6 +37,16 @@ class BlueTeam(object):
             __file__).parents[2] / 'config/blue_team_config_baseline.yml'
         config = yaml.load(open(str(read_path)), Loader=yaml.SafeLoader)
 
+        # TODO:
+        # For experimentation
+        if self.config['experiment']['platoon_size'] > 0:
+            config['uav_platoon']['n_vehicles'] = [
+                self.config['experiment']['platoon_size']
+            ] * 3
+            config['ugv_platoon']['n_vehicles'] = [
+                self.config['experiment']['platoon_size']
+            ] * 3
+
         # Containers
         ugv, uav = [], []
         init_orient = physics_client.getQuaternionFromEuler([np.pi / 2, 0, 0])
@@ -88,5 +98,5 @@ class BlueTeam(object):
         """Take a step in the environement
         """
         # Execute the actions
-        self.action_manager.primitive_execution()
-        return None
+        done_rolling_actions = self.action_manager.primitive_execution()
+        return done_rolling_actions

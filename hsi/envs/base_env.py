@@ -14,9 +14,11 @@ class BaseEnv(object):
             self.p.resetDebugVisualizerCamera(cameraDistance=150,
                                               cameraYaw=0,
                                               cameraPitch=-89.999,
-                                              cameraTargetPosition=[0, 0, 0])
+                                              cameraTargetPosition=[0, 30, 0])
+
+            # self.p.getCameraImage(1200, 1200)
             self.p.configureDebugVisualizer(self.p.COV_ENABLE_GUI, 0)
-            self.p.configureDebugVisualizer(shadowMapWorldSize=10)
+            # self.p.configureDebugVisualizer(shadowMapWorldSize=10)
             # self.p.configureDebugVisualizer(lightPosition=[0, 0, 500])
 
         # Set gravity
@@ -30,6 +32,8 @@ class BaseEnv(object):
         return None
 
     def base_env_step(self):
+
+        # self.p.getCameraImage(1200, 1200)
         self.p.stepSimulation()
 
     def base_env_simulation_reset(self):

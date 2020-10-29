@@ -46,8 +46,12 @@ class UaV(object):
         # Load the mesh
         path = '/'.join(
             ['data/assets', 'vehicles', 'arial_vehicle_abstract.urdf'])
-        self.object = self.physics_client.loadURDF(path, self.init_pos,
-                                                   self.init_orientation)
+        self.object = self.physics_client.loadURDF(
+            path,
+            self.init_pos,
+            self.init_orientation,
+            flags=self.physics_client.URDF_USE_MATERIAL_COLORS_FROM_MTL,
+        )
         # Constraint
         self.constraint = self.physics_client.createConstraint(
             self.object, -1, -1, -1, self.physics_client.JOINT_FIXED,
