@@ -49,7 +49,7 @@ class BlueTeam(object):
 
         # Containers
         ugv, uav = [], []
-        init_orient = physics_client.getQuaternionFromEuler([np.pi / 2, 0, 0])
+        init_orient = physics_client.getQuaternionFromEuler([0, 0, np.pi / 2])
 
         for i, node in enumerate(config['ugv_platoon']['initial_pos']):
             lat = self.state_manager.node_info(node)['y']

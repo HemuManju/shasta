@@ -4,7 +4,6 @@ import numpy as np
 from .base_env import BaseEnv
 
 from .blue_team.blue_base import BlueTeam
-from .red_team.red_base import RedTeam  # noqa
 
 from .sensors import Sensors
 from .interaction_manager import InteractionManager
@@ -46,9 +45,6 @@ class EnhanceEnv(BaseEnv):
         # Blue team
         self.blue_team = BlueTeam(self.p, self.config)
 
-        # # Red team
-        # self.red_team = RedTeam(self.p, self.config)
-
         return None
 
     def reset(self):
@@ -56,7 +52,7 @@ class EnhanceEnv(BaseEnv):
             time.sleep(1 / 240)
             self.p.stepSimulation()
 
-    def step(self, blue_actions, red_actions):
+    def step(self, blue_actions):
         # Roll the actions
         done_rolling_actions = False
         simulation_count = 0
@@ -68,10 +64,15 @@ class EnhanceEnv(BaseEnv):
         self.blue_team.action_manager.perform_action_allocation(
             blue_actions['uav'], blue_actions['ugv'])
 
-        # self.red_team.action_manager.perform_action_allocation(
-        #     red_actions['uav'], red_actions['ugv'])
-
         step_time = []
+
+        # self.p.startStateLogging(loggingType=self.p.STATE_LOGGING_VIDEO_MP4,
+        #                          fileName='rochester.mp4',
+        #                          physicsClientId=self.p._client)
+
+        t = time.time()
+        running = True
+        entered = False
 
         # Run the simulation
         while not done_rolling_actions and current_time <= duration:
@@ -81,22 +82,46 @@ class EnhanceEnv(BaseEnv):
             # Run the blue team (these can be made parallel)
             action_time = time.time()
             done_rolling_actions = self.blue_team.execute()
+
             # Perform a step in simulation to update
             self.base_env_step()
             step_time.append(time.time() - action_time)
+            pos = self.blue_team.state_manager.uav[2].current_pos
+            pos[2] = pos[2] + 5
+
+            key_pos = np.dot([42.88599, -78.8755, 1],
+                             self.blue_team.state_manager.A)
+            key_pos[2] = pos[2]
+            distance = np.linalg.norm(pos - key_pos)
+
+            if distance < 5 and running:
+                self.p.startStateLogging(
+                    loggingType=self.p.STATE_LOGGING_VIDEO_MP4,
+                    fileName='testing.mp4',
+                    physicsClientId=self.p._client)
+                entered = True
+                running = False
+
+            if entered and distance > 80:
+                pos = self.blue_team.state_manager.ugv[2].current_pos
+                pos[2] = pos[2] + 5
+
+            if time.time() - t > 200:
+                break
+                # if running:
+                #     self.p.startStateLogging(
+                #         loggingType=self.p.STATE_LOGGING_VIDEO_MP4,
+                #         fileName='testing.mp4',
+                #         physicsClientId=self.p._client)
+                #     running = False
+
+            self.p.resetDebugVisualizerCamera(cameraDistance=10,
+                                              cameraYaw=75,
+                                              cameraPitch=5,
+                                              cameraTargetPosition=pos)
 
             # self.sensors.get_camera_image([0, 0, 10], image_type='rgb')
 
-            # # Run the red team (these can be made parallel)
-            # self.red_team.execute()
-            # # Perform a step in simulation to update
-            # self.base_env_step()
-
-            # # Interaction Manager (this over-rides the given actions)
-            # self.interaction_manager.update_actions(self.blue_team,
-            #                                         self.red_team)
-            # Perform a step in simulation to update
-            # self.base_env_step()
         # TODO: Need to implement state, action, and reward
         return 1 / np.mean(step_time)
 

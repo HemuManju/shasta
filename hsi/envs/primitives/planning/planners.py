@@ -104,7 +104,7 @@ class PathPlanning():
         lat_lon = np.dot(point, np.linalg.inv(self.A))
         return lat_lon
 
-    def find_path(self, start, end, n_splits=1):
+    def find_path(self, start, end, n_splits=3):
         """Finds a path between start and end using path graph
 
         Parameters

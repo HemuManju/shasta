@@ -1,6 +1,7 @@
 import numpy as np
 
 from ..sensors import Sensors
+import pybullet_data
 
 
 class UgV(object):
@@ -50,12 +51,21 @@ class UgV(object):
         # Load the mesh
         path = '/'.join(
             ['data/assets', 'vehicles', 'ground_vehicle_abstract.urdf'])
+        self.physics_client.setAdditionalSearchPath(
+            pybullet_data.getDataPath())
+
+        # self.object = self.physics_client.loadURDF("husky/husky.urdf",
+        #                                            self.init_pos,
+        #                                            self.init_orientation,
+        #                                            globalScaling=5)
         self.object = self.physics_client.loadURDF(path, self.init_pos,
                                                    self.init_orientation)
         # Constraint
+        init_orient = self.physics_client.getQuaternionFromEuler(
+            [0, 0, -np.pi])
         self.constraint = self.physics_client.createConstraint(
             self.object, -1, -1, -1, self.physics_client.JOINT_FIXED,
-            [0, 0, 0], [0, 0, 0], self.init_pos)
+            [0, 0, 0], [0, 0, 0], self.init_pos, init_orient)
 
         # Change color depending on team type
         if team_type == 'blue':  # Change the color
@@ -116,8 +126,15 @@ class UgV(object):
         position : array
             The position to which the vehicle should be moved.
         """
+        for i in [2, 3, 4, 5]:
+            self.physics_client.setJointMotorControl2(
+                self.object,
+                i,
+                self.physics_client.VELOCITY_CONTROL,
+                targetVelocity=100,
+                force=20)
         self.current_pos, _ = self.get_pos_and_orientation()
-        position[2] = 0.5  # ground clearance
+        position[2] = 0.0  # ground clearance
         self.physics_client.changeConstraint(self.constraint, position)
         return None
 

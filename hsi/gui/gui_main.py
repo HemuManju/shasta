@@ -100,6 +100,7 @@ class MainGUI(pyglet.window.Window):
             # Update the user
             self.user.draw()
             self.main.update()
+
             # time.sleep(2)
 
             self.push_events()

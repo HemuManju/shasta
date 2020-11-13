@@ -4,7 +4,7 @@ simulation:
   total_time: 300
   current_time: 0
   use_real_time: False
-  time_step: 1.0
+  time_step: 0.025
   headless: False
   detailed_model: True
   dynamic: False
@@ -20,7 +20,7 @@ simulation:
   n_ugv_clusters: 3
   n_uav_platoons: 3
   n_ugv_platoons: 3
-  map_to_use: 'buffalo'
+  map_to_use: 'buffalo-medium'
 
 ##---------------------------------------------------------------------##
 experiment:
@@ -28,16 +28,16 @@ experiment:
   step_frames: 10
   attack_distance: 10
   detection_range: 35
-  platoon_size: 15
+  platoon_size: 0
 ##---------------------------------------------------------------------##
 # UAV and UGV parameters
 uav:
-  speed: 5.0
+  speed: 20.0
   search_speed: 2.0
   search_dist: 5
   max_formation_size: 10
 ugv:
-  speed: 2.0
+  speed: 10.0
   search_speed: 1.0
   defense_radius: 3
   max_formation_size: 10

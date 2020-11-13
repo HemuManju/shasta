@@ -4,7 +4,7 @@ from pyglet.window import key, mouse
 import pyglet.gl as gl
 import numpy as np
 from pywavefront import visualization
-
+import time
 from .shape_utils import Sphere
 from .utils import ViewPort
 
@@ -26,13 +26,14 @@ class Obj():
 
         self.meshes = pywavefront.Wavefront(obj_path)
         self.spheres = []
+        self.blue = []
         t = np.linspace(0, 2 * np.pi, 10)
 
         # Just for plotting
         for i in range(10):
             x = 0 + 5 * np.cos(t[i])
             y = 0 + 5 * np.sin(t[i])
-            self.spheres.append(Sphere(x, y=y, z=5.0, color=(0, 0, 1, 0)))
+            self.blue.append(Sphere(x, y=y, z=5.0, color=(0, 0, 1, 0)))
 
         for i in range(10):
             x = 20 + 5 * np.cos(t[i])
@@ -57,6 +58,7 @@ class Obj():
         self.mouse_pos = []
 
         self.active = False
+        self.run = False
 
         return None
 
@@ -118,6 +120,9 @@ class Obj():
             self.zoom_level = 4
             gl.glDisable(gl.GL_DEPTH_TEST)
             gl.glClear(gl.GL_COLOR_BUFFER_BIT | gl.GL_DEPTH_BUFFER_BIT)
+
+        if symbol == key.S:
+            self.run = True
         return None
 
     def on_mouse_scroll(self, x, y, scroll_x, scroll_y):
@@ -131,6 +136,11 @@ class Obj():
         self.w, self.h = 0, 0
         self.mouse_pos = []
         self.vertex_list = None
+
+        if button is mouse.MIDDLE:
+            self.run = True
+            self.t = time.time()
+            Sphere(x, y, radius=10, color=(0, 0, 0, 0)).draw()
 
     def on_mouse_drag(self, x, y, dx, dy, button, modifiers):
         if self.rect.is_inside(x, y):
@@ -172,6 +182,18 @@ class Obj():
         self.apply_transformation()
         visualization.draw(self.meshes)
 
+        if self.run:
+            # # Draw UxV
+            for i, sphere in enumerate(self.blue):
+                sphere.x = sphere.x - 0.1
+                sphere.y = sphere.y + 0.1
+
+            if time.time() - self.t > 10:
+                self.run = False
+
         # # Draw UxV
         for i, sphere in enumerate(self.spheres):
+            sphere.draw()
+
+        for i, sphere in enumerate(self.blue):
             sphere.draw()

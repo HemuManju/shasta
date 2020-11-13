@@ -7,12 +7,12 @@ class FormationControl(object):
     """
     def __init__(self):
         # Initialise the parameters
-        self.a = 5
-        self.b = 5
+        self.a = 10
+        self.b = 10
         self.knn = 6
         self.alpha = 0.5
         self.gamma = 0.5
-        self.min_dis = 2
+        self.min_dis = 4
         return None
 
     def calculate_vel(self, vehicle, dt, all_drones_pos, centroid_pos,
@@ -107,7 +107,7 @@ class FormationControl(object):
                                    path_vel, vmax, formation_type)
                 for vehicle in vehicles
             ]))
-        if np.max(speed) < 0.015 * len(all_drones_pos):
+        if np.max(speed) < 0.0075 * len(all_drones_pos):
             formation_done = True
         else:
             formation_done = False

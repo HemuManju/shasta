@@ -9,7 +9,7 @@ class BaseEnv(object):
         if config['simulation']['headless']:
             self.p = bc.BulletClient(connection_mode=p.DIRECT)
         else:
-            options = '--background_color_red=0.85 --background_color_green=0.85 --background_color_blue=0.85'  # noqa
+            options = '--background_color_red=0.90 --background_color_green=0.90 --background_color_blue=0.90'  # noqa
             self.p = bc.BulletClient(connection_mode=p.GUI, options=options)
             self.p.resetDebugVisualizerCamera(cameraDistance=150,
                                               cameraYaw=0,
