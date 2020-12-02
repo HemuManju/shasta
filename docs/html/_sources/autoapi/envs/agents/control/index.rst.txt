@@ -1,0 +1,26 @@
+:mod:`envs.agents.control`
+==========================
+
+.. py:module:: envs.agents.control
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   envs.agents.control.UaVPDController
+
+
+
+.. py:class:: UaVPDController(dynamic_properties, Kp_trans=[1, 1, 1], Kp_rot=[25, 25, 25], Kd_trans=[10, 10, 1])
+
+   Bases: :class:`object`
+
+   .. method:: compute_torque(self, current_pos, current_orin, desired_pos, current_z_vel=0, desired_vel=[0, 0, 0], desired_acc=[0, 0, 0])
+
+
+

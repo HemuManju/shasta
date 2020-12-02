@@ -1,0 +1,35 @@
+:mod:`envs.sensors`
+===================
+
+.. py:module:: envs.sensors
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   envs.sensors.Sensors
+
+
+
+.. py:class:: Sensors(p)
+
+   Bases: :class:`object`
+
+   .. method:: get_camera_image(self, target_pos, image_type)
+
+      Get the camera image of the scene
+
+      :returns: Three arrays corresponding to rgb, depth, and segmentation image.
+      :rtype: tuple
+
+
+   .. method:: ray_cast(self)
+      :abstractmethod:
+
+
+

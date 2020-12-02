@@ -1,0 +1,133 @@
+:mod:`gui.core.shape_utils`
+===========================
+
+.. py:module:: gui.core.shape_utils
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   gui.core.shape_utils.Point2d
+   gui.core.shape_utils.BaseObject
+   gui.core.shape_utils.Rectangle
+   gui.core.shape_utils.Circle
+   gui.core.shape_utils.Cube
+   gui.core.shape_utils.Sphere
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   gui.core.shape_utils.create_window
+
+
+.. data:: lightfv
+   
+
+   
+
+.. function:: create_window(width, height, resize=False)
+
+
+.. py:class:: Point2d(x=0, y=0)
+
+   Bases: :class:`object`
+
+   Represents a point in 2 dimensions.
+
+
+.. py:class:: BaseObject(color)
+
+   Bases: :class:`object`
+
+   Represents an item in the virtual world.
+
+   .. method:: enable_lightning(self)
+
+
+   .. method:: before_draw(self)
+
+      Sets the position, rotation, and color of the item before it is drawn.
+
+
+
+.. py:class:: Rectangle(x, y, width, height, color)
+
+   Bases: :class:`gui.core.shape_utils.BaseObject`
+
+   Represents a rectangle in the virtual world.
+
+   .. method:: left(self)
+      :property:
+
+      Returns left end of the rectangle.
+
+
+   .. method:: right(self)
+      :property:
+
+      Returns the right end of the rectangle.
+
+
+   .. method:: bottom(self)
+      :property:
+
+      Returns the lower end of the rectangle.
+
+
+   .. method:: top(self)
+      :property:
+
+      Returns the upper end of the rectangle.
+
+
+   .. method:: draw(self)
+
+      Draws a rectangle.
+
+
+
+.. py:class:: Circle(x, y, radius, color)
+
+   Bases: :class:`gui.core.shape_utils.BaseObject`
+
+   Represents a circle in the virtual world.
+
+   .. method:: draw(self)
+
+      Draws a circle.
+
+
+
+.. py:class:: Cube(x, y, radius, color)
+
+   Bases: :class:`gui.core.shape_utils.BaseObject`
+
+   Represents a circle in the virtual world.
+
+   .. method:: draw(self)
+
+      Draws a circle.
+
+
+
+.. py:class:: Sphere(x, y, z=50, radius=1, color=(0, 0, 1, 0))
+
+   Bases: :class:`gui.core.shape_utils.BaseObject`
+
+   Represents a circle in the virtual world.
+
+   .. method:: draw(self)
+
+      Draws a circle.
+
+
+

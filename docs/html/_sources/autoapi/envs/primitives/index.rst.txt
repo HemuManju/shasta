@@ -1,0 +1,17 @@
+:mod:`envs.primitives`
+======================
+
+.. py:module:: envs.primitives
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   engaging/index.rst
+   formation/index.rst
+   planning/index.rst
+
+

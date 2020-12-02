@@ -1,0 +1,35 @@
+:mod:`envs.utils.interaction`
+=============================
+
+.. py:module:: envs.utils.interaction
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   envs.utils.interaction.findkeys
+   envs.utils.interaction.check_perimeter
+
+
+.. function:: findkeys(node, kv)
+
+
+.. function:: check_perimeter(blue_team_pos, red_team_pos, config)
+
+   This function checks if the blue team are near red teams using the centroid
+
+   :param red_team_pos: A dictionary containing the states of the red team
+   :type red_team_pos: list
+   :param blue_team_pos: A dictionary containing the states of the blue team
+   :type blue_team_pos: list
+
+   :returns: A array mask containing which blue teams are near to red teams
+   :rtype: array
+
+

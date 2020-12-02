@@ -1,0 +1,48 @@
+:mod:`gui.core.user`
+====================
+
+.. py:module:: gui.core.user
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   gui.core.user.User
+
+
+
+.. py:class:: User(scenes)
+
+   .. method:: do_claim(self)
+
+
+   .. method:: on_mouse_release(self, x, y, button, modifiers)
+
+
+   .. method:: on_key_release(self, symbol, modifiers)
+
+
+   .. method:: on_key_press(self, symbol, modifiers)
+
+
+   .. method:: on_mouse_motion(self, x, y, dx, dy)
+
+
+   .. method:: on_mouse_press(self, x, y, button, modifiers)
+
+
+   .. method:: on_mouse_scroll(self, x, y, scroll_x, scroll_y)
+
+
+   .. method:: on_mouse_drag(self, x, y, dx, dy, button, modifiers)
+
+
+   .. method:: draw(self)
+
+
+

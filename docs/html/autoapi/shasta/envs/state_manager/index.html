@@ -1,0 +1,326 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>shasta.envs.state_manager &mdash; shasta 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> shasta
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">Offset Game Study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">shasta</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">shasta.envs.state_manager</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../../_sources/autoapi/shasta/envs/state_manager/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-shasta.envs.state_manager">
+<span id="shasta-envs-state-manager"></span><h1><a class="reference internal" href="#module-shasta.envs.state_manager" title="shasta.envs.state_manager"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shasta.envs.state_manager</span></code></a><a class="headerlink" href="#module-shasta.envs.state_manager" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#shasta.envs.state_manager.StateManager" title="shasta.envs.state_manager.StateManager"><code class="xref py py-obj docutils literal notranslate"><span class="pre">StateManager</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt id="shasta.envs.state_manager.StateManager">
+<em class="property">class </em><code class="sig-name descname">StateManager</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">current_time</span></em>, <em class="sig-param"><span class="n">config</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/shasta/envs/state_manager.html#StateManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shasta.envs.state_manager.StateManager" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="py method">
+<dt id="shasta.envs.state_manager.StateManager._initial_uxv">
+<code class="sig-name descname">_initial_uxv</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">uav</span></em>, <em class="sig-param"><span class="n">ugv</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/shasta/envs/state_manager.html#StateManager._initial_uxv"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shasta.envs.state_manager.StateManager._initial_uxv" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="shasta.envs.state_manager.StateManager._initial_mission_setup">
+<code class="sig-name descname">_initial_mission_setup</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/shasta/envs/state_manager.html#StateManager._initial_mission_setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shasta.envs.state_manager.StateManager._initial_mission_setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perform initial setup such as progress, reward, grid map etc.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="shasta.envs.state_manager.StateManager._affine_transformation_and_graph">
+<code class="sig-name descname">_affine_transformation_and_graph</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/shasta/envs/state_manager.html#StateManager._affine_transformation_and_graph"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shasta.envs.state_manager.StateManager._affine_transformation_and_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs initial conversion of the lat lon to cartesian</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="shasta.envs.state_manager.StateManager._initial_buildings_setup">
+<code class="sig-name descname">_initial_buildings_setup</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/shasta/envs/state_manager.html#StateManager._initial_buildings_setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shasta.envs.state_manager.StateManager._initial_buildings_setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perfrom initial building setup.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="shasta.envs.state_manager.StateManager._initial_target_setup">
+<code class="sig-name descname">_initial_target_setup</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/shasta/envs/state_manager.html#StateManager._initial_target_setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shasta.envs.state_manager.StateManager._initial_target_setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs target setup with properties such as goal probability,
+goal progress etc.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="shasta.envs.state_manager.StateManager.node_info">
+<code class="sig-name descname">node_info</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">idx</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/shasta/envs/state_manager.html#StateManager.node_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shasta.envs.state_manager.StateManager.node_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the information about a node.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – Node ID</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dictionary containing all the information about the node.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="shasta.envs.state_manager.StateManager.building_info">
+<code class="sig-name descname">building_info</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">idx</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/shasta/envs/state_manager.html#StateManager.building_info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shasta.envs.state_manager.StateManager.building_info" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the information about a building such as perimeter,
+position, number of floors.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – Building ID</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dictionary containing all the information about the building.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="shasta.envs.state_manager.StateManager.get_image">
+<code class="sig-name descname">get_image</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">platoon_id</span></em>, <em class="sig-param"><span class="n">platoon_type</span></em>, <em class="sig-param"><span class="n">vehicle_id</span></em>, <em class="sig-param"><span class="n">image_type</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/shasta/envs/state_manager.html#StateManager.get_image"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shasta.envs.state_manager.StateManager.get_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the image of the agent</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>platoon_id</strong> (<em>int</em>) – The platoon ID to vehicle belongs to.</p></li>
+<li><p><strong>platoon_type</strong> (<em>str</em>) – Platoon type ‘uav’ or ‘ugv’</p></li>
+<li><p><strong>vehicle_id</strong> (<em>int</em>) – Vehicle ID from which image is acquired</p></li>
+<li><p><strong>image_type</strong> (<em>str</em>) – Type of image to return rgb, seg, depth</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A image from the vehicle of required type</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="shasta.envs.state_manager.StateManager.get_states">
+<code class="sig-name descname">get_states</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/shasta/envs/state_manager.html#StateManager.get_states"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shasta.envs.state_manager.StateManager.get_states" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Hemanth Manjunatha
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

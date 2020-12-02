@@ -1,0 +1,84 @@
+:mod:`envs.action_manager`
+==========================
+
+.. py:module:: envs.action_manager
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   envs.action_manager.ActionManager
+
+
+
+.. py:class:: ActionManager(state_manager, physics_client)
+
+   Bases: :class:`object`
+
+   .. method:: _init_platoons_setup(self, physics_client)
+
+      Initial setup of platoons with primitive execution class.
+      Each platoon name is given as uxv_p_* where * is the platoon number
+      and x is either 'a' or 'g' depending on platoon type.
+      The containers used for platoons are dict where key is uxv_p_*
+
+      As an example one of the keys is 'uav_p_1'
+      which is platoon 1 of type uav
+
+
+   .. method:: get_actions(self, attributes=None)
+
+      Returns the attributes of the primitive manager such as actions or
+      specific attricutes such as centroid of platoons or target postiion
+
+      :param attributes: A list of attributes to extract from the primitive manager.
+                         If this is empyt all the member variables
+                         from the primitive instance will be returned
+      :type attributes: list
+
+      :returns: A dictionary of all the attributes
+                as specified by the 'attributes' input parameter
+      :rtype: dict
+
+
+   .. method:: get_allocated_vehicle(self, n_vehicles, vehicles_type)
+
+      Allocated the vehicles to the platoons as required
+
+      :param n_vehicles: Number of vehicles in the platoon
+      :type n_vehicles: int
+      :param vehicles_type: Type of vehicles 'uav' or 'ugv'
+      :type vehicles_type: str
+
+      :returns: * **vehicles_id** (*list*) -- A list of vehicles_id assigned to a platoon
+                * **vehicles** (*list*) -- A list of vehicle instance of uav or ugv
+
+
+   .. method:: perform_action_allocation(self, actions_uav, actions_ugv)
+
+      Perfroms action allocation and
+
+      :param actions_uav: UAV decoded actions
+      :type actions_uav: dict
+      :param actions_ugv: UGV decoded actions
+      :type actions_ugv: dict
+
+
+   .. method:: primitive_execution(self)
+
+      Performs task execution
+
+      :param actions_uav: UAV decoded actions
+      :type actions_uav: array
+      :param actions_ugv: UAV decoded actions
+      :type actions_ugv: array
+      :param hand_coded: Whether hand coded tactics are being used or not
+      :type hand_coded: bool
+
+
+

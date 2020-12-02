@@ -1,0 +1,409 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>envs.state_manager &mdash; shasta 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> shasta
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">shasta</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">shasta</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>envs.state_manager</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for envs.state_manager</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">osmnx</span> <span class="k">as</span> <span class="nn">ox</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">networkx</span> <span class="k">as</span> <span class="nn">nx</span>
+
+
+<div class="viewcode-block" id="StateManager"><a class="viewcode-back" href="../../autoapi/envs/state_manager/index.html#envs.state_manager.StateManager">[docs]</a><span class="k">class</span> <span class="nc">StateManager</span><span class="p">():</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current_time</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">StateManager</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="c1"># Need to specify some parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_time</span> <span class="o">=</span> <span class="n">current_time</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">found_goal</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># Initial setup</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_affine_transformation_and_graph</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initial_mission_setup</span><span class="p">()</span>
+        <span class="c1"># self._initial_buildings_setup()</span>
+        <span class="c1"># self._initial_target_setup()</span>
+
+        <span class="k">return</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="StateManager._initial_uxv"><a class="viewcode-back" href="../../autoapi/envs/state_manager/index.html#envs.state_manager.StateManager._initial_uxv">[docs]</a>    <span class="k">def</span> <span class="nf">_initial_uxv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">uav</span><span class="p">,</span> <span class="n">ugv</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">uav</span> <span class="o">=</span> <span class="n">uav</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ugv</span> <span class="o">=</span> <span class="n">ugv</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="StateManager._initial_mission_setup"><a class="viewcode-back" href="../../autoapi/envs/state_manager/index.html#envs.state_manager.StateManager._initial_mission_setup">[docs]</a>    <span class="k">def</span> <span class="nf">_initial_mission_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Perform initial setup such as progress, reward, grid map etc.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">goal</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;simulation&#39;</span><span class="p">][</span><span class="s1">&#39;goal_node&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">progress_reward</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;reward&#39;</span><span class="p">][</span><span class="s1">&#39;progress_reward&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">indoor_reward</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">progress_reward</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_keep_in_pareto</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;state&#39;</span><span class="p">][</span><span class="s1">&#39;n_keep_in_pareto&#39;</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="StateManager._affine_transformation_and_graph"><a class="viewcode-back" href="../../autoapi/envs/state_manager/index.html#envs.state_manager.StateManager._affine_transformation_and_graph">[docs]</a>    <span class="k">def</span> <span class="nf">_affine_transformation_and_graph</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Performs initial conversion of the lat lon to cartesian</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Graph</span>
+        <span class="n">read_path</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;urdf_data_path&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;simulation&#39;</span><span class="p">][</span><span class="s1">&#39;map_to_use&#39;</span><span class="p">],</span> <span class="s1">&#39;map.osm&#39;</span>
+        <span class="p">])</span>
+        <span class="n">G</span> <span class="o">=</span> <span class="n">ox</span><span class="o">.</span><span class="n">graph_from_xml</span><span class="p">(</span><span class="n">read_path</span><span class="p">,</span> <span class="n">simplify</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bidirectional</span><span class="o">=</span><span class="s1">&#39;walk&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">G</span> <span class="o">=</span> <span class="n">nx</span><span class="o">.</span><span class="n">convert_node_labels_to_integers</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+
+        <span class="c1"># Transformation matrix</span>
+        <span class="n">read_path</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;urdf_data_path&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;simulation&#39;</span><span class="p">][</span><span class="s1">&#39;map_to_use&#39;</span><span class="p">],</span> <span class="s1">&#39;coordinates.csv&#39;</span>
+        <span class="p">])</span>
+        <span class="n">points</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">read_path</span><span class="p">)</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="n">points</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">source</span> <span class="o">=</span> <span class="n">points</span><span class="p">[[</span><span class="s1">&#39;lat&#39;</span><span class="p">,</span> <span class="s1">&#39;lon&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+
+        <span class="c1"># Pad the points with ones</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">source</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">source</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))))</span>
+        <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">target</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">target</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mi">1</span><span class="p">))))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">A</span><span class="p">,</span> <span class="n">res</span><span class="p">,</span> <span class="n">rank</span><span class="p">,</span> <span class="n">s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">lstsq</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">rcond</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="StateManager._initial_buildings_setup"><a class="viewcode-back" href="../../autoapi/envs/state_manager/index.html#envs.state_manager.StateManager._initial_buildings_setup">[docs]</a>    <span class="k">def</span> <span class="nf">_initial_buildings_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Perfrom initial building setup.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">read_path</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;urdf_data_path&#39;</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;simulation&#39;</span><span class="p">][</span><span class="s1">&#39;map_to_use&#39;</span><span class="p">],</span> <span class="s1">&#39;buildings.csv&#39;</span>
+        <span class="p">])</span>
+
+        <span class="c1"># Check if building information is already generated</span>
+        <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="n">read_path</span><span class="p">)</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+            <span class="n">buildings</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">read_path</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">read_path</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;urdf_data_path&#39;</span><span class="p">],</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;simulation&#39;</span><span class="p">][</span><span class="s1">&#39;map_to_use&#39;</span><span class="p">],</span> <span class="s1">&#39;map.osm&#39;</span>
+            <span class="p">])</span>
+            <span class="n">G</span> <span class="o">=</span> <span class="n">ox</span><span class="o">.</span><span class="n">graph_from_xml</span><span class="p">(</span><span class="n">read_path</span><span class="p">)</span>
+            <span class="c1"># TODO: This method doesn&#39;t work if the building info is not there in OSM</span>
+            <span class="n">nodes</span><span class="p">,</span> <span class="n">streets</span> <span class="o">=</span> <span class="n">ox</span><span class="o">.</span><span class="n">graph_to_gdfs</span><span class="p">(</span><span class="n">G</span><span class="p">)</span>
+
+            <span class="n">west</span><span class="p">,</span> <span class="n">north</span><span class="p">,</span> <span class="n">east</span><span class="p">,</span> <span class="n">south</span> <span class="o">=</span> <span class="n">nodes</span><span class="o">.</span><span class="n">geometry</span><span class="o">.</span><span class="n">total_bounds</span>
+            <span class="n">polygon</span> <span class="o">=</span> <span class="n">ox</span><span class="o">.</span><span class="n">utils_geo</span><span class="o">.</span><span class="n">bbox_to_poly</span><span class="p">(</span><span class="n">north</span><span class="p">,</span> <span class="n">south</span><span class="p">,</span> <span class="n">east</span><span class="p">,</span> <span class="n">west</span><span class="p">)</span>
+            <span class="n">gdf</span> <span class="o">=</span> <span class="n">ox</span><span class="o">.</span><span class="n">footprints</span><span class="o">.</span><span class="n">footprints_from_polygon</span><span class="p">(</span><span class="n">polygon</span><span class="p">)</span>
+            <span class="n">buildings_proj</span> <span class="o">=</span> <span class="n">ox</span><span class="o">.</span><span class="n">project_gdf</span><span class="p">(</span><span class="n">gdf</span><span class="p">)</span>
+
+            <span class="c1"># Save the dataframe representing buildings</span>
+            <span class="n">buildings</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+            <span class="n">buildings</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">centroid</span><span class="o">.</span><span class="n">x</span>
+            <span class="n">buildings</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gdf</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">centroid</span><span class="o">.</span><span class="n">y</span>
+            <span class="n">buildings</span><span class="p">[</span><span class="s1">&#39;area&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">buildings_proj</span><span class="o">.</span><span class="n">area</span>
+            <span class="n">buildings</span><span class="p">[</span><span class="s1">&#39;perimeter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">buildings_proj</span><span class="o">.</span><span class="n">length</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">buildings</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">buildings_proj</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span>
+            <span class="k">except</span> <span class="ne">KeyError</span><span class="p">:</span>
+                <span class="n">buildings</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># assumption</span>
+            <span class="n">buildings</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">buildings_proj</span><span class="p">))</span>
+
+            <span class="c1"># Save the building info</span>
+            <span class="n">save_path</span> <span class="o">=</span> <span class="n">read_path</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;urdf_data_path&#39;</span><span class="p">],</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;simulation&#39;</span><span class="p">][</span><span class="s1">&#39;map_to_use&#39;</span><span class="p">],</span> <span class="s1">&#39;buildings.csv&#39;</span>
+            <span class="p">])</span>
+            <span class="n">buildings</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">buildings</span> <span class="o">=</span> <span class="n">buildings</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="StateManager._initial_target_setup"><a class="viewcode-back" href="../../autoapi/envs/state_manager/index.html#envs.state_manager.StateManager._initial_target_setup">[docs]</a>    <span class="k">def</span> <span class="nf">_initial_target_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Performs target setup with properties such as goal probability,</span>
+<span class="sd">        goal progress etc.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Targets</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">n_targets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;simulation&#39;</span><span class="p">][</span><span class="s1">&#39;n_targets&#39;</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">target</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;simulation&#39;</span><span class="p">][</span><span class="s1">&#39;target_building_id&#39;</span><span class="p">]:</span>
+            <span class="n">info</span> <span class="o">=</span> <span class="p">{}</span>
+            <span class="n">info</span><span class="p">[</span><span class="s1">&#39;target_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">target</span>
+            <span class="n">info</span><span class="p">[</span><span class="s1">&#39;probability_goals&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">n_targets</span>
+            <span class="n">info</span><span class="p">[</span><span class="s1">&#39;progress_goals&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">info</span><span class="p">[</span><span class="s1">&#39;probability_goals_indoor&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">n_targets</span>
+            <span class="n">info</span><span class="p">[</span><span class="s1">&#39;progress_goals_indoor&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">info</span><span class="p">[</span><span class="s1">&#39;defence_perimeter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+            <span class="n">building_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">building_info</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
+            <span class="n">info</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">building_info</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span>
+            <span class="n">info</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">building_info</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span>
+            <span class="n">info</span><span class="p">[</span><span class="s1">&#39;perimeter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">building_info</span><span class="p">[</span><span class="s1">&#39;perimeter&#39;</span><span class="p">]</span>
+            <span class="n">info</span><span class="p">[</span><span class="s1">&#39;area&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">building_info</span><span class="p">[</span><span class="s1">&#39;area&#39;</span><span class="p">]</span>
+            <span class="n">info</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">building_info</span><span class="p">[</span><span class="s1">&#39;height&#39;</span><span class="p">]</span>
+            <span class="n">info</span><span class="p">[</span><span class="s1">&#39;n_defence_perimeter&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">building_info</span><span class="p">[</span><span class="s1">&#39;perimeter&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;ugv&#39;</span><span class="p">][</span><span class="s1">&#39;defense_radius&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">info</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="StateManager.node_info"><a class="viewcode-back" href="../../autoapi/envs/state_manager/index.html#envs.state_manager.StateManager.node_info">[docs]</a>    <span class="k">def</span> <span class="nf">node_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the information about a node.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        id : int</span>
+<span class="sd">            Node ID</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            A dictionary containing all the information about the node.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">G</span><span class="o">.</span><span class="n">nodes</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="StateManager.building_info"><a class="viewcode-back" href="../../autoapi/envs/state_manager/index.html#envs.state_manager.StateManager.building_info">[docs]</a>    <span class="k">def</span> <span class="nf">building_info</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">idx</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the information about a building such as perimeter,</span>
+<span class="sd">            position, number of floors.</span>
+
+<span class="sd">            Parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            id : int</span>
+<span class="sd">                Building ID</span>
+
+<span class="sd">            Returns</span>
+<span class="sd">            -------</span>
+<span class="sd">            dict</span>
+<span class="sd">                A dictionary containing all the information about the building.</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">buildings</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">buildings</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">idx</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="StateManager.get_image"><a class="viewcode-back" href="../../autoapi/envs/state_manager/index.html#envs.state_manager.StateManager.get_image">[docs]</a>    <span class="k">def</span> <span class="nf">get_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">platoon_id</span><span class="p">,</span> <span class="n">platoon_type</span><span class="p">,</span> <span class="n">vehicle_id</span><span class="p">,</span> <span class="n">image_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the image of the agent</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        platoon_id : int</span>
+<span class="sd">            The platoon ID to vehicle belongs to.</span>
+<span class="sd">        platoon_type : str</span>
+<span class="sd">            Platoon type &#39;uav&#39; or &#39;ugv&#39;</span>
+<span class="sd">        vehicle_id : int</span>
+<span class="sd">            Vehicle ID from which image is acquired</span>
+<span class="sd">        image_type : str</span>
+<span class="sd">            Type of image to return rgb, seg, depth</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        array</span>
+<span class="sd">            A image from the vehicle of required type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">platoon_type</span> <span class="o">==</span> <span class="s1">&#39;uav&#39;</span><span class="p">:</span>
+            <span class="n">platoon_key</span> <span class="o">=</span> <span class="s1">&#39;uav_p_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">platoon_id</span><span class="p">)</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">uav_platoons</span><span class="p">[</span><span class="n">platoon_key</span><span class="p">]</span><span class="o">.</span><span class="n">get_camera_image</span><span class="p">(</span>
+                <span class="n">vehicle_id</span><span class="p">,</span> <span class="n">image_type</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">platoon_key</span> <span class="o">=</span> <span class="s1">&#39;ugv_p_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">platoon_id</span><span class="p">)</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ugv_platoons</span><span class="p">[</span><span class="n">platoon_key</span><span class="p">]</span><span class="o">.</span><span class="n">get_camera_image</span><span class="p">(</span>
+                <span class="n">vehicle_id</span><span class="p">,</span> <span class="n">image_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">image</span></div>
+
+<div class="viewcode-block" id="StateManager.get_states"><a class="viewcode-back" href="../../autoapi/envs/state_manager/index.html#envs.state_manager.StateManager.get_states">[docs]</a>    <span class="k">def</span> <span class="nf">get_states</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Hemanth Manjunatha
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

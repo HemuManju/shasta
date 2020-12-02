@@ -1,0 +1,44 @@
+:mod:`envs.interaction_manager`
+===============================
+
+.. py:module:: envs.interaction_manager
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   envs.interaction_manager.InteractionManager
+
+
+
+.. py:class:: InteractionManager(config)
+
+   Bases: :class:`object`
+
+   .. method:: get_team_position(self, blue_team, red_team)
+
+
+   .. method:: _set_action(self, action, n_blue_team, n_red_team, distance)
+
+
+   .. method:: update_action(self, blue_action, red_action)
+
+
+   .. method:: set_action(self, team, key, action)
+
+
+   .. method:: get_action(self, team, key)
+
+
+   .. method:: action_lookup_string(self, key)
+
+
+   .. method:: update_actions(self, blue_team, red_team)
+
+
+

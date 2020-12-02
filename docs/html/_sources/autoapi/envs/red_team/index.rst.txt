@@ -1,0 +1,16 @@
+:mod:`envs.red_team`
+====================
+
+.. py:module:: envs.red_team
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   red_base/index.rst
+   utils/index.rst
+
+

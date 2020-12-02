@@ -1,0 +1,334 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>default_actions &mdash; shasta 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home" alt="Documentation Home"> shasta
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../readme.html">shasta</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../autoapi/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">shasta</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">Module code</a> &raquo;</li>
+        
+      <li>default_actions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for default_actions</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">yaml</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">collections</span>
+
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">genfromtxt</span>
+
+
+<div class="viewcode-block" id="initial_nodes_setup"><a class="viewcode-back" href="../autoapi/default_actions/index.html#default_actions.initial_nodes_setup">[docs]</a><span class="k">def</span> <span class="nf">initial_nodes_setup</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Performs initial nodes setup</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Nodes setup</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">path</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;urdf_data_path&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;nodes.csv&#39;</span>
+    <span class="n">position_data</span> <span class="o">=</span> <span class="n">genfromtxt</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;,&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;simulation&#39;</span><span class="p">][</span><span class="s1">&#39;n_nodes&#39;</span><span class="p">]):</span>
+        <span class="n">info</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">info</span><span class="p">[</span><span class="s1">&#39;position&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">position_data</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1.125</span><span class="p">,</span> <span class="n">position_data</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1.125</span>
+        <span class="p">]</span>
+        <span class="n">info</span><span class="p">[</span><span class="s1">&#39;importance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">nodes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">info</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">nodes</span></div>
+
+
+<div class="viewcode-block" id="blue_team_actions"><a class="viewcode-back" href="../autoapi/default_actions/index.html#default_actions.blue_team_actions">[docs]</a><span class="k">def</span> <span class="nf">blue_team_actions</span><span class="p">(</span><span class="n">config</span><span class="p">):</span>
+    <span class="c1"># Variables</span>
+    <span class="n">default_actions</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="c1"># Read fields for all the platoons</span>
+    <span class="n">read_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span>
+        <span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parents</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="s1">&#39;config/blue_team_config_baseline.yml&#39;</span>
+    <span class="n">attr</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">read_path</span><span class="p">)),</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">SafeLoader</span><span class="p">)</span>
+
+    <span class="c1"># For experimentation</span>
+    <span class="k">if</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;experiment&#39;</span><span class="p">][</span><span class="s1">&#39;platoon_size&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+            <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;uav_platoon&#39;</span><span class="p">][</span><span class="s1">&#39;n_vehicles&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;experiment&#39;</span><span class="p">][</span>
+                <span class="s1">&#39;platoon_size&#39;</span><span class="p">]</span>
+            <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;ugv_platoon&#39;</span><span class="p">][</span><span class="s1">&#39;n_vehicles&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;experiment&#39;</span><span class="p">][</span>
+                <span class="s1">&#39;platoon_size&#39;</span><span class="p">]</span>
+    <span class="c1"># Setup the uav platoons</span>
+    <span class="n">ids</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;simulation&#39;</span><span class="p">][</span><span class="s1">&#39;n_uav_platoons&#39;</span><span class="p">]):</span>
+        <span class="n">actions_uav</span> <span class="o">=</span> <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;uav&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;uav_p_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">actions_uav</span><span class="p">[</span><span class="s1">&#39;platoon_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">actions_uav</span><span class="p">[</span><span class="s1">&#39;n_vehicles&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;uav_platoon&#39;</span><span class="p">][</span><span class="s1">&#39;n_vehicles&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+
+        <span class="c1"># Assign the ids</span>
+        <span class="n">n_vehicles</span> <span class="o">=</span> <span class="n">actions_uav</span><span class="p">[</span><span class="s1">&#39;n_vehicles&#39;</span><span class="p">]</span>
+        <span class="n">vehicles_id</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span> <span class="n">ids</span> <span class="o">+</span> <span class="n">n_vehicles</span><span class="p">))</span>
+        <span class="n">ids</span> <span class="o">=</span> <span class="n">ids</span> <span class="o">+</span> <span class="n">n_vehicles</span>
+        <span class="n">actions_uav</span><span class="p">[</span><span class="s1">&#39;vehicles_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vehicles_id</span>
+
+        <span class="c1"># Update the uav action</span>
+        <span class="n">default_actions</span><span class="p">[</span><span class="s1">&#39;uav&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">actions_uav</span>
+
+    <span class="c1"># Setup the uav platoons</span>
+    <span class="n">ids</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;simulation&#39;</span><span class="p">][</span><span class="s1">&#39;n_ugv_platoons&#39;</span><span class="p">]):</span>
+        <span class="n">actions_ugv</span> <span class="o">=</span> <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;ugv&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;ugv_p_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">actions_ugv</span><span class="p">[</span><span class="s1">&#39;platoon_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">actions_ugv</span><span class="p">[</span><span class="s1">&#39;n_vehicles&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;ugv_platoon&#39;</span><span class="p">][</span><span class="s1">&#39;n_vehicles&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+
+        <span class="c1"># Assign the ids</span>
+        <span class="n">n_vehicles</span> <span class="o">=</span> <span class="n">actions_ugv</span><span class="p">[</span><span class="s1">&#39;n_vehicles&#39;</span><span class="p">]</span>
+        <span class="n">vehicles_id</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span> <span class="n">ids</span> <span class="o">+</span> <span class="n">n_vehicles</span><span class="p">))</span>
+        <span class="n">ids</span> <span class="o">=</span> <span class="n">ids</span> <span class="o">+</span> <span class="n">n_vehicles</span>
+        <span class="n">actions_ugv</span><span class="p">[</span><span class="s1">&#39;vehicles_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vehicles_id</span>
+
+        <span class="c1"># Update the ugv action</span>
+        <span class="n">default_actions</span><span class="p">[</span><span class="s1">&#39;ugv&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">actions_ugv</span>
+    <span class="k">return</span> <span class="n">default_actions</span></div>
+
+
+<div class="viewcode-block" id="red_team_actions"><a class="viewcode-back" href="../autoapi/default_actions/index.html#default_actions.red_team_actions">[docs]</a><span class="k">def</span> <span class="nf">red_team_actions</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">team_type</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="c1"># Variables</span>
+    <span class="n">default_actions</span> <span class="o">=</span> <span class="n">collections</span><span class="o">.</span><span class="n">defaultdict</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>
+
+    <span class="c1"># Read fields for all the platoons</span>
+    <span class="k">if</span> <span class="n">team_type</span> <span class="o">==</span> <span class="s1">&#39;dynamic&#39;</span><span class="p">:</span>
+        <span class="n">read_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span>
+            <span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parents</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="s1">&#39;config/red_team_config_dynamic.yml&#39;</span>
+    <span class="k">elif</span> <span class="n">team_type</span> <span class="o">==</span> <span class="s1">&#39;static&#39;</span><span class="p">:</span>
+        <span class="n">read_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span>
+            <span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parents</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="s1">&#39;config/red_team_config_static.yml&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">read_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span>
+            <span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parents</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="s1">&#39;config/red_team_config_baseline.yml&#39;</span>
+
+    <span class="n">attr</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="nb">open</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">read_path</span><span class="p">)),</span> <span class="n">Loader</span><span class="o">=</span><span class="n">yaml</span><span class="o">.</span><span class="n">SafeLoader</span><span class="p">)</span>
+
+    <span class="c1"># Setup the uav platoons</span>
+    <span class="n">ids</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;simulation&#39;</span><span class="p">][</span><span class="s1">&#39;n_uav_platoons&#39;</span><span class="p">]):</span>
+        <span class="n">actions_uav</span> <span class="o">=</span> <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;uav&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;uav_p_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">actions_uav</span><span class="p">[</span><span class="s1">&#39;platoon_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">actions_uav</span><span class="p">[</span><span class="s1">&#39;n_vehicles&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;uav_platoon&#39;</span><span class="p">][</span><span class="s1">&#39;n_vehicles&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+
+        <span class="c1"># Assign the ids</span>
+        <span class="n">n_vehicles</span> <span class="o">=</span> <span class="n">actions_uav</span><span class="p">[</span><span class="s1">&#39;n_vehicles&#39;</span><span class="p">]</span>
+        <span class="n">vehicles_id</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span> <span class="n">ids</span> <span class="o">+</span> <span class="n">n_vehicles</span><span class="p">))</span>
+        <span class="n">ids</span> <span class="o">=</span> <span class="n">ids</span> <span class="o">+</span> <span class="n">n_vehicles</span>
+        <span class="n">actions_uav</span><span class="p">[</span><span class="s1">&#39;vehicles_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vehicles_id</span>
+
+        <span class="c1"># Update the uav action</span>
+        <span class="n">default_actions</span><span class="p">[</span><span class="s1">&#39;uav&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">actions_uav</span>
+
+    <span class="c1"># Setup the uav platoons</span>
+    <span class="n">ids</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;simulation&#39;</span><span class="p">][</span><span class="s1">&#39;n_ugv_platoons&#39;</span><span class="p">]):</span>
+        <span class="n">actions_ugv</span> <span class="o">=</span> <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;ugv&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;ugv_p_&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">actions_ugv</span><span class="p">[</span><span class="s1">&#39;platoon_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span>
+        <span class="n">actions_ugv</span><span class="p">[</span><span class="s1">&#39;n_vehicles&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">attr</span><span class="p">[</span><span class="s1">&#39;ugv_platoon&#39;</span><span class="p">][</span><span class="s1">&#39;n_vehicles&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+
+        <span class="c1"># Assign the ids</span>
+        <span class="n">n_vehicles</span> <span class="o">=</span> <span class="n">actions_ugv</span><span class="p">[</span><span class="s1">&#39;n_vehicles&#39;</span><span class="p">]</span>
+        <span class="n">vehicles_id</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span> <span class="n">ids</span> <span class="o">+</span> <span class="n">n_vehicles</span><span class="p">))</span>
+        <span class="n">ids</span> <span class="o">=</span> <span class="n">ids</span> <span class="o">+</span> <span class="n">n_vehicles</span>
+        <span class="n">actions_ugv</span><span class="p">[</span><span class="s1">&#39;vehicles_id&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">vehicles_id</span>
+
+        <span class="c1"># Update the ugv action</span>
+        <span class="n">default_actions</span><span class="p">[</span><span class="s1">&#39;ugv&#39;</span><span class="p">][</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">actions_ugv</span>
+    <span class="k">return</span> <span class="n">default_actions</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Hemanth Manjunatha
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

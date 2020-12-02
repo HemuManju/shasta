@@ -1,0 +1,66 @@
+:mod:`gui.gui_main`
+===================
+
+.. py:module:: gui.gui_main
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   gui.gui_main.MainGUI
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   gui.gui_main.get_layout
+
+
+.. function:: get_layout(window_width, window_height, show=False)
+
+
+.. py:class:: MainGUI(width, height, config)
+
+   Bases: :class:`pyglet.window.Window`
+
+   Platform-independent application window.
+
+   A window is a "heavyweight" object occupying operating system resources.
+   The "client" or "content" area of a window is filled entirely with
+   an OpenGL viewport.  Applications have no access to operating system
+   widgets or controls; all rendering must be done via OpenGL.
+
+   Windows may appear as floating regions or can be set to fill an entire
+   screen (fullscreen).  When floating, windows may appear borderless or
+   decorated with a platform-specific frame (including, for example, the
+   title bar, minimize and close buttons, resize handles, and so on).
+
+   While it is possible to set the location of a window, it is recommended
+   that applications allow the platform to place it according to local
+   conventions.  This will ensure it is not obscured by other windows,
+   and appears on an appropriate screen for the user.
+
+   To render into a window, you must first call `switch_to`, to make
+   it the current OpenGL context.  If you use only one window in the
+   application, there is no need to do this.
+
+   .. method:: on_close(self)
+
+      Default on_close handler.
+
+
+   .. method:: push_events(self)
+
+
+   .. method:: run(self)
+
+
+

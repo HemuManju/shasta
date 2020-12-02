@@ -1,0 +1,16 @@
+:mod:`envs.utils`
+=================
+
+.. py:module:: envs.utils
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   interaction/index.rst
+   magicattr/index.rst
+
+

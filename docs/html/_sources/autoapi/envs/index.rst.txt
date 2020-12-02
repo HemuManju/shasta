@@ -1,0 +1,34 @@
+:mod:`envs`
+===========
+
+.. py:module:: envs
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   agents/index.rst
+   blue_team/index.rst
+   primitives/index.rst
+   red_team/index.rst
+   utils/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   action_manager/index.rst
+   base_env/index.rst
+   enhance_env/index.rst
+   interaction_manager/index.rst
+   primitive_manager/index.rst
+   sensors/index.rst
+   state_manager/index.rst
+
+

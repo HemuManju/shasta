@@ -1,0 +1,333 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>envs.agents.ugv &mdash; shasta 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> shasta
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">shasta</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">shasta</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>envs.agents.ugv</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for envs.agents.ugv</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">..sensors</span> <span class="kn">import</span> <span class="n">Sensors</span>
+
+
+<div class="viewcode-block" id="UgV"><a class="viewcode-back" href="../../../autoapi/envs/agents/ugv/index.html#envs.agents.ugv.UgV">[docs]</a><span class="k">class</span> <span class="nc">UgV</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This the base class for single UGV robot</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">physics_client</span><span class="p">,</span> <span class="n">init_pos</span><span class="p">,</span> <span class="n">init_orientation</span><span class="p">,</span> <span class="n">platoon_id</span><span class="p">,</span>
+                 <span class="n">robot_id</span><span class="p">,</span> <span class="n">config</span><span class="p">,</span> <span class="n">team_type</span><span class="p">):</span>
+
+        <span class="c1"># Physics client</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">physics_client</span> <span class="o">=</span> <span class="n">physics_client</span>
+
+        <span class="c1"># Platoon properties</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vehicle_id</span> <span class="o">=</span> <span class="n">robot_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">platoon_id</span> <span class="o">=</span> <span class="n">platoon_id</span>
+
+        <span class="c1"># Properties UAV</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_pos</span> <span class="o">=</span> <span class="n">init_pos</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">init_orientation</span> <span class="o">=</span> <span class="n">init_orientation</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_pos</span> <span class="o">=</span> <span class="n">init_pos</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">desired_pos</span> <span class="o">=</span> <span class="n">init_pos</span>
+
+        <span class="c1"># Extra parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">idle</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ammo</span> <span class="o">=</span> <span class="mi">100</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">battery</span> <span class="o">=</span> <span class="mi">100</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">functional</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speed</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;ugv&#39;</span><span class="p">][</span><span class="s1">&#39;speed&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">search_speed</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;ugv&#39;</span><span class="p">][</span><span class="s1">&#39;search_speed&#39;</span><span class="p">]</span>
+
+        <span class="c1"># Config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+
+        <span class="c1"># Simulation parameters</span>
+        <span class="c1"># self.controller = UaVPDController()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reward</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># Sensors</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sensors</span> <span class="o">=</span> <span class="n">Sensors</span><span class="p">(</span><span class="n">physics_client</span><span class="p">)</span>
+
+        <span class="c1"># Initial setup</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initial_setup</span><span class="p">(</span><span class="n">team_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="UgV._initial_setup"><a class="viewcode-back" href="../../../autoapi/envs/agents/ugv/index.html#envs.agents.ugv.UgV._initial_setup">[docs]</a>    <span class="k">def</span> <span class="nf">_initial_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">team_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initial step of objects and constraints</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Load the mesh</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="p">[</span><span class="s1">&#39;data/assets&#39;</span><span class="p">,</span> <span class="s1">&#39;vehicles&#39;</span><span class="p">,</span> <span class="s1">&#39;ground_vehicle_abstract.urdf&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">object</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">physics_client</span><span class="o">.</span><span class="n">loadURDF</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_pos</span><span class="p">,</span>
+                                                   <span class="bp">self</span><span class="o">.</span><span class="n">init_orientation</span><span class="p">)</span>
+        <span class="c1"># Constraint</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">constraint</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">physics_client</span><span class="o">.</span><span class="n">createConstraint</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">physics_client</span><span class="o">.</span><span class="n">JOINT_FIXED</span><span class="p">,</span>
+            <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_pos</span><span class="p">)</span>
+
+        <span class="c1"># Change color depending on team type</span>
+        <span class="k">if</span> <span class="n">team_type</span> <span class="o">==</span> <span class="s1">&#39;blue&#39;</span><span class="p">:</span>  <span class="c1"># Change the color</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">physics_client</span><span class="o">.</span><span class="n">changeVisualShape</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="p">,</span>
+                                                  <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+                                                  <span class="n">rgbaColor</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="UgV.get_pos_and_orientation"><a class="viewcode-back" href="../../../autoapi/envs/agents/ugv/index.html#envs.agents.ugv.UgV.get_pos_and_orientation">[docs]</a>    <span class="k">def</span> <span class="nf">get_pos_and_orientation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the position and orientation (as Yaw angle) of the robot.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pos</span><span class="p">,</span> <span class="n">rot</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">physics_client</span><span class="o">.</span><span class="n">getBasePositionAndOrientation</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="p">)</span>
+        <span class="n">euler</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">physics_client</span><span class="o">.</span><span class="n">getEulerFromQuaternion</span><span class="p">(</span><span class="n">rot</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">pos</span><span class="p">),</span> <span class="n">euler</span></div>
+
+<div class="viewcode-block" id="UgV.reset"><a class="viewcode-back" href="../../../autoapi/envs/agents/ugv/index.html#envs.agents.ugv.UgV.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Moves the robot back to its initial position</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">physics_client</span><span class="o">.</span><span class="n">changeConstraint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">constraint</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_pos</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_pos</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">desired_pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_pos</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="UgV.get_image"><a class="viewcode-back" href="../../../autoapi/envs/agents/ugv/index.html#envs.agents.ugv.UgV.get_image">[docs]</a>    <span class="k">def</span> <span class="nf">get_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">image_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the camera image of the agent</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        image_type : str</span>
+<span class="sd">            Specifying what kind of image to return</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        array</span>
+<span class="sd">            A numpy array containing the image of specified image type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get position</span>
+        <span class="n">pos</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_pos_and_orientation</span><span class="p">()</span>
+        <span class="n">image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sensors</span><span class="o">.</span><span class="n">get_camera_image</span><span class="p">(</span><span class="n">pos</span><span class="p">,</span> <span class="n">image_type</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">image</span></div>
+
+<div class="viewcode-block" id="UgV.get_info"><a class="viewcode-back" href="../../../autoapi/envs/agents/ugv/index.html#envs.agents.ugv.UgV.get_info">[docs]</a>    <span class="k">def</span> <span class="nf">get_info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the information about the UGV</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        dict</span>
+<span class="sd">            A dictionary containing all the information</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__dict__</span></div>
+
+<div class="viewcode-block" id="UgV.set_position"><a class="viewcode-back" href="../../../autoapi/envs/agents/ugv/index.html#envs.agents.ugv.UgV.set_position">[docs]</a>    <span class="k">def</span> <span class="nf">set_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">position</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This function moves the vehicles to given position</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        position : array</span>
+<span class="sd">            The position to which the vehicle should be moved.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_pos</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_pos_and_orientation</span><span class="p">()</span>
+        <span class="n">position</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.5</span>  <span class="c1"># ground clearance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">physics_client</span><span class="o">.</span><span class="n">changeConstraint</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">constraint</span><span class="p">,</span> <span class="n">position</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="UgV.remove_self"><a class="viewcode-back" href="../../../autoapi/envs/agents/ugv/index.html#envs.agents.ugv.UgV.remove_self">[docs]</a>    <span class="k">def</span> <span class="nf">remove_self</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">physics_client</span><span class="o">.</span><span class="n">removeBody</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">object</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Hemanth Manjunatha
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

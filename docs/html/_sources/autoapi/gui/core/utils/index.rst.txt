@@ -1,0 +1,54 @@
+:mod:`gui.core.utils`
+=====================
+
+.. py:module:: gui.core.utils
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   gui.core.utils.ViewPort
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   gui.core.utils.create_window
+
+
+.. data:: lightfv
+   
+
+   
+
+.. py:class:: ViewPort(ax)
+
+   Bases: :class:`object`
+
+   .. method:: set_viewport(self)
+
+
+   .. method:: setup_bounding_box(self)
+
+
+   .. method:: is_inside(self, x, y)
+
+
+   .. method:: get_origin(self)
+
+
+   .. method:: get_size(self)
+
+
+
+.. function:: create_window(width, height)
+
+

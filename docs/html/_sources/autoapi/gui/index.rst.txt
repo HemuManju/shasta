@@ -1,0 +1,24 @@
+:mod:`gui`
+==========
+
+.. py:module:: gui
+
+
+Subpackages
+-----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 3
+
+   core/index.rst
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   gui_main/index.rst
+
+

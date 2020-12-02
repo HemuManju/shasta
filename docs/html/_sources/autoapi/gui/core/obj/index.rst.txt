@@ -1,0 +1,56 @@
+:mod:`gui.core.obj`
+===================
+
+.. py:module:: gui.core.obj
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   gui.core.obj.Obj
+
+
+
+.. data:: lightfv
+   
+
+   
+
+.. py:class:: Obj(ax, obj_path)
+
+   .. method:: apply_transformation(self)
+
+
+   .. method:: prepare_projection(self)
+
+
+   .. method:: convert_to_obj_coordinates(self, x, y)
+
+
+   .. method:: pan_rotate(self, x, y, dx, dy, button, modifiers)
+
+
+   .. method:: on_key_press(self, symbol, modifiers)
+
+
+   .. method:: on_mouse_scroll(self, x, y, scroll_x, scroll_y)
+
+
+   .. method:: on_mouse_release(self, x, y, button, modifiers)
+
+
+   .. method:: on_mouse_drag(self, x, y, dx, dy, button, modifiers)
+
+
+   .. method:: do_draw(self)
+
+
+   .. method:: update(self)
+
+
+

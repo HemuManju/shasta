@@ -1,0 +1,292 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>gui.core.utils &mdash; shasta 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> shasta
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">shasta</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">shasta</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>gui.core.utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for gui.core.utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pyglet</span>
+<span class="kn">import</span> <span class="nn">pyglet.gl</span> <span class="k">as</span> <span class="nn">gl</span>
+
+<span class="kn">import</span> <span class="nn">ctypes</span>
+<div class="viewcode-block" id="lightfv"><a class="viewcode-back" href="../../../autoapi/gui/core/utils/index.html#gui.core.utils.lightfv">[docs]</a><span class="n">lightfv</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_float</span> <span class="o">*</span> <span class="mi">4</span></div>
+
+
+<div class="viewcode-block" id="ViewPort"><a class="viewcode-back" href="../../../autoapi/gui/core/utils/index.html#gui.core.utils.ViewPort">[docs]</a><span class="k">class</span> <span class="nc">ViewPort</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_b_box</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_position</span><span class="p">()</span>
+
+        <span class="c1"># For mac the graphiscs need to be scaled by 2</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_m_scale</span> <span class="o">=</span> <span class="mi">2</span>
+
+        <span class="c1"># Window size</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_win_width</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">window_width</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_m_scale</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_win_height</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">window_height</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_m_scale</span>
+
+        <span class="c1"># Set up all the dimensions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setup_bounding_box</span><span class="p">()</span>
+
+<div class="viewcode-block" id="ViewPort.set_viewport"><a class="viewcode-back" href="../../../autoapi/gui/core/utils/index.html#gui.core.utils.ViewPort.set_viewport">[docs]</a>    <span class="k">def</span> <span class="nf">set_viewport</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Set viewport</span>
+        <span class="n">gl</span><span class="o">.</span><span class="n">glViewport</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">)</span>
+        <span class="n">gl</span><span class="o">.</span><span class="n">glMatrixMode</span><span class="p">(</span><span class="n">gl</span><span class="o">.</span><span class="n">GL_PROJECTION</span><span class="p">)</span>
+        <span class="n">gl</span><span class="o">.</span><span class="n">glLoadIdentity</span><span class="p">()</span>
+
+        <span class="c1"># Set projection</span>
+        <span class="n">gl</span><span class="o">.</span><span class="n">glOrtho</span><span class="p">(</span><span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+                   <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="p">),</span> <span class="o">-</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+        <span class="n">gl</span><span class="o">.</span><span class="n">glLightfv</span><span class="p">(</span><span class="n">gl</span><span class="o">.</span><span class="n">GL_LIGHT0</span><span class="p">,</span> <span class="n">gl</span><span class="o">.</span><span class="n">GL_POSITION</span><span class="p">,</span> <span class="n">lightfv</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">))</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="ViewPort.setup_bounding_box"><a class="viewcode-back" href="../../../autoapi/gui/core/utils/index.html#gui.core.utils.ViewPort.setup_bounding_box">[docs]</a>    <span class="k">def</span> <span class="nf">setup_bounding_box</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x0</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_b_box</span><span class="o">.</span><span class="n">x0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_win_width</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y0</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_b_box</span><span class="o">.</span><span class="n">y0</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_win_height</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">x1</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_b_box</span><span class="o">.</span><span class="n">x1</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_win_width</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y1</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_b_box</span><span class="o">.</span><span class="n">y1</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">_win_height</span><span class="p">)</span>
+
+        <span class="c1"># Setup origin</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">origin_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">origin_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y0</span>
+
+        <span class="c1"># Setup width and height</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">x1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">x0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">y1</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">y0</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="ViewPort.is_inside"><a class="viewcode-back" href="../../../autoapi/gui/core/utils/index.html#gui.core.utils.ViewPort.is_inside">[docs]</a>    <span class="k">def</span> <span class="nf">is_inside</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x0</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_m_scale</span> <span class="o">&lt;</span> <span class="n">x</span> <span class="ow">and</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">x1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_m_scale</span><span class="p">):</span>
+            <span class="k">if</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">y0</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_m_scale</span> <span class="o">&lt;</span> <span class="n">y</span> <span class="ow">and</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">y1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">_m_scale</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="ViewPort.get_origin"><a class="viewcode-back" href="../../../autoapi/gui/core/utils/index.html#gui.core.utils.ViewPort.get_origin">[docs]</a>    <span class="k">def</span> <span class="nf">get_origin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ViewPort.get_size"><a class="viewcode-back" href="../../../autoapi/gui/core/utils/index.html#gui.core.utils.ViewPort.get_size">[docs]</a>    <span class="k">def</span> <span class="nf">get_size</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="create_window"><a class="viewcode-back" href="../../../autoapi/gui/core/utils/index.html#gui.core.utils.create_window">[docs]</a><span class="k">def</span> <span class="nf">create_window</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">pyglet</span><span class="o">.</span><span class="n">gl</span><span class="o">.</span><span class="n">Config</span><span class="p">(</span><span class="n">sample_buffers</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                                  <span class="n">samples</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                                  <span class="n">depth_size</span><span class="o">=</span><span class="mi">24</span><span class="p">,</span>
+                                  <span class="n">double_buffer</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">window</span> <span class="o">=</span> <span class="n">pyglet</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">Window</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
+                                      <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span>
+                                      <span class="n">height</span><span class="o">=</span><span class="n">height</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">pyglet</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">NoSuchConfigException</span><span class="p">:</span>
+        <span class="n">config</span> <span class="o">=</span> <span class="n">pyglet</span><span class="o">.</span><span class="n">gl</span><span class="o">.</span><span class="n">Config</span><span class="p">(</span><span class="n">double_buffer</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">window</span> <span class="o">=</span> <span class="n">pyglet</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">Window</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
+                                      <span class="n">width</span><span class="o">=</span><span class="n">width</span><span class="p">,</span>
+                                      <span class="n">height</span><span class="o">=</span><span class="n">height</span><span class="p">)</span>
+
+    <span class="nd">@window</span><span class="o">.</span><span class="n">event</span>
+    <span class="k">def</span> <span class="nf">on_key_press</span><span class="p">(</span><span class="n">symbol</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">modifiers</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">symbol</span> <span class="o">==</span> <span class="n">pyglet</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">key</span><span class="o">.</span><span class="n">Q</span><span class="p">:</span>
+                <span class="n">window</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">window</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Hemanth Manjunatha
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

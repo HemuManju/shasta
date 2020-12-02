@@ -1,0 +1,64 @@
+:mod:`envs.primitive_manager`
+=============================
+
+.. py:module:: envs.primitive_manager
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   envs.primitive_manager.PrimitiveManager
+
+
+
+.. py:class:: PrimitiveManager(state_manager, physics_client)
+
+   Bases: :class:`object`
+
+   .. method:: allocate_action(self, action)
+
+
+   .. method:: execute_primitive(self)
+
+      Perform primitive execution
+
+
+   .. method:: make_vehicles_idle(self)
+
+      Make the vehicles idle
+
+
+   .. method:: make_vehicles_nonidle(self)
+
+      Make the vehicles non-idle
+
+
+   .. method:: get_centroid(self)
+
+      Get the centroid of the vehicles
+
+
+   .. method:: planning_primitive(self)
+
+      Performs path planning primitive
+
+
+   .. method:: formation_primitive(self)
+
+      Performs formation primitive
+
+
+   .. method:: plot_path(self)
+
+
+   .. method:: shooting_primitive(self)
+
+      Perform shooting primitive
+
+
+

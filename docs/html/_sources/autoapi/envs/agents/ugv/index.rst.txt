@@ -1,0 +1,70 @@
+:mod:`envs.agents.ugv`
+======================
+
+.. py:module:: envs.agents.ugv
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   envs.agents.ugv.UgV
+
+
+
+.. py:class:: UgV(physics_client, init_pos, init_orientation, platoon_id, robot_id, config, team_type)
+
+   Bases: :class:`object`
+
+   This the base class for single UGV robot
+
+   .. method:: _initial_setup(self, team_type)
+
+      Initial step of objects and constraints
+
+
+   .. method:: get_pos_and_orientation(self)
+
+      Returns the position and orientation (as Yaw angle) of the robot.
+
+
+   .. method:: reset(self)
+
+      Moves the robot back to its initial position
+
+
+   .. method:: get_image(self, image_type)
+
+      Get the camera image of the agent
+
+      :param image_type: Specifying what kind of image to return
+      :type image_type: str
+
+      :returns: A numpy array containing the image of specified image type
+      :rtype: array
+
+
+   .. method:: get_info(self)
+
+      Returns the information about the UGV
+
+      :returns: A dictionary containing all the information
+      :rtype: dict
+
+
+   .. method:: set_position(self, position)
+
+      This function moves the vehicles to given position
+
+      :param position: The position to which the vehicle should be moved.
+      :type position: array
+
+
+   .. method:: remove_self(self)
+
+
+

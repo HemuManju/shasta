@@ -1,0 +1,136 @@
+:mod:`envs.utils.magicattr`
+===========================
+
+.. py:module:: envs.utils.magicattr
+
+.. autoapi-nested-parse::
+
+   Copyright (c) 2018, Jairus Martin.
+
+   Distributed under the terms of the MIT License.
+
+   The full license is in the file LICENSE, distributed with this software.
+
+   Created on June, 2018
+
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   envs.utils.magicattr.get
+   envs.utils.magicattr.set
+   envs.utils.magicattr.delete
+   envs.utils.magicattr.lookup
+   envs.utils.magicattr._parse
+   envs.utils.magicattr._lookup_subscript_value
+   envs.utils.magicattr._lookup
+
+
+.. data:: _AST_TYPES
+   
+
+   
+
+.. data:: _STRING_TYPE
+   
+
+   
+
+.. function:: get(obj, attr)
+
+   A getattr that supports nested lookups on objects, dicts, lists, and
+   any combination in between.
+
+   :param obj: An object to lookup the attribute on
+   :type obj: Object
+   :param attr: A attribute string to lookup
+   :type attr: String
+
+   :returns: **result** -- The object retrieved
+   :rtype: Object
+
+
+.. function:: set(obj, attr, val)
+
+   A setattr that supports nested lookups on objects, dicts, lists, and
+   any combination in between.
+
+   :param obj: An object to lookup the attribute on
+   :type obj: Object
+   :param attr: A attribute string to lookup
+   :type attr: String
+   :param val: The value to set
+   :type val: Object
+
+
+.. function:: delete(obj, attr)
+
+   A delattr that supports deletion of a nested lookups on objects,
+   dicts, lists, and any combination in between.
+
+   :param obj: An object to lookup the attribute on
+   :type obj: Object
+   :param attr: A attribute string to lookup
+   :type attr: String
+
+
+.. function:: lookup(obj, attr)
+
+   Like get but instead of returning the final value it returns the
+   object and action that will be done. This is useful if you need to do
+   any final checking (such as type validation) before doing a final setattr
+   or delattr.
+
+   :param obj: An object to lookup the attribute on
+   :type obj: Object
+   :param attr: A attribute string to lookup
+   :type attr: String
+
+   :returns: * **result** (*Tuple[Object, String, Bool]*)
+             * *_   A tuple of the object, the attribute, dict key, or list index that* -- will be used, and whether the former is a subscript operation.
+
+
+.. function:: _parse(attr)
+
+   Parse and validate an attr string
+
+   :param attr:
+   :type attr: String
+
+   :returns: **nodes** -- List of ast nodes
+   :rtype: List
+
+
+.. function:: _lookup_subscript_value(node)
+
+   Lookup the value of ast node on the object.
+
+   :param obj: An object to lookup the attribute, index, or key
+   :type obj: Object
+   :param node: Node to lookup
+   :type node: ast.Attribute, ast.Name, or ast.Subscript
+
+   :returns: **result** -- The object retrieved
+   :rtype: Object
+
+
+.. function:: _lookup(obj, node)
+
+   Lookup the given ast node on the object.
+
+   :param obj: An object to lookup the attribute, index, or key
+   :type obj: Object
+   :param node: Node to lookup
+   :type node: ast.Attribute, ast.Name, or ast.Subscript
+
+   :returns: **result** -- The object retrieved
+   :rtype: Object
+
+

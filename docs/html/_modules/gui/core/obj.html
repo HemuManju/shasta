@@ -1,0 +1,385 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>gui.core.obj &mdash; shasta 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home" alt="Documentation Home"> shasta
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../readme.html">shasta</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">shasta</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>gui.core.obj</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for gui.core.obj</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pywavefront</span>
+<span class="kn">import</span> <span class="nn">pyglet</span>
+<span class="kn">from</span> <span class="nn">pyglet.window</span> <span class="kn">import</span> <span class="n">key</span><span class="p">,</span> <span class="n">mouse</span>
+<span class="kn">import</span> <span class="nn">pyglet.gl</span> <span class="k">as</span> <span class="nn">gl</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">pywavefront</span> <span class="kn">import</span> <span class="n">visualization</span>
+
+<span class="kn">from</span> <span class="nn">.shape_utils</span> <span class="kn">import</span> <span class="n">Sphere</span>
+<span class="kn">from</span> <span class="nn">.utils</span> <span class="kn">import</span> <span class="n">ViewPort</span>
+
+<span class="kn">import</span> <span class="nn">ctypes</span>
+<div class="viewcode-block" id="lightfv"><a class="viewcode-back" href="../../../autoapi/gui/core/obj/index.html#gui.core.obj.lightfv">[docs]</a><span class="n">lightfv</span> <span class="o">=</span> <span class="n">ctypes</span><span class="o">.</span><span class="n">c_float</span> <span class="o">*</span> <span class="mi">4</span></div>
+
+
+<div class="viewcode-block" id="Obj"><a class="viewcode-back" href="../../../autoapi/gui/core/obj/index.html#gui.core.obj.Obj">[docs]</a><span class="k">class</span> <span class="nc">Obj</span><span class="p">():</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">obj_path</span><span class="p">):</span>
+        <span class="c1"># Setup viewport</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span> <span class="o">=</span> <span class="n">ViewPort</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+
+        <span class="c1"># Parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rotation_x</span> <span class="o">=</span> <span class="mi">90</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rotation_y</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">zoom_level</span> <span class="o">=</span> <span class="mi">4</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">meshes</span> <span class="o">=</span> <span class="n">pywavefront</span><span class="o">.</span><span class="n">Wavefront</span><span class="p">(</span><span class="n">obj_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">spheres</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+        <span class="c1"># Just for plotting</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spheres</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Sphere</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="mi">20</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spheres</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Sphere</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="o">-</span><span class="mi">40</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="mi">70</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spheres</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Sphere</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+
+        <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="o">-</span><span class="mi">30</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="mi">50</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">spheres</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Sphere</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)))</span>
+
+        <span class="c1"># Drawing</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">h</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vertex_list</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mouse_pos</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">active</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="Obj.apply_transformation"><a class="viewcode-back" href="../../../autoapi/gui/core/obj/index.html#gui.core.obj.Obj.apply_transformation">[docs]</a>    <span class="k">def</span> <span class="nf">apply_transformation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">set_viewport</span><span class="p">()</span>
+
+        <span class="c1"># Translation</span>
+        <span class="n">gl</span><span class="o">.</span><span class="n">glTranslated</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># Scale</span>
+        <span class="n">gl</span><span class="o">.</span><span class="n">glScaled</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">zoom_level</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">zoom_level</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Rotation</span>
+        <span class="n">gl</span><span class="o">.</span><span class="n">glRotatef</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rotation_x</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="n">gl</span><span class="o">.</span><span class="n">glRotatef</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rotation_y</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="Obj.prepare_projection"><a class="viewcode-back" href="../../../autoapi/gui/core/obj/index.html#gui.core.obj.Obj.prepare_projection">[docs]</a>    <span class="k">def</span> <span class="nf">prepare_projection</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">apply_transformation</span><span class="p">()</span>
+        <span class="n">gl</span><span class="o">.</span><span class="n">glRotatef</span><span class="p">(</span><span class="mi">90</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Obj.convert_to_obj_coordinates"><a class="viewcode-back" href="../../../autoapi/gui/core/obj/index.html#gui.core.obj.Obj.convert_to_obj_coordinates">[docs]</a>    <span class="k">def</span> <span class="nf">convert_to_obj_coordinates</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">_m_scale</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">_m_scale</span>
+        <span class="n">pmat</span> <span class="o">=</span> <span class="p">(</span><span class="n">gl</span><span class="o">.</span><span class="n">GLdouble</span> <span class="o">*</span> <span class="mi">16</span><span class="p">)()</span>
+        <span class="n">mvmat</span> <span class="o">=</span> <span class="p">(</span><span class="n">gl</span><span class="o">.</span><span class="n">GLdouble</span> <span class="o">*</span> <span class="mi">16</span><span class="p">)()</span>
+        <span class="n">viewport</span> <span class="o">=</span> <span class="p">(</span><span class="n">gl</span><span class="o">.</span><span class="n">GLint</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)()</span>
+
+        <span class="c1"># Model, projection and viewport matrices</span>
+        <span class="n">gl</span><span class="o">.</span><span class="n">glGetDoublev</span><span class="p">(</span><span class="n">gl</span><span class="o">.</span><span class="n">GL_MODELVIEW_MATRIX</span><span class="p">,</span> <span class="n">mvmat</span><span class="p">)</span>
+        <span class="n">gl</span><span class="o">.</span><span class="n">glGetDoublev</span><span class="p">(</span><span class="n">gl</span><span class="o">.</span><span class="n">GL_PROJECTION_MATRIX</span><span class="p">,</span> <span class="n">pmat</span><span class="p">)</span>
+        <span class="n">gl</span><span class="o">.</span><span class="n">glGetIntegerv</span><span class="p">(</span><span class="n">gl</span><span class="o">.</span><span class="n">GL_VIEWPORT</span><span class="p">,</span> <span class="n">viewport</span><span class="p">)</span>
+
+        <span class="c1"># Unproject</span>
+        <span class="n">point</span> <span class="o">=</span> <span class="p">[</span><span class="n">gl</span><span class="o">.</span><span class="n">GLdouble</span><span class="p">()</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)]</span>
+        <span class="n">gl</span><span class="o">.</span><span class="n">gluUnProject</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">mvmat</span><span class="p">,</span> <span class="n">pmat</span><span class="p">,</span> <span class="n">viewport</span><span class="p">,</span> <span class="o">*</span><span class="n">point</span><span class="p">)</span>
+        <span class="n">obj_coord</span> <span class="o">=</span> <span class="p">[</span><span class="n">v</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">point</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">obj_coord</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Obj.pan_rotate"><a class="viewcode-back" href="../../../autoapi/gui/core/obj/index.html#gui.core.obj.Obj.pan_rotate">[docs]</a>    <span class="k">def</span> <span class="nf">pan_rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">):</span>
+        <span class="c1"># Shifting</span>
+        <span class="k">if</span> <span class="n">button</span> <span class="ow">is</span> <span class="n">mouse</span><span class="o">.</span><span class="n">RIGHT</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">modifiers</span> <span class="ow">is</span> <span class="n">key</span><span class="o">.</span><span class="n">MOD_SHIFT</span><span class="p">:</span>
+                <span class="n">gl</span><span class="o">.</span><span class="n">glEnable</span><span class="p">(</span><span class="n">gl</span><span class="o">.</span><span class="n">GL_DEPTH_TEST</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">rotation_x</span> <span class="o">-=</span> <span class="n">dy</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">rotation_y</span> <span class="o">+=</span> <span class="n">dx</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rotation_x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">rotation_x</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">_m_scale</span> <span class="o">*</span> <span class="n">dx</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">_m_scale</span> <span class="o">*</span> <span class="n">dy</span></div>
+
+<div class="viewcode-block" id="Obj.on_key_press"><a class="viewcode-back" href="../../../autoapi/gui/core/obj/index.html#gui.core.obj.Obj.on_key_press">[docs]</a>    <span class="k">def</span> <span class="nf">on_key_press</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">symbol</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">symbol</span> <span class="o">==</span> <span class="n">key</span><span class="o">.</span><span class="n">R</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rotation_x</span> <span class="o">=</span> <span class="mi">90</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rotation_y</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">zoom_level</span> <span class="o">=</span> <span class="mi">4</span>
+            <span class="n">gl</span><span class="o">.</span><span class="n">glDisable</span><span class="p">(</span><span class="n">gl</span><span class="o">.</span><span class="n">GL_DEPTH_TEST</span><span class="p">)</span>
+            <span class="n">gl</span><span class="o">.</span><span class="n">glClear</span><span class="p">(</span><span class="n">gl</span><span class="o">.</span><span class="n">GL_COLOR_BUFFER_BIT</span> <span class="o">|</span> <span class="n">gl</span><span class="o">.</span><span class="n">GL_DEPTH_BUFFER_BIT</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="Obj.on_mouse_scroll"><a class="viewcode-back" href="../../../autoapi/gui/core/obj/index.html#gui.core.obj.Obj.on_mouse_scroll">[docs]</a>    <span class="k">def</span> <span class="nf">on_mouse_scroll</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">scroll_x</span><span class="p">,</span> <span class="n">scroll_y</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">zoom_level</span> <span class="o">+=</span> <span class="n">scroll_y</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">zoom_level</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">zoom_level</span> <span class="o">=</span> <span class="mi">4</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">zoom_level</span> <span class="o">&gt;</span> <span class="mi">15</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">zoom_level</span> <span class="o">=</span> <span class="mi">15</span></div>
+
+<div class="viewcode-block" id="Obj.on_mouse_release"><a class="viewcode-back" href="../../../autoapi/gui/core/obj/index.html#gui.core.obj.Obj.on_mouse_release">[docs]</a>    <span class="k">def</span> <span class="nf">on_mouse_release</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">h</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mouse_pos</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vertex_list</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="Obj.on_mouse_drag"><a class="viewcode-back" href="../../../autoapi/gui/core/obj/index.html#gui.core.obj.Obj.on_mouse_drag">[docs]</a>    <span class="k">def</span> <span class="nf">on_mouse_drag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">is_inside</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">active</span> <span class="o">=</span> <span class="kc">True</span>
+
+            <span class="c1"># Drawing with user</span>
+            <span class="k">if</span> <span class="n">button</span> <span class="ow">is</span> <span class="n">mouse</span><span class="o">.</span><span class="n">LEFT</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">prepare_projection</span><span class="p">()</span>
+                <span class="n">pos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">convert_to_obj_coordinates</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">mouse_pos</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pos</span><span class="p">)</span>
+                <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mouse_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">mouse_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">1</span><span class="p">]</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">w</span> <span class="o">+=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">_m_scale</span> <span class="o">*</span> <span class="n">dx</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">zoom_level</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">h</span> <span class="o">+=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rect</span><span class="o">.</span><span class="n">_m_scale</span> <span class="o">*</span> <span class="n">dy</span><span class="p">)</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">zoom_level</span>
+                <span class="n">z</span> <span class="o">=</span> <span class="mi">500</span>
+                <span class="n">gl</span><span class="o">.</span><span class="n">glLineWidth</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vertex_list</span> <span class="o">=</span> <span class="n">pyglet</span><span class="o">.</span><span class="n">graphics</span><span class="o">.</span><span class="n">vertex_list</span><span class="p">(</span>
+                    <span class="mi">4</span><span class="p">,</span> <span class="p">(</span><span class="s1">&#39;v3f&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">w</span><span class="p">,</span>
+                                <span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">h</span><span class="p">,</span> <span class="n">z</span><span class="p">)),</span>
+                    <span class="p">(</span><span class="s1">&#39;c3B&#39;</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)))</span>
+
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">active</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># Obj movement</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pan_rotate</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">dx</span><span class="p">,</span> <span class="n">dy</span><span class="p">,</span> <span class="n">button</span><span class="p">,</span> <span class="n">modifiers</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Obj.do_draw"><a class="viewcode-back" href="../../../autoapi/gui/core/obj/index.html#gui.core.obj.Obj.do_draw">[docs]</a>    <span class="k">def</span> <span class="nf">do_draw</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Draw OBJ</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">apply_transformation</span><span class="p">()</span>
+        <span class="n">visualization</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meshes</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">active</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">prepare_projection</span><span class="p">()</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">vertex_list</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">vertex_list</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="n">gl</span><span class="o">.</span><span class="n">GL_LINE_LOOP</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Obj.update"><a class="viewcode-back" href="../../../autoapi/gui/core/obj/index.html#gui.core.obj.Obj.update">[docs]</a>    <span class="k">def</span> <span class="nf">update</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Draw OBJ</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">apply_transformation</span><span class="p">()</span>
+        <span class="n">visualization</span><span class="o">.</span><span class="n">draw</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">meshes</span><span class="p">)</span>
+
+        <span class="c1"># # Draw UxV</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sphere</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spheres</span><span class="p">):</span>
+            <span class="n">sphere</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Hemanth Manjunatha
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
