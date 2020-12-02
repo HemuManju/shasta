@@ -1,5 +1,5 @@
 =============================
-Offset Game Study
+SHaSTA: A Simulator for Human and Swarm Team Applications
 =============================
 
 .. image:: https://badge.fury.io/py/offset-game.png
