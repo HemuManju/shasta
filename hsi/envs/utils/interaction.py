@@ -1,5 +1,4 @@
 from scipy.spatial.distance import cdist
-from sklearn.metrics import pairwise_distances_argmin_min
 
 import numpy as np
 
@@ -33,7 +32,7 @@ def check_perimeter(blue_team_pos, red_team_pos, config):
             A array mask containing which blue teams are near to red teams
         """
     distance = cdist(blue_team_pos, red_team_pos)
-    threshold = config['experiment']['perimeter_distance']
+    threshold = config['experiment']['attack_distance']
     indices = np.argwhere(distance < threshold)
 
     with_in_perimeter = []

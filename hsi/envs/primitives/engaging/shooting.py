@@ -10,7 +10,7 @@ class Shooting(object):
             loc = n_team_red / n_team_blue
         else:
             loc = n_team_blue / n_team_red
-        p = np.random.normal(loc/distance**2, scale=0.75)
+        p = np.random.normal(loc / distance**2, scale=0.75)
         return p
 
     def shoot_original(self):

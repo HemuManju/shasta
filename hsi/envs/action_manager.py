@@ -1,13 +1,16 @@
+from .primitive_manager import PrimitiveManager
+
+
 class ActionManager(object):
-    def __init__(self, state_manager, PrimitiveManager):
-        self.state_manager = state_manager
+    def __init__(self, state_manager, physics_client):
         self.config = state_manager.config
+        self.state_manager = state_manager
 
         # Setup the platoons
-        self._init_platoons_setup(PrimitiveManager)
+        self._init_platoons_setup(physics_client)
         return None
 
-    def _init_platoons_setup(self, PrimitiveManager):
+    def _init_platoons_setup(self, physics_client):
         """Initial setup of platoons with primitive execution class.
             Each platoon name is given as uxv_p_* where * is the platoon number
             and x is either 'a' or 'g' depending on platoon type.
@@ -19,15 +22,17 @@ class ActionManager(object):
         self.uav_platoons = {}  # A container for platoons
         for i in range(self.config['simulation']['n_uav_platoons']):
             key = 'uav_p_' + str(i + 1)
-            self.uav_platoons[key] = PrimitiveManager(self.state_manager)
+            self.uav_platoons[key] = PrimitiveManager(self.state_manager,
+                                                      physics_client)
 
         self.ugv_platoons = {}
         for i in range(self.config['simulation']['n_ugv_platoons']):
             key = 'ugv_p_' + str(i + 1)
-            self.ugv_platoons[key] = PrimitiveManager(self.state_manager)
+            self.ugv_platoons[key] = PrimitiveManager(self.state_manager,
+                                                      physics_client)
         return None
 
-    def platoon_attributes(self, attributes):
+    def get_actions(self, attributes=None):
         """Returns the attributes of the primitive manager such as actions or
         specific attricutes such as centroid of platoons or target postiion
 
@@ -107,35 +112,6 @@ class ActionManager(object):
 
         return vehicles_id, vehicles
 
-    def get_image(self, platoon_id, platoon_type, vehicle_id, image_type):
-        """Get the image of the agent
-
-        Parameters
-        ----------
-        platoon_id : int
-            The platoon ID to vehicle belongs to.
-        platoon_type : str
-            Platoon type 'uav' or 'ugv'
-        vehicle_id : int
-            Vehicle ID from which image is acquired
-        image_type : str
-            Type of image to return rgb, seg, depth
-
-        Returns
-        -------
-        array
-            A image from the vehicle of required type
-        """
-        if platoon_type == 'uav':
-            platoon_key = 'uav_p_' + str(platoon_id)
-            image = self.uav_platoons[platoon_key].get_camera_image(
-                vehicle_id, image_type)
-        else:
-            platoon_key = 'ugv_p_' + str(platoon_id)
-            image = self.ugv_platoons[platoon_key].get_camera_image(
-                vehicle_id, image_type)
-        return image
-
     def perform_action_allocation(self, actions_uav, actions_ugv):
         """Perfroms action allocation and
 
@@ -197,21 +173,19 @@ class ActionManager(object):
         hand_coded : bool
             Whether hand coded tactics are being used or not
         """
-
         primitives_done = []
+
         # Update all the ugv vehicles
-        primitives_done = [
-            platoon.execute_primitive()
-            for _, platoon in self.ugv_platoons.items()
-        ]
+        for _, platoon in self.ugv_platoons.items():
+            done = platoon.execute_primitive()
+            primitives_done.append(done)
 
         # Update all the uav vehicles
-        primitives_done = [
-            platoon.execute_primitive()
-            for _, platoon in self.uav_platoons.items()
-        ]
-        # TODO: Find a way to append preimitives done
-        if all(item for item in primitives_done):
+        for _, platoon in self.uav_platoons.items():
+            done = platoon.execute_primitive()
+            primitives_done.append(done)
+
+        if all(primitives_done):
             done_rolling = True
         else:
             done_rolling = False

@@ -78,6 +78,8 @@ target/
 # Exclude data from source control by default
 /data/
 /reports/
+/hsi/envs/urdf/meshes/
+/preprocessing/
 
 # Exclude trained Models
 /models/

@@ -1,0 +1,111 @@
+##---------------------------------------------------------------------##
+# Simulation parameters
+simulation:
+  total_time: 10
+  current_time: 0
+  use_real_time: False
+  time_step: 1.0
+  headless: True
+  detailed_model: True
+  episodes: 100
+  n_buildings: 15
+  n_nodes: 53
+  n_targets: 3
+  goal_node: [39]
+  target_building_id: [38, 39, 40, 51]
+  n_ugv: 25
+  n_uav: 75
+  n_uav_clusters: 3
+  n_ugv_clusters: 3
+  n_uav_platoons: 3
+  n_ugv_platoons: 3
+
+##---------------------------------------------------------------------##
+experiment:
+  duration: 300
+  step_frames: 10
+  attack_distance: 10
+  detection_range: 35
+##---------------------------------------------------------------------##
+# UAV and UGV parameters
+uav:
+  speed: 3.0
+  search_speed: 2.0
+  search_dist: 5
+  max_formation_size: 10
+ugv:
+  speed: 1.0
+  search_speed: 1.0
+  defense_radius: 3
+  max_formation_size: 10
+  coef_slowness: 1.2
+##---------------------------------------------------------------------##
+# Weigths parameters
+weights:
+  w_cluster_battery_pos: 1
+  w_cluster_ammo_pos: 1
+  w_search: 1
+  w_time_uav: 1 #  reward weight asssociated with time to goal for UAVs
+  w_battery_uav: 1 # weight of battery in reward
+  w_time_ugv: 1 #  reward weight asssociated with time to goal for UGVs
+  w_ammo_ugv: 1 # weight of ammo in reward
+##---------------------------------------------------------------------##
+# State parameters
+state:
+  n_keep_in_pareto: 5
+##---------------------------------------------------------------------##
+# Reward parameters
+reward:
+  progress_reward: 10
+  indoor_reward: 20
+  succssess_reward: 100
+##---------------------------------------------------------------------##
+# Neural network parameters
+network:
+  n_states: 10
+  n_actions: 6
+  n_epochs: 50
+  batch_size: 64
+  learning_rate: 0.001
+  drop_out: 0.10
+  gamma: 0.45
+##---------------------------------------------------------------------##
+# Primitive parameters
+primitive:
+  uav:
+    n_uav_primitive: 2
+    n_formations: 2
+    max_size: 2
+    n_caution_status: 3
+  ugv:
+    n_ugv_primitive: 2
+    n_formations: 2
+    max_size: 2
+    n_caution_status: 4
+##---------------------------------------------------------------------##
+# Primitive parameters
+red_team:
+  sigma: 1
+  mue: 0.1
+  init_nodes: [11, 10, 9]
+blue_team:
+  init_nodes: [12, 13, 14]
+##---------------------------------------------------------------------##
+# Paths
+urdf_data_path: 'data/processed/map_data/'
+map_save_path: 'data/processed/map_data/'
+log_path: 'data/log/'
+rrt_data_path: 'data/processed/map_data/rrt'
+graph_save_path: 'data/processed/map_data/'
+image_save_path: 'data/processed/image_data/'
+##---------------------------------------------------------------------##
+# Misc parameters
+record_video: False
+log_states: False
+
+##---------------------------------------------------------------------##
+# Smoke
+smoke:
+  smoke_nodes: [31, 02, 18]
+  smoke_intensity: 0
+  smoke_radius: 0

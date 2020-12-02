@@ -40,3 +40,6 @@ class Sensors(object):
         else:
             image = [rgbImg, depthImg, segImg]
         return image
+
+    def ray_cast(self):
+        raise NotImplementedError
