@@ -13,6 +13,7 @@ Human-Swarm Teams uniquely combine the ability of swarms and cognition of humans
 Documentation
 -------------
 
+https://hemumanju.github.io/shasta/
 
 Features
 --------
