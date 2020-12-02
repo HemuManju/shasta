@@ -1,0 +1,31 @@
+:mod:`default_actions`
+======================
+
+.. py:module:: default_actions
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   default_actions.initial_nodes_setup
+   default_actions.blue_team_actions
+   default_actions.red_team_actions
+
+
+.. function:: initial_nodes_setup(config)
+
+   Performs initial nodes setup
+
+
+.. function:: blue_team_actions(config)
+
+
+.. function:: red_team_actions(config, team_type=None)
+
+

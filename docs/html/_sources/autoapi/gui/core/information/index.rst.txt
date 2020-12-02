@@ -1,0 +1,53 @@
+:mod:`gui.core.information`
+===========================
+
+.. py:module:: gui.core.information
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   gui.core.information.Timer
+   gui.core.information.Text
+   gui.core.information.ImageView
+
+
+
+.. py:class:: Timer(ax)
+
+   .. method:: prepare_projection(self)
+
+
+   .. method:: reset(self)
+
+
+   .. method:: update(self)
+
+
+
+.. py:class:: Text(ax)
+
+   .. method:: prepare_projection(self)
+
+
+   .. method:: reset(self)
+
+
+   .. method:: update(self, text=None, x_pos=None, y_pos=None)
+
+
+
+.. py:class:: ImageView(ax)
+
+   .. method:: prepare_projection(self)
+
+
+   .. method:: update(self)
+
+
+

@@ -1,0 +1,40 @@
+:mod:`envs.enhance_env`
+=======================
+
+.. py:module:: envs.enhance_env
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   envs.enhance_env.EnhanceEnv
+
+
+
+.. py:class:: EnhanceEnv(config)
+
+   Bases: :class:`envs.base_env.BaseEnv`
+
+   .. method:: _initial_team_setup(self)
+
+
+   .. method:: reset(self)
+
+
+   .. method:: step(self, blue_actions, red_actions)
+
+
+   .. method:: get_reward(self)
+
+      Update reward of all the agents
+
+
+   .. method:: check_episode_done(self)
+
+
+

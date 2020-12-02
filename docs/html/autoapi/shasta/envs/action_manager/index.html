@@ -1,0 +1,317 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>shasta.envs.action_manager &mdash; shasta 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> shasta
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">Offset Game Study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">shasta</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">shasta.envs.action_manager</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../../_sources/autoapi/shasta/envs/action_manager/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-shasta.envs.action_manager">
+<span id="shasta-envs-action-manager"></span><h1><a class="reference internal" href="#module-shasta.envs.action_manager" title="shasta.envs.action_manager"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shasta.envs.action_manager</span></code></a><a class="headerlink" href="#module-shasta.envs.action_manager" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#shasta.envs.action_manager.ActionManager" title="shasta.envs.action_manager.ActionManager"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ActionManager</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt id="shasta.envs.action_manager.ActionManager">
+<em class="property">class </em><code class="sig-name descname">ActionManager</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">state_manager</span></em>, <em class="sig-param"><span class="n">physics_client</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/shasta/envs/action_manager.html#ActionManager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shasta.envs.action_manager.ActionManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="shasta.envs.action_manager.ActionManager._init_platoons_setup">
+<code class="sig-name descname">_init_platoons_setup</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">physics_client</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/shasta/envs/action_manager.html#ActionManager._init_platoons_setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shasta.envs.action_manager.ActionManager._init_platoons_setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initial setup of platoons with primitive execution class.
+Each platoon name is given as uxv_p_* where * is the platoon number
+and x is either ‘a’ or ‘g’ depending on platoon type.
+The containers used for platoons are dict where key is uxv_p_*</p>
+<p>As an example one of the keys is ‘uav_p_1’
+which is platoon 1 of type uav</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="shasta.envs.action_manager.ActionManager.get_actions">
+<code class="sig-name descname">get_actions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">attributes</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/shasta/envs/action_manager.html#ActionManager.get_actions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shasta.envs.action_manager.ActionManager.get_actions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the attributes of the primitive manager such as actions or
+specific attricutes such as centroid of platoons or target postiion</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>attributes</strong> (<em>list</em>) – A list of attributes to extract from the primitive manager.
+If this is empyt all the member variables
+from the primitive instance will be returned</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A dictionary of all the attributes
+as specified by the ‘attributes’ input parameter</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="shasta.envs.action_manager.ActionManager.get_allocated_vehicle">
+<code class="sig-name descname">get_allocated_vehicle</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">n_vehicles</span></em>, <em class="sig-param"><span class="n">vehicles_type</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/shasta/envs/action_manager.html#ActionManager.get_allocated_vehicle"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shasta.envs.action_manager.ActionManager.get_allocated_vehicle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allocated the vehicles to the platoons as required</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n_vehicles</strong> (<em>int</em>) – Number of vehicles in the platoon</p></li>
+<li><p><strong>vehicles_type</strong> (<em>str</em>) – Type of vehicles ‘uav’ or ‘ugv’</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>vehicles_id</strong> (<em>list</em>) – A list of vehicles_id assigned to a platoon</p></li>
+<li><p><strong>vehicles</strong> (<em>list</em>) – A list of vehicle instance of uav or ugv</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="shasta.envs.action_manager.ActionManager.perform_action_allocation">
+<code class="sig-name descname">perform_action_allocation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">actions_uav</span></em>, <em class="sig-param"><span class="n">actions_ugv</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/shasta/envs/action_manager.html#ActionManager.perform_action_allocation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shasta.envs.action_manager.ActionManager.perform_action_allocation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Perfroms action allocation and</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>actions_uav</strong> (<em>dict</em>) – UAV decoded actions</p></li>
+<li><p><strong>actions_ugv</strong> (<em>dict</em>) – UGV decoded actions</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="shasta.envs.action_manager.ActionManager.primitive_execution">
+<code class="sig-name descname">primitive_execution</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../_modules/shasta/envs/action_manager.html#ActionManager.primitive_execution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shasta.envs.action_manager.ActionManager.primitive_execution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Performs task execution</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>actions_uav</strong> (<em>array</em>) – UAV decoded actions</p></li>
+<li><p><strong>actions_ugv</strong> (<em>array</em>) – UAV decoded actions</p></li>
+<li><p><strong>hand_coded</strong> (<em>bool</em>) – Whether hand coded tactics are being used or not</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Hemanth Manjunatha
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

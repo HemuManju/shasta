@@ -1,0 +1,313 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>gui.gui_main &mdash; shasta 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> shasta
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">shasta</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">shasta</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>gui.gui_main</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for gui.gui_main</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">pyglet</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="kn">from</span> <span class="nn">.core.obj</span> <span class="kn">import</span> <span class="n">Obj</span>
+<span class="kn">from</span> <span class="nn">.core.user</span> <span class="kn">import</span> <span class="n">User</span>
+
+<span class="kn">from</span> <span class="nn">.core.information</span> <span class="kn">import</span> <span class="n">Timer</span><span class="p">,</span> <span class="n">ImageView</span><span class="p">,</span> <span class="n">Text</span>
+
+
+<div class="viewcode-block" id="get_layout"><a class="viewcode-back" href="../../autoapi/gui/gui_main/index.html#gui.gui_main.get_layout">[docs]</a><span class="k">def</span> <span class="nf">get_layout</span><span class="p">(</span><span class="n">window_width</span><span class="p">,</span> <span class="n">window_height</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="c1"># Setup your layout here</span>
+    <span class="n">grid</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="s1">&#39;main&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot2grid</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">colspan</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">rowspan</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="s1">&#39;cont&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot2grid</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">colspan</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">rowspan</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="s1">&#39;info&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot2grid</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">colspan</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="s1">&#39;pan1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot2grid</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="s1">&#39;pan2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot2grid</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="s1">&#39;pan3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot2grid</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="s1">&#39;pan4&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot2grid</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="s1">&#39;pan5&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot2grid</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">)</span>
+    <span class="n">ax</span><span class="p">[</span><span class="s1">&#39;pan6&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot2grid</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">fig</span><span class="o">=</span><span class="n">fig</span><span class="p">)</span>
+
+    <span class="c1"># Cleaning and setting up the padding</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">ax</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="n">ax</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">tl</span> <span class="ow">in</span> <span class="n">ax</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">get_xticklabels</span><span class="p">()</span> <span class="o">+</span> <span class="n">ax</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">get_yticklabels</span><span class="p">():</span>
+            <span class="n">tl</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+        <span class="c1"># Add window size</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">ax</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="s1">&#39;window_width&#39;</span><span class="p">,</span> <span class="n">window_width</span><span class="p">)</span>
+        <span class="nb">setattr</span><span class="p">(</span><span class="n">ax</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="s1">&#39;window_height&#39;</span><span class="p">,</span> <span class="n">window_height</span><span class="p">)</span>
+
+    <span class="c1"># Adjust the paddings around the sub plots</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">top</span><span class="o">=</span><span class="mf">0.99</span><span class="p">,</span> <span class="n">left</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">bottom</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">right</span><span class="o">=</span><span class="mf">0.99</span><span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">wspace</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">hspace</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">show</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">setp</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">get_axes</span><span class="p">(),</span> <span class="n">xticks</span><span class="o">=</span><span class="p">[],</span> <span class="n">yticks</span><span class="o">=</span><span class="p">[])</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">ax</span></div>
+
+
+<div class="viewcode-block" id="MainGUI"><a class="viewcode-back" href="../../autoapi/gui/gui_main/index.html#gui.gui_main.MainGUI">[docs]</a><span class="k">class</span> <span class="nc">MainGUI</span><span class="p">(</span><span class="n">pyglet</span><span class="o">.</span><span class="n">window</span><span class="o">.</span><span class="n">Window</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">)</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">get_layout</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+        <span class="c1"># Obj path</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
+            <span class="n">config</span><span class="p">[</span><span class="s1">&#39;urdf_data_path&#39;</span><span class="p">],</span> <span class="n">config</span><span class="p">[</span><span class="s1">&#39;simulation&#39;</span><span class="p">][</span><span class="s1">&#39;map_to_use&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;meshes/map.obj&#39;</span>
+        <span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">main</span> <span class="o">=</span> <span class="n">Obj</span><span class="p">(</span><span class="n">ax</span><span class="p">[</span><span class="s1">&#39;main&#39;</span><span class="p">],</span> <span class="n">path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">panels</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">6</span><span class="p">):</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;pan&#39;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">panels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">Obj</span><span class="p">(</span><span class="n">ax</span><span class="p">[</span><span class="n">key</span><span class="p">],</span> <span class="n">path</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">info</span> <span class="o">=</span> <span class="n">Timer</span><span class="p">(</span><span class="n">ax</span><span class="p">[</span><span class="s1">&#39;info&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enemy_info</span> <span class="o">=</span> <span class="n">Text</span><span class="p">(</span><span class="n">ax</span><span class="p">[</span><span class="s1">&#39;info&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">control</span> <span class="o">=</span> <span class="n">ImageView</span><span class="p">(</span><span class="n">ax</span><span class="p">[</span><span class="s1">&#39;cont&#39;</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="p">([</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">panels</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">panels</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">panels</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">panels</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">panels</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">panels</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+        <span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alive</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="MainGUI.on_close"><a class="viewcode-back" href="../../autoapi/gui/gui_main/index.html#gui.gui_main.MainGUI.on_close">[docs]</a>    <span class="k">def</span> <span class="nf">on_close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alive</span> <span class="o">=</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="MainGUI.push_events"><a class="viewcode-back" href="../../autoapi/gui/gui_main/index.html#gui.gui_main.MainGUI.push_events">[docs]</a>    <span class="k">def</span> <span class="nf">push_events</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Push handlers</span>
+        <span class="n">pyglet</span><span class="o">.</span><span class="n">clock</span><span class="o">.</span><span class="n">tick</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">push_handlers</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dispatch_events</span><span class="p">()</span>
+
+        <span class="c1"># Flush all the handlers</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pop_handlers</span><span class="p">()</span>
+
+        <span class="c1"># Draw</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">flip</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="MainGUI.run"><a class="viewcode-back" href="../../autoapi/gui/gui_main/index.html#gui.gui_main.MainGUI.run">[docs]</a>    <span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">alive</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+            <span class="c1"># Update window</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">panel</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">panels</span><span class="p">:</span>
+                <span class="n">panel</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">control</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">info</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">enemy_info</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s1">&#39;Enemy Attack&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+            <span class="c1"># Update the user</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">draw</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">main</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+            <span class="c1"># time.sleep(2)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">push_events</span><span class="p">()</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Hemanth Manjunatha
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

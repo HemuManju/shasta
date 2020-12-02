@@ -1,0 +1,331 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>envs.enhance_env &mdash; shasta 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> shasta
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">shasta</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">shasta</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>envs.enhance_env</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for envs.enhance_env</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">.base_env</span> <span class="kn">import</span> <span class="n">BaseEnv</span>
+
+<span class="kn">from</span> <span class="nn">.blue_team.blue_base</span> <span class="kn">import</span> <span class="n">BlueTeam</span>
+<span class="kn">from</span> <span class="nn">.red_team.red_base</span> <span class="kn">import</span> <span class="n">RedTeam</span>  <span class="c1"># noqa</span>
+
+<span class="kn">from</span> <span class="nn">.sensors</span> <span class="kn">import</span> <span class="n">Sensors</span>
+<span class="kn">from</span> <span class="nn">.interaction_manager</span> <span class="kn">import</span> <span class="n">InteractionManager</span>
+
+
+<div class="viewcode-block" id="EnhanceEnv"><a class="viewcode-back" href="../../autoapi/envs/enhance_env/index.html#envs.enhance_env.EnhanceEnv">[docs]</a><span class="k">class</span> <span class="nc">EnhanceEnv</span><span class="p">(</span><span class="n">BaseEnv</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="c1"># Initialise the base environment</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+
+        <span class="c1"># Load the environment</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;simulation&#39;</span><span class="p">][</span><span class="s1">&#39;detailed_model&#39;</span><span class="p">]:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;urdf_data_path&#39;</span><span class="p">],</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;simulation&#39;</span><span class="p">][</span><span class="s1">&#39;map_to_use&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;environment_collision_free.urdf&#39;</span>
+            <span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;urdf_data_path&#39;</span><span class="p">],</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;simulation&#39;</span><span class="p">][</span><span class="s1">&#39;map_to_use&#39;</span><span class="p">],</span>
+                <span class="s1">&#39;environment_collision_free.urdf&#39;</span>
+            <span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">loadURDF</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">getQuaternionFromEuler</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]),</span>
+                        <span class="n">flags</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">URDF_USE_MATERIAL_COLORS_FROM_MTL</span><span class="p">,</span>
+                        <span class="n">useFixedBase</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Initial step of blue and red team</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_initial_team_setup</span><span class="p">()</span>
+
+        <span class="c1"># Initialize interaction manager</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sensors</span> <span class="o">=</span> <span class="n">Sensors</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">interaction_manager</span> <span class="o">=</span> <span class="n">InteractionManager</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="EnhanceEnv._initial_team_setup"><a class="viewcode-back" href="../../autoapi/envs/enhance_env/index.html#envs.enhance_env.EnhanceEnv._initial_team_setup">[docs]</a>    <span class="k">def</span> <span class="nf">_initial_team_setup</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Blue team</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blue_team</span> <span class="o">=</span> <span class="n">BlueTeam</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+
+        <span class="c1"># # Red team</span>
+        <span class="c1"># self.red_team = RedTeam(self.p, self.config)</span>
+
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="EnhanceEnv.reset"><a class="viewcode-back" href="../../autoapi/envs/enhance_env/index.html#envs.enhance_env.EnhanceEnv.reset">[docs]</a>    <span class="k">def</span> <span class="nf">reset</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">):</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="mi">240</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">stepSimulation</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="EnhanceEnv.step"><a class="viewcode-back" href="../../autoapi/envs/enhance_env/index.html#envs.enhance_env.EnhanceEnv.step">[docs]</a>    <span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">blue_actions</span><span class="p">,</span> <span class="n">red_actions</span><span class="p">):</span>
+        <span class="c1"># Roll the actions</span>
+        <span class="n">done_rolling_actions</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">simulation_count</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">start_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+        <span class="n">current_time</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">duration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;simulation&#39;</span><span class="p">][</span><span class="s1">&#39;total_time&#39;</span><span class="p">]</span>
+
+        <span class="c1"># Perform action allocation for blue and red team respectively</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">blue_team</span><span class="o">.</span><span class="n">action_manager</span><span class="o">.</span><span class="n">perform_action_allocation</span><span class="p">(</span>
+            <span class="n">blue_actions</span><span class="p">[</span><span class="s1">&#39;uav&#39;</span><span class="p">],</span> <span class="n">blue_actions</span><span class="p">[</span><span class="s1">&#39;ugv&#39;</span><span class="p">])</span>
+
+        <span class="c1"># self.red_team.action_manager.perform_action_allocation(</span>
+        <span class="c1">#     red_actions[&#39;uav&#39;], red_actions[&#39;ugv&#39;])</span>
+
+        <span class="n">step_time</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Run the simulation</span>
+        <span class="k">while</span> <span class="ow">not</span> <span class="n">done_rolling_actions</span> <span class="ow">and</span> <span class="n">current_time</span> <span class="o">&lt;=</span> <span class="n">duration</span><span class="p">:</span>
+            <span class="n">simulation_count</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">current_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">start_time</span>
+
+            <span class="c1"># Run the blue team (these can be made parallel)</span>
+            <span class="n">action_time</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+            <span class="n">done_rolling_actions</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">blue_team</span><span class="o">.</span><span class="n">execute</span><span class="p">()</span>
+            <span class="c1"># Perform a step in simulation to update</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">base_env_step</span><span class="p">()</span>
+            <span class="n">step_time</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">action_time</span><span class="p">)</span>
+
+            <span class="c1"># self.sensors.get_camera_image([0, 0, 10], image_type=&#39;rgb&#39;)</span>
+
+            <span class="c1"># # Run the red team (these can be made parallel)</span>
+            <span class="c1"># self.red_team.execute()</span>
+            <span class="c1"># # Perform a step in simulation to update</span>
+            <span class="c1"># self.base_env_step()</span>
+
+            <span class="c1"># # Interaction Manager (this over-rides the given actions)</span>
+            <span class="c1"># self.interaction_manager.update_actions(self.blue_team,</span>
+            <span class="c1">#                                         self.red_team)</span>
+            <span class="c1"># Perform a step in simulation to update</span>
+            <span class="c1"># self.base_env_step()</span>
+        <span class="c1"># TODO: Need to implement state, action, and reward</span>
+        <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">step_time</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="EnhanceEnv.get_reward"><a class="viewcode-back" href="../../autoapi/envs/enhance_env/index.html#envs.enhance_env.EnhanceEnv.get_reward">[docs]</a>    <span class="k">def</span> <span class="nf">get_reward</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Update reward of all the agents</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Calculate the reward</span>
+        <span class="n">total_reward</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reward</span><span class="o">.</span><span class="n">mission_reward</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">state_manager</span><span class="o">.</span><span class="n">ugv</span><span class="p">,</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">state_manager</span><span class="o">.</span><span class="n">uav</span><span class="p">,</span>
+                                                  <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">vehicle</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">state_manager</span><span class="o">.</span><span class="n">uav</span><span class="p">:</span>
+            <span class="n">vehicle</span><span class="o">.</span><span class="n">reward</span> <span class="o">=</span> <span class="n">total_reward</span>
+
+        <span class="k">for</span> <span class="n">vehicle</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">state_manager</span><span class="o">.</span><span class="n">ugv</span><span class="p">:</span>
+            <span class="n">vehicle</span><span class="o">.</span><span class="n">reward</span> <span class="o">=</span> <span class="n">total_reward</span>
+        <span class="k">return</span> <span class="n">total_reward</span></div>
+
+<div class="viewcode-block" id="EnhanceEnv.check_episode_done"><a class="viewcode-back" href="../../autoapi/envs/enhance_env/index.html#envs.enhance_env.EnhanceEnv.check_episode_done">[docs]</a>    <span class="k">def</span> <span class="nf">check_episode_done</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">done</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">current_time</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;simulation&#39;</span><span class="p">][</span><span class="s1">&#39;total_time&#39;</span><span class="p">]:</span>
+            <span class="n">done</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">state_manager</span><span class="o">.</span><span class="n">found_goal</span><span class="p">:</span>
+            <span class="n">done</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">return</span> <span class="n">done</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Hemanth Manjunatha
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

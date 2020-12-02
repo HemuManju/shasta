@@ -1,0 +1,61 @@
+:mod:`envs.primitives.formation.control`
+========================================
+
+.. py:module:: envs.primitives.formation.control
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   envs.primitives.formation.control.FormationControl
+
+
+
+.. py:class:: FormationControl
+
+   Bases: :class:`object`
+
+   Formation control primitive using region based shape control.
+   Coded by: Apurvakumar Jani, Date: 18/9/2019
+
+   .. method:: calculate_vel(self, vehicle, dt, all_drones_pos, centroid_pos, path_vel, vmax, formation_type)
+
+      Calculate the vehicle velocity depending on the position of the peer vehicles
+
+      :param vehicle: A class instance of UxV agent
+      :type vehicle: class instance
+      :param dt: Time step duration (in seconds) to use in next position calculation
+      :type dt: float
+      :param all_drones_pos: An array with position of all the vehicles in the group/platoon
+      :type all_drones_pos: aarray
+      :param centroid_pos: An array specifying the centroid of the platoon
+      :type centroid_pos: array
+      :param path_vel: Path velocity calculated from next position and current position
+      :type path_vel: float
+      :param vmax: Maximum velocity of the vehicle
+      :type vmax: float
+      :param formation_type: Whether the formation is solid or ring
+      :type formation_type: str
+
+      :returns: **vehicle** -- A vehicle class instance with updated position
+      :rtype: class instance
+
+
+   .. method:: execute(self, vehicles, next_pos, centroid_pos, dt, formation_type)
+
+      Get the position of the formation control
+
+      :param vehicles: A list containing UAV or UGV class
+      :type vehicles: list
+      :param centroid_pos: An array containing the x, y, and z position
+      :type centroid_pos: array
+      :param dt: Time step to be used for distance calculation
+      :type dt: float
+
+
+

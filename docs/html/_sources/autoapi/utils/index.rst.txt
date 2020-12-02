@@ -1,0 +1,59 @@
+:mod:`utils`
+============
+
+.. py:module:: utils
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   utils.ColorPrint
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   utils.skip_run
+
+
+.. py:exception:: SkipWith
+
+   Bases: :class:`Exception`
+
+   Common base class for all non-exit exceptions.
+
+
+.. function:: skip_run(flag, f)
+
+   To skip a block of code.
+
+   :param flag: skip or run.
+   :type flag: str
+
+   :returns:
+   :rtype: None
+
+
+.. py:class:: ColorPrint
+
+   .. method:: print_skip(message, end='\n')
+      :staticmethod:
+
+
+   .. method:: print_run(message, end='\n')
+      :staticmethod:
+
+
+   .. method:: print_warn(message, end='\n')
+      :staticmethod:
+
+
+

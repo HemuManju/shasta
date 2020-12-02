@@ -1,0 +1,15 @@
+:mod:`envs.primitives.formation`
+================================
+
+.. py:module:: envs.primitives.formation
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   control/index.rst
+
+

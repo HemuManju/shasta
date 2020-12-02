@@ -1,0 +1,16 @@
+:mod:`envs.blue_team`
+=====================
+
+.. py:module:: envs.blue_team
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   blue_base/index.rst
+   utils/index.rst
+
+

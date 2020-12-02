@@ -1,0 +1,323 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>envs.primitives.formation.control &mdash; shasta 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html" class="icon icon-home" alt="Documentation Home"> shasta
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../readme.html">shasta</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">shasta</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>envs.primitives.formation.control</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for envs.primitives.formation.control</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<div class="viewcode-block" id="FormationControl"><a class="viewcode-back" href="../../../../autoapi/envs/primitives/formation/control/index.html#envs.primitives.formation.control.FormationControl">[docs]</a><span class="k">class</span> <span class="nc">FormationControl</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; Formation control primitive using region based shape control.</span>
+<span class="sd">    Coded by: Apurvakumar Jani, Date: 18/9/2019</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="c1"># Initialise the parameters</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">a</span> <span class="o">=</span> <span class="mi">5</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">b</span> <span class="o">=</span> <span class="mi">5</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">knn</span> <span class="o">=</span> <span class="mi">6</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gamma</span> <span class="o">=</span> <span class="mf">0.5</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">min_dis</span> <span class="o">=</span> <span class="mi">2</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="FormationControl.calculate_vel"><a class="viewcode-back" href="../../../../autoapi/envs/primitives/formation/control/index.html#envs.primitives.formation.control.FormationControl.calculate_vel">[docs]</a>    <span class="k">def</span> <span class="nf">calculate_vel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vehicle</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">all_drones_pos</span><span class="p">,</span> <span class="n">centroid_pos</span><span class="p">,</span>
+                      <span class="n">path_vel</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="n">formation_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Calculate the vehicle velocity depending on the position of the peer vehicles</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        vehicle : class instance</span>
+<span class="sd">            A class instance of UxV agent</span>
+<span class="sd">        dt : float</span>
+<span class="sd">            Time step duration (in seconds) to use in next position calculation</span>
+<span class="sd">        all_drones_pos : aarray</span>
+<span class="sd">            An array with position of all the vehicles in the group/platoon</span>
+<span class="sd">        centroid_pos : array</span>
+<span class="sd">            An array specifying the centroid of the platoon</span>
+<span class="sd">        path_vel : float</span>
+<span class="sd">            Path velocity calculated from next position and current position</span>
+<span class="sd">        vmax : float</span>
+<span class="sd">            Maximum velocity of the vehicle</span>
+<span class="sd">        formation_type : str</span>
+<span class="sd">            Whether the formation is solid or ring</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        vehicle : class instance</span>
+<span class="sd">            A vehicle class instance with updated position</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Get the neighboor position</span>
+        <span class="n">curr_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">vehicle</span><span class="o">.</span><span class="n">current_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">peers_pos</span> <span class="o">=</span> <span class="n">all_drones_pos</span>
+
+        <span class="c1"># Calculate the velocity of each neighboor particle</span>
+        <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="bp">self</span><span class="o">.</span><span class="n">knn</span>  <span class="c1"># constant</span>
+        <span class="n">g_lij</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_dis</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span>
+            <span class="n">curr_pos</span> <span class="o">-</span> <span class="n">peers_pos</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">del_g_ij</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">peers_pos</span> <span class="o">-</span> <span class="n">curr_pos</span><span class="p">)</span>
+        <span class="n">P_ij</span> <span class="o">=</span> <span class="n">k</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">g_lij</span> <span class="o">/</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">min_dis</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">del_g_ij</span><span class="p">)</span>
+        <span class="n">f_g_ij</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">curr_pos</span> <span class="o">-</span> <span class="n">centroid_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="bp">self</span><span class="o">.</span><span class="n">a</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="p">]),</span>
+            <span class="nb">ord</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+
+        <span class="c1"># Calculate path velocity</span>
+        <span class="n">kl</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># constant</span>
+        <span class="n">del_f_g_ij</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">*</span> <span class="p">(</span><span class="n">curr_pos</span> <span class="o">-</span> <span class="n">centroid_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>
+        <span class="n">del_zeta_ij</span> <span class="o">=</span> <span class="p">(</span><span class="n">kl</span> <span class="o">*</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">f_g_ij</span><span class="p">))</span> <span class="o">*</span> <span class="n">del_f_g_ij</span>
+        <span class="n">vel</span> <span class="o">=</span> <span class="n">path_vel</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">alpha</span> <span class="o">*</span> <span class="n">del_zeta_ij</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">gamma</span> <span class="o">*</span> <span class="n">P_ij</span><span class="p">)</span>
+
+        <span class="c1"># Calculate the speed</span>
+        <span class="n">speed</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">vel</span><span class="p">)</span>
+
+        <span class="c1"># Normalize the velocity with respect to speed</span>
+        <span class="k">if</span> <span class="n">speed</span> <span class="o">&gt;</span> <span class="n">vmax</span><span class="p">:</span>
+            <span class="n">vel</span> <span class="o">=</span> <span class="p">(</span><span class="n">vel</span> <span class="o">/</span> <span class="n">speed</span><span class="p">)</span> <span class="o">*</span> <span class="n">vmax</span>
+
+        <span class="c1"># New position</span>
+        <span class="n">vehicle</span><span class="o">.</span><span class="n">desired_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">vehicle</span><span class="o">.</span><span class="n">current_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="p">(</span><span class="n">vel</span><span class="p">)</span> <span class="o">*</span> <span class="n">dt</span>
+
+        <span class="k">return</span> <span class="n">vehicle</span><span class="p">,</span> <span class="n">speed</span></div>
+
+<div class="viewcode-block" id="FormationControl.execute"><a class="viewcode-back" href="../../../../autoapi/envs/primitives/formation/control/index.html#envs.primitives.formation.control.FormationControl.execute">[docs]</a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">vehicles</span><span class="p">,</span> <span class="n">next_pos</span><span class="p">,</span> <span class="n">centroid_pos</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">formation_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the position of the formation control</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        vehicles : list</span>
+<span class="sd">            A list containing UAV or UGV class</span>
+<span class="sd">        centroid_pos : array</span>
+<span class="sd">            An array containing the x, y, and z position</span>
+<span class="sd">        dt : float</span>
+<span class="sd">            Time step to be used for distance calculation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">vmax</span> <span class="o">=</span> <span class="n">vehicles</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">speed</span>
+        <span class="n">all_drones_pos</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">vehicle</span><span class="o">.</span><span class="n">current_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="k">for</span> <span class="n">vehicle</span> <span class="ow">in</span> <span class="n">vehicles</span><span class="p">])</span>
+
+        <span class="c1"># Path velocity</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">next_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">next_pos</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span> <span class="o">-</span> <span class="n">centroid_pos</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">path_vel</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">dt</span><span class="p">)</span> <span class="o">*</span> <span class="n">path</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">path_vel</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">vmax</span><span class="p">:</span>
+            <span class="n">path_vel</span> <span class="o">=</span> <span class="p">(</span><span class="n">path_vel</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">path_vel</span><span class="p">))</span> <span class="o">*</span> <span class="n">vmax</span>
+
+        <span class="c1"># Loop over each drone to calculate the velocity</span>
+        <span class="c1"># NOTE: Very complicated way to implementing list comprehension</span>
+        <span class="c1"># TODO: Need to find an efficient way to implement formation control</span>
+        <span class="n">vehicles</span><span class="p">,</span> <span class="n">speed</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span>
+            <span class="nb">list</span><span class="p">,</span>
+            <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="p">[</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">calculate_vel</span><span class="p">(</span><span class="n">vehicle</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">all_drones_pos</span><span class="p">,</span> <span class="n">centroid_pos</span><span class="p">,</span>
+                                   <span class="n">path_vel</span><span class="p">,</span> <span class="n">vmax</span><span class="p">,</span> <span class="n">formation_type</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">vehicle</span> <span class="ow">in</span> <span class="n">vehicles</span>
+            <span class="p">]))</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">speed</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.015</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_drones_pos</span><span class="p">):</span>
+            <span class="n">formation_done</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">formation_done</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="k">return</span> <span class="n">vehicles</span><span class="p">,</span> <span class="n">formation_done</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Hemanth Manjunatha
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

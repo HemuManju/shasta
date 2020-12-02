@@ -1,0 +1,21 @@
+:mod:`envs.red_team.utils`
+==========================
+
+.. py:module:: envs.red_team.utils
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   envs.red_team.utils.async_func
+
+
+.. function:: async_func(f)
+
+

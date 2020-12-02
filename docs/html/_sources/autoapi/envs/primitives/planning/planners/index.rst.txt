@@ -1,0 +1,80 @@
+:mod:`envs.primitives.planning.planners`
+========================================
+
+.. py:module:: envs.primitives.planning.planners
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   envs.primitives.planning.planners.PathPlanning
+
+
+
+.. py:class:: PathPlanning(config)
+
+   Path planner based on the skeleton of the image.
+   Generates a spline path
+
+   .. method:: find_homogenous_affine_transformation(self, config)
+
+      Find the affine transfromation from source points to target points
+      source = A*target
+
+      :param config: A simulation configuration file
+      :type config: yaml
+
+      :returns: **A** -- A numpy array such that source = A*target
+      :rtype: array
+
+
+   .. method:: linear_refine_implicit(self, x, n)
+
+      Given a 2D ndarray (npt, m) of npt coordinates in m dimension,
+      insert 2**(n-1) additional points on each trajectory segment
+      Returns an (npt*2**(n-1), m) ndarray
+
+      :param x: A 2D input array
+      :type x: array
+      :param n: Number of intermediate points to insert between two consecutive points in x
+      :type n: int
+
+      :returns: An array with interploated points
+      :rtype: array
+
+      :raises NotImplementedError: The functions is not implemented for 3D or higher dimensions
+      :raises ValueError: Number of intermediate points should be greated than zero
+
+
+   .. method:: convert_to_lat_lon(self, point)
+
+      Convert a given point to lat lon co-ordinates
+
+      :param point: A numpy array in pybullet cartesian co-ordinates
+      :type point: array
+
+      :returns: **lat_lon** -- The lat lon co-ordinates
+      :rtype: array
+
+
+   .. method:: find_path(self, start, end, n_splits=1)
+
+      Finds a path between start and end using path graph
+
+      :param start: A catersian co-ordinate specifying the start position
+      :type start: array
+      :param end: A node ID specifying the end position
+      :type end: array
+      :param n_splits: Number of splits in refining the path points, by default 1
+      :type n_splits: int, optional
+
+      :returns: **path_points** -- A refined path points in pybullet cartesian co-ordinate system
+      :rtype: array
+
+
+

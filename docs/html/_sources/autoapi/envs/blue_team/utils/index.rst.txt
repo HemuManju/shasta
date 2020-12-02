@@ -1,0 +1,21 @@
+:mod:`envs.blue_team.utils`
+===========================
+
+.. py:module:: envs.blue_team.utils
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   envs.blue_team.utils.async_func
+
+
+.. function:: async_func(f)
+
+

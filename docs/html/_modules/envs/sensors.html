@@ -1,0 +1,253 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>envs.sensors &mdash; shasta 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home" alt="Documentation Home"> shasta
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">shasta</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">shasta</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>envs.sensors</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for envs.sensors</h1><div class="highlight"><pre>
+<div class="viewcode-block" id="Sensors"><a class="viewcode-back" href="../../autoapi/envs/sensors/index.html#envs.sensors.Sensors">[docs]</a><span></span><span class="k">class</span> <span class="nc">Sensors</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">p</span> <span class="o">=</span> <span class="n">p</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">width</span> <span class="o">=</span> <span class="mi">256</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">height</span> <span class="o">=</span> <span class="mi">256</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fov</span> <span class="o">=</span> <span class="mi">120</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">aspect</span> <span class="o">=</span> <span class="mf">1.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nearplane</span> <span class="o">=</span> <span class="mf">0.01</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">farplane</span> <span class="o">=</span> <span class="mf">10.0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">projection_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">computeProjectionMatrixFOV</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fov</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">aspect</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nearplane</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">farplane</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">upAxisIndex</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="Sensors.get_camera_image"><a class="viewcode-back" href="../../autoapi/envs/sensors/index.html#envs.sensors.Sensors.get_camera_image">[docs]</a>    <span class="k">def</span> <span class="nf">get_camera_image</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">target_pos</span><span class="p">,</span> <span class="n">image_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Get the camera image of the scene</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        tuple</span>
+<span class="sd">            Three arrays corresponding to rgb, depth, and segmentation image.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Get depth values using the OpenGL renderer</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">view_matrix</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">computeViewMatrixFromYawPitchRoll</span><span class="p">(</span>
+            <span class="n">target_pos</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">farplane</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">90</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">upAxisIndex</span><span class="p">)</span>
+        <span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="n">rgbImg</span><span class="p">,</span> <span class="n">depthImg</span><span class="p">,</span> <span class="n">segImg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">getCameraImage</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">width</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">height</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">view_matrix</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">projection_matrix</span><span class="p">,</span>
+            <span class="n">renderer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">p</span><span class="o">.</span><span class="n">ER_BULLET_HARDWARE_OPENGL</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">image_type</span> <span class="o">==</span> <span class="s1">&#39;seg&#39;</span><span class="p">:</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="n">segImg</span>
+        <span class="k">elif</span> <span class="n">image_type</span> <span class="o">==</span> <span class="s1">&#39;depth&#39;</span><span class="p">:</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="n">depthImg</span>
+        <span class="k">elif</span> <span class="n">image_type</span> <span class="o">==</span> <span class="s1">&#39;rgb&#39;</span><span class="p">:</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="n">rgbImg</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">image</span> <span class="o">=</span> <span class="p">[</span><span class="n">rgbImg</span><span class="p">,</span> <span class="n">depthImg</span><span class="p">,</span> <span class="n">segImg</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">image</span></div>
+
+<div class="viewcode-block" id="Sensors.ray_cast"><a class="viewcode-back" href="../../autoapi/envs/sensors/index.html#envs.sensors.Sensors.ray_cast">[docs]</a>    <span class="k">def</span> <span class="nf">ray_cast</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">NotImplementedError</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Hemanth Manjunatha
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,29 @@
+:mod:`main`
+===========
+
+.. py:module:: main
+
+
+Module Contents
+---------------
+
+.. data:: config_path
+   
+
+   
+
+.. data:: config
+   
+
+   
+
+.. data:: default_blue_actions
+   
+
+   
+
+.. data:: gui
+   
+
+   
+

@@ -1,0 +1,29 @@
+:mod:`envs.primitives.engaging.shooting`
+========================================
+
+.. py:module:: envs.primitives.engaging.shooting
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   envs.primitives.engaging.shooting.Shooting
+
+
+
+.. py:class:: Shooting
+
+   Bases: :class:`object`
+
+   .. method:: shoot(self, n_team_blue, n_team_red, distance, type)
+
+
+   .. method:: shoot_original(self)
+
+
+

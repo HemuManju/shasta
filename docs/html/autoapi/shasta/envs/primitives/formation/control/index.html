@@ -1,0 +1,277 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>shasta.envs.primitives.formation.control &mdash; shasta 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../../../_static/css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../../" src="../../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../../_static/jquery.js"></script>
+        <script src="../../../../../../_static/underscore.js"></script>
+        <script src="../../../../../../_static/doctools.js"></script>
+        <script src="../../../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../../index.html" class="icon icon-home" alt="Documentation Home"> shasta
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../readme.html">Offset Game Study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../index.html">shasta</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">shasta.envs.primitives.formation.control</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../../../../_sources/autoapi/shasta/envs/primitives/formation/control/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-shasta.envs.primitives.formation.control">
+<span id="shasta-envs-primitives-formation-control"></span><h1><a class="reference internal" href="#module-shasta.envs.primitives.formation.control" title="shasta.envs.primitives.formation.control"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shasta.envs.primitives.formation.control</span></code></a><a class="headerlink" href="#module-shasta.envs.primitives.formation.control" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#shasta.envs.primitives.formation.control.FormationControl" title="shasta.envs.primitives.formation.control.FormationControl"><code class="xref py py-obj docutils literal notranslate"><span class="pre">FormationControl</span></code></a></p></td>
+<td><p>Formation control primitive using region based shape control.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt id="shasta.envs.primitives.formation.control.FormationControl">
+<em class="property">class </em><code class="sig-name descname">FormationControl</code><a class="reference internal" href="../../../../../../_modules/shasta/envs/primitives/formation/control.html#FormationControl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shasta.envs.primitives.formation.control.FormationControl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Formation control primitive using region based shape control.
+Coded by: Apurvakumar Jani, Date: 18/9/2019</p>
+<dl class="py method">
+<dt id="shasta.envs.primitives.formation.control.FormationControl.calculate_vel">
+<code class="sig-name descname">calculate_vel</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">vehicle</span></em>, <em class="sig-param"><span class="n">dt</span></em>, <em class="sig-param"><span class="n">all_drones_pos</span></em>, <em class="sig-param"><span class="n">centroid_pos</span></em>, <em class="sig-param"><span class="n">path_vel</span></em>, <em class="sig-param"><span class="n">vmax</span></em>, <em class="sig-param"><span class="n">formation_type</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/shasta/envs/primitives/formation/control.html#FormationControl.calculate_vel"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shasta.envs.primitives.formation.control.FormationControl.calculate_vel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the vehicle velocity depending on the position of the peer vehicles</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vehicle</strong> (<em>class instance</em>) – A class instance of UxV agent</p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – Time step duration (in seconds) to use in next position calculation</p></li>
+<li><p><strong>all_drones_pos</strong> (<em>aarray</em>) – An array with position of all the vehicles in the group/platoon</p></li>
+<li><p><strong>centroid_pos</strong> (<em>array</em>) – An array specifying the centroid of the platoon</p></li>
+<li><p><strong>path_vel</strong> (<em>float</em>) – Path velocity calculated from next position and current position</p></li>
+<li><p><strong>vmax</strong> (<em>float</em>) – Maximum velocity of the vehicle</p></li>
+<li><p><strong>formation_type</strong> (<em>str</em>) – Whether the formation is solid or ring</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>vehicle</strong> – A vehicle class instance with updated position</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>class instance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="shasta.envs.primitives.formation.control.FormationControl.execute">
+<code class="sig-name descname">execute</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">vehicles</span></em>, <em class="sig-param"><span class="n">next_pos</span></em>, <em class="sig-param"><span class="n">centroid_pos</span></em>, <em class="sig-param"><span class="n">dt</span></em>, <em class="sig-param"><span class="n">formation_type</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../../_modules/shasta/envs/primitives/formation/control.html#FormationControl.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shasta.envs.primitives.formation.control.FormationControl.execute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the position of the formation control</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vehicles</strong> (<em>list</em>) – A list containing UAV or UGV class</p></li>
+<li><p><strong>centroid_pos</strong> (<em>array</em>) – An array containing the x, y, and z position</p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – Time step to be used for distance calculation</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Hemanth Manjunatha
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

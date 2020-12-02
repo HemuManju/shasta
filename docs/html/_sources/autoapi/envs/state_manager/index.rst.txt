@@ -1,0 +1,88 @@
+:mod:`envs.state_manager`
+=========================
+
+.. py:module:: envs.state_manager
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   envs.state_manager.StateManager
+
+
+
+.. py:class:: StateManager(current_time, config)
+
+   .. method:: _initial_uxv(self, uav, ugv)
+
+
+   .. method:: _initial_mission_setup(self)
+
+      Perform initial setup such as progress, reward, grid map etc.
+
+
+   .. method:: _affine_transformation_and_graph(self)
+
+      Performs initial conversion of the lat lon to cartesian
+
+
+   .. method:: _initial_buildings_setup(self)
+
+      Perfrom initial building setup.
+
+
+   .. method:: _initial_target_setup(self)
+
+      Performs target setup with properties such as goal probability,
+      goal progress etc.
+
+
+   .. method:: node_info(self, idx)
+
+      Get the information about a node.
+
+      :param id: Node ID
+      :type id: int
+
+      :returns: A dictionary containing all the information about the node.
+      :rtype: dict
+
+
+   .. method:: building_info(self, idx)
+
+      Get the information about a building such as perimeter,
+      position, number of floors.
+
+      :param id: Building ID
+      :type id: int
+
+      :returns: A dictionary containing all the information about the building.
+      :rtype: dict
+
+
+   .. method:: get_image(self, platoon_id, platoon_type, vehicle_id, image_type)
+
+      Get the image of the agent
+
+      :param platoon_id: The platoon ID to vehicle belongs to.
+      :type platoon_id: int
+      :param platoon_type: Platoon type 'uav' or 'ugv'
+      :type platoon_type: str
+      :param vehicle_id: Vehicle ID from which image is acquired
+      :type vehicle_id: int
+      :param image_type: Type of image to return rgb, seg, depth
+      :type image_type: str
+
+      :returns: A image from the vehicle of required type
+      :rtype: array
+
+
+   .. method:: get_states(self)
+
+
+

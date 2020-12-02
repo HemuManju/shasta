@@ -1,0 +1,50 @@
+:mod:`envs.blue_team.blue_base`
+===============================
+
+.. py:module:: envs.blue_team.blue_base
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   envs.blue_team.blue_base.BlueTeam
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   envs.blue_team.blue_base.get_initial_positions
+
+
+.. function:: get_initial_positions(cartesian_pos, r, n)
+
+
+.. py:class:: BlueTeam(physics_client, config)
+
+   Bases: :class:`object`
+
+   .. method:: _initial_uxv_setup(self, physics_client)
+
+
+   .. method:: reset(self)
+
+      Resets the position of all the robots
+
+
+   .. method:: get_attributes(self, attributes)
+
+
+   .. method:: execute(self)
+
+      Take a step in the environement
+
+
+

@@ -1,0 +1,33 @@
+:mod:`envs.agents.utils`
+========================
+
+.. py:module:: envs.agents.utils
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   envs.agents.utils.transformation_matrix
+   envs.agents.utils.rotation_matrix
+
+
+.. function:: transformation_matrix(x, y, z, roll, pitch, yaw)
+
+
+.. function:: rotation_matrix(roll, pitch, yaw)
+
+   Calculates the ZYX rotation matrix.
+   Args
+       Roll: Angular position about the x-axis in radians.
+       Pitch: Angular position about the y-axis in radians.
+       Yaw: Angular position about the z-axis in radians.
+   Returns
+       3x3 rotation matrix as NumPy array
+
+

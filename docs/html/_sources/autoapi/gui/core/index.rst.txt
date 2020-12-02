@@ -1,0 +1,19 @@
+:mod:`gui.core`
+===============
+
+.. py:module:: gui.core
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   information/index.rst
+   obj/index.rst
+   shape_utils/index.rst
+   user/index.rst
+   utils/index.rst
+
+

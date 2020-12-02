@@ -1,0 +1,394 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>shasta.envs.utils.magicattr &mdash; shasta 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../../_static/css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../_static/graphviz.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../../" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/jquery.js"></script>
+        <script src="../../../../../_static/underscore.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+        <script src="../../../../../_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="../../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../../index.html" class="icon icon-home" alt="Documentation Home"> shasta
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../readme.html">Offset Game Study</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../history.html">History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../index.html">API Reference</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">shasta</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li><code class="xref py py-mod docutils literal notranslate"><span class="pre">shasta.envs.utils.magicattr</span></code></li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../../../../_sources/autoapi/shasta/envs/utils/magicattr/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-shasta.envs.utils.magicattr">
+<span id="shasta-envs-utils-magicattr"></span><h1><a class="reference internal" href="#module-shasta.envs.utils.magicattr" title="shasta.envs.utils.magicattr"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shasta.envs.utils.magicattr</span></code></a><a class="headerlink" href="#module-shasta.envs.utils.magicattr" title="Permalink to this headline">¶</a></h1>
+<p>Copyright (c) 2018, Jairus Martin.</p>
+<p>Distributed under the terms of the MIT License.</p>
+<p>The full license is in the file LICENSE, distributed with this software.</p>
+<p>Created on June, 2018</p>
+<div class="section" id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="functions">
+<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#shasta.envs.utils.magicattr.get" title="shasta.envs.utils.magicattr.get"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get</span></code></a>(obj, attr)</p></td>
+<td><p>A getattr that supports nested lookups on objects, dicts, lists, and</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#shasta.envs.utils.magicattr.set" title="shasta.envs.utils.magicattr.set"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set</span></code></a>(obj, attr, val)</p></td>
+<td><p>A setattr that supports nested lookups on objects, dicts, lists, and</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#shasta.envs.utils.magicattr.delete" title="shasta.envs.utils.magicattr.delete"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete</span></code></a>(obj, attr)</p></td>
+<td><p>A delattr that supports deletion of a nested lookups on objects,</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#shasta.envs.utils.magicattr.lookup" title="shasta.envs.utils.magicattr.lookup"><code class="xref py py-obj docutils literal notranslate"><span class="pre">lookup</span></code></a>(obj, attr)</p></td>
+<td><p>Like get but instead of returning the final value it returns the</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#shasta.envs.utils.magicattr._parse" title="shasta.envs.utils.magicattr._parse"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_parse</span></code></a>(attr)</p></td>
+<td><p>Parse and validate an attr string</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#shasta.envs.utils.magicattr._lookup_subscript_value" title="shasta.envs.utils.magicattr._lookup_subscript_value"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_lookup_subscript_value</span></code></a>(node)</p></td>
+<td><p>Lookup the value of ast node on the object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#shasta.envs.utils.magicattr._lookup" title="shasta.envs.utils.magicattr._lookup"><code class="xref py py-obj docutils literal notranslate"><span class="pre">_lookup</span></code></a>(obj, node)</p></td>
+<td><p>Lookup the given ast node on the object.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py data">
+<dt id="shasta.envs.utils.magicattr._AST_TYPES">
+<code class="sig-name descname">_AST_TYPES</code><a class="reference internal" href="../../../../../_modules/shasta/envs/utils/magicattr.html#_AST_TYPES"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shasta.envs.utils.magicattr._AST_TYPES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py data">
+<dt id="shasta.envs.utils.magicattr._STRING_TYPE">
+<code class="sig-name descname">_STRING_TYPE</code><a class="reference internal" href="../../../../../_modules/shasta/envs/utils/magicattr.html#_STRING_TYPE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shasta.envs.utils.magicattr._STRING_TYPE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="shasta.envs.utils.magicattr.get">
+<code class="sig-name descname">get</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">obj</span></em>, <em class="sig-param"><span class="n">attr</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/shasta/envs/utils/magicattr.html#get"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shasta.envs.utils.magicattr.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>A getattr that supports nested lookups on objects, dicts, lists, and
+any combination in between.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<em>Object</em>) – An object to lookup the attribute on</p></li>
+<li><p><strong>attr</strong> (<em>String</em>) – A attribute string to lookup</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>result</strong> – The object retrieved</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shasta.envs.utils.magicattr.set">
+<code class="sig-name descname">set</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">obj</span></em>, <em class="sig-param"><span class="n">attr</span></em>, <em class="sig-param"><span class="n">val</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/shasta/envs/utils/magicattr.html#set"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shasta.envs.utils.magicattr.set" title="Permalink to this definition">¶</a></dt>
+<dd><p>A setattr that supports nested lookups on objects, dicts, lists, and
+any combination in between.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<em>Object</em>) – An object to lookup the attribute on</p></li>
+<li><p><strong>attr</strong> (<em>String</em>) – A attribute string to lookup</p></li>
+<li><p><strong>val</strong> (<em>Object</em>) – The value to set</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shasta.envs.utils.magicattr.delete">
+<code class="sig-name descname">delete</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">obj</span></em>, <em class="sig-param"><span class="n">attr</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/shasta/envs/utils/magicattr.html#delete"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shasta.envs.utils.magicattr.delete" title="Permalink to this definition">¶</a></dt>
+<dd><p>A delattr that supports deletion of a nested lookups on objects,
+dicts, lists, and any combination in between.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<em>Object</em>) – An object to lookup the attribute on</p></li>
+<li><p><strong>attr</strong> (<em>String</em>) – A attribute string to lookup</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shasta.envs.utils.magicattr.lookup">
+<code class="sig-name descname">lookup</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">obj</span></em>, <em class="sig-param"><span class="n">attr</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/shasta/envs/utils/magicattr.html#lookup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shasta.envs.utils.magicattr.lookup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Like get but instead of returning the final value it returns the
+object and action that will be done. This is useful if you need to do
+any final checking (such as type validation) before doing a final setattr
+or delattr.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<em>Object</em>) – An object to lookup the attribute on</p></li>
+<li><p><strong>attr</strong> (<em>String</em>) – A attribute string to lookup</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><strong>result</strong> (<em>Tuple[Object, String, Bool]</em>)</p></li>
+<li><p><em>_   A tuple of the object, the attribute, dict key, or list index that</em> – will be used, and whether the former is a subscript operation.</p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shasta.envs.utils.magicattr._parse">
+<code class="sig-name descname">_parse</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">attr</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/shasta/envs/utils/magicattr.html#_parse"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shasta.envs.utils.magicattr._parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse and validate an attr string</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>attr</strong> (<em>String</em>) – </p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>nodes</strong> – List of ast nodes</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>List</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shasta.envs.utils.magicattr._lookup_subscript_value">
+<code class="sig-name descname">_lookup_subscript_value</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">node</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/shasta/envs/utils/magicattr.html#_lookup_subscript_value"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shasta.envs.utils.magicattr._lookup_subscript_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lookup the value of ast node on the object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<em>Object</em>) – An object to lookup the attribute, index, or key</p></li>
+<li><p><strong>node</strong> (<em>ast.Attribute</em><em>, </em><em>ast.Name</em><em>, or </em><em>ast.Subscript</em>) – Node to lookup</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>result</strong> – The object retrieved</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="shasta.envs.utils.magicattr._lookup">
+<code class="sig-name descname">_lookup</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">obj</span></em>, <em class="sig-param"><span class="n">node</span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../../../_modules/shasta/envs/utils/magicattr.html#_lookup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#shasta.envs.utils.magicattr._lookup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lookup the given ast node on the object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>obj</strong> (<em>Object</em>) – An object to lookup the attribute, index, or key</p></li>
+<li><p><strong>node</strong> (<em>ast.Attribute</em><em>, </em><em>ast.Name</em><em>, or </em><em>ast.Subscript</em>) – Node to lookup</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>result</strong> – The object retrieved</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Object</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Hemanth Manjunatha
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

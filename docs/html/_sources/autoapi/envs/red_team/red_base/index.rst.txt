@@ -1,0 +1,50 @@
+:mod:`envs.red_team.red_base`
+=============================
+
+.. py:module:: envs.red_team.red_base
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   envs.red_team.red_base.RedTeam
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   envs.red_team.red_base.get_initial_positions
+
+
+.. function:: get_initial_positions(init_pos, r, n)
+
+
+.. py:class:: RedTeam(physics_client, config)
+
+   Bases: :class:`object`
+
+   .. method:: _initial_uxv_setup(self, physics_client)
+
+
+   .. method:: reset(self)
+
+      Resets the position of all the robots
+
+
+   .. method:: get_attributes(self, attributes)
+
+
+   .. method:: execute(self)
+
+      Execute the actions of uav and ugv
+
+
+
