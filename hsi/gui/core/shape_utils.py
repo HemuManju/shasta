@@ -2,9 +2,6 @@ import pyglet
 import math
 from pyglet import gl
 
-import ctypes
-lightfv = ctypes.c_float * 4
-
 
 def create_window(width, height, resize=False):
     try:
@@ -53,8 +50,6 @@ class BaseObject(object):
     def enable_lightning(self):
         gl.glEnable(gl.GL_LIGHTING)
         gl.glEnable(gl.GL_BLEND)
-        # gl.glLightfv(gl.GL_LIGHT0, gl.GL_POSITION, lightfv(50, 50, 50, 1))
-        # gl.glLightfv(gl.GL_LIGHT0, gl.GL_DIFFUSE, lightfv(0.8, 1, 0.8, 1))
         gl.glLightf(gl.GL_LIGHT0, gl.GL_CONSTANT_ATTENUATION, 0.1)
         gl.glLightf(gl.GL_LIGHT0, gl.GL_LINEAR_ATTENUATION, 0.05)
         gl.glEnable(gl.GL_LIGHT0)
@@ -65,11 +60,10 @@ class BaseObject(object):
         Sets the position, rotation, and color of the item before it is drawn.
         """
         # self.enable_lightning()
-        # sets the position
-        # gl.glLoadIdentity()
+        # Reset the position
         gl.glTranslatef(self.tx, self.ty, self.tz)
 
-        # sets the rotation
+        # Reset the rotation
         gl.glRotatef(self.rx, 1, 0, 0)
         gl.glRotatef(self.ry, 0, 1, 0)
         gl.glRotatef(self.rz, 0, 0, 1)
@@ -138,6 +132,9 @@ class Rectangle(BaseObject):
         gl.glVertex3f(self.x + self.width, self.y, 0)
         gl.glEnd()
 
+        # Restore the transformation matrix
+        gl.glPopMatrix()
+
 
 class Circle(BaseObject):
     """
@@ -169,10 +166,12 @@ class Cube(BaseObject):
     """
     Represents a circle in the virtual world.
     """
-    def __init__(self, x, y, radius, color):
+    def __init__(self, x, y, z=50, radius=1, color=(0, 0, 1, 0)):
         super(Sphere, self).__init__(color)
         self.x = x
-        self.y = y
+        # Need to swap y and z (y is up)
+        self.y = z
+        self.z = y
         self.radius = radius
 
     def draw(self):
@@ -185,10 +184,13 @@ class Cube(BaseObject):
         gl.glTranslatef(self.x, self.y, -10)
         gl.gluSphere(sphere, self.radius, 25, 25)
 
+        # Restore the transformation matrix
+        gl.glPopMatrix()
+
 
 class Sphere(BaseObject):
     """
-    Represents a circle in the virtual world.
+    Represents a sphere in the virtual world.
     """
     def __init__(self, x, y, z=50, radius=1, color=(0, 0, 1, 0)):
         super(Sphere, self).__init__(color)
@@ -201,7 +203,7 @@ class Sphere(BaseObject):
 
     def draw(self):
         """
-        Draws a circle.
+        Draws a Sphere.
         """
         self.before_draw()
 

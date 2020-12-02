@@ -22,5 +22,6 @@ with skip_run('skip', 'Test New Framework') as check, check():
     env.step(default_blue_actions, default_red_actions)
 
 with skip_run('run', 'Test New GUI') as check, check():
+    config['simulation']['map_to_use'] = 'buffalo-medium'
     gui = MainGUI(1200, 800, config)
     gui.run()
