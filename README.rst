@@ -15,8 +15,3 @@ Documentation
 
 https://hemumanju.github.io/shasta/
 
-Features
---------
-
-* TODO
-
