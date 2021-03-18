@@ -115,10 +115,10 @@ class EnhanceEnv(BaseEnv):
                 #         physicsClientId=self.p._client)
                 #     running = False
 
-            self.p.resetDebugVisualizerCamera(cameraDistance=10,
-                                              cameraYaw=75,
-                                              cameraPitch=5,
-                                              cameraTargetPosition=pos)
+            # self.p.resetDebugVisualizerCamera(cameraDistance=50,
+            #                                   cameraYaw=75,
+            #                                   cameraPitch=-50,
+            #                                   cameraTargetPosition=pos)
 
             # self.sensors.get_camera_image([0, 0, 10], image_type='rgb')
 

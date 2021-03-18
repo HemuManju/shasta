@@ -30,16 +30,9 @@ def blue_team_actions(config):
         __file__).parents[1] / 'config/blue_team_config_baseline.yml'
     attr = yaml.load(open(str(read_path)), Loader=yaml.SafeLoader)
 
-    # For experimentation
-    if config['experiment']['platoon_size'] > 0:
-        for i in range(3):
-            attr['uav_platoon']['n_vehicles'][i] = config['experiment'][
-                'platoon_size']
-            attr['ugv_platoon']['n_vehicles'][i] = config['experiment'][
-                'platoon_size']
     # Setup the uav platoons
     ids = 0
-    for i in range(config['simulation']['n_uav_platoons']):
+    for i in range(len(attr['uav_platoon']['n_vehicles'])):
         actions_uav = attr['uav'].copy()
         key = 'uav_p_' + str(i + 1)
         actions_uav['platoon_id'] = i + 1
@@ -56,7 +49,7 @@ def blue_team_actions(config):
 
     # Setup the uav platoons
     ids = 0
-    for i in range(config['simulation']['n_ugv_platoons']):
+    for i in range(len(attr['ugv_platoon']['n_vehicles'])):
         actions_ugv = attr['ugv'].copy()
         key = 'ugv_p_' + str(i + 1)
         actions_ugv['platoon_id'] = i + 1
@@ -92,7 +85,7 @@ def red_team_actions(config, team_type=None):
 
     # Setup the uav platoons
     ids = 0
-    for i in range(config['simulation']['n_uav_platoons']):
+    for i in range(len(attr['uav_platoon']['n_vehicles'])):
         actions_uav = attr['uav'].copy()
         key = 'uav_p_' + str(i + 1)
         actions_uav['platoon_id'] = i + 1
@@ -109,7 +102,7 @@ def red_team_actions(config, team_type=None):
 
     # Setup the uav platoons
     ids = 0
-    for i in range(config['simulation']['n_ugv_platoons']):
+    for i in range(len(attr['ugv_platoon']['n_vehicles'])):
         actions_ugv = attr['ugv'].copy()
         key = 'ugv_p_' + str(i + 1)
         actions_ugv['platoon_id'] = i + 1

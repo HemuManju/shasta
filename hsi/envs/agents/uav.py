@@ -120,13 +120,13 @@ class UaV(object):
         position : array
             The position to which the vehicle should be moved.
         """
-        for i in range(4):
-            self.physics_client.setJointMotorControl2(
-                self.object,
-                i,
-                self.physics_client.VELOCITY_CONTROL,
-                targetVelocity=100,
-                force=20)
+        # for i in range(4):
+        #     self.physics_client.setJointMotorControl2(
+        #         self.object,
+        #         i,
+        #         self.physics_client.VELOCITY_CONTROL,
+        #         targetVelocity=100,
+        #         force=20)
 
         self.current_pos, _ = self.get_pos_and_orientation()
         position[2] = 10.0

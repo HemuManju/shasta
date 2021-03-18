@@ -27,9 +27,10 @@ class RedTeam(object):
 
         # Initialize the state and action components
         self.state_manager = StateManager(self.current_time, self.config)
-        uav, ugv = self._initial_uxv_setup(physics_client)
+        uav, ugv, config = self._initial_uxv_setup(physics_client)
         self.state_manager._initial_uxv(uav, ugv)  # Append the UxV
-        self.action_manager = ActionManager(self.state_manager, physics_client)
+        self.action_manager = ActionManager(self.state_manager, physics_client,
+                                            config)
 
     def _initial_uxv_setup(self, physics_client):
         # Read the configuration of platoons
@@ -64,7 +65,7 @@ class RedTeam(object):
                 uav.append(
                     UaV(physics_client, position, init_orient, i, j,
                         self.config, 'red'))
-        return uav, ugv
+        return uav, ugv, config
 
     def reset(self):
         """

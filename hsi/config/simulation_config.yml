@@ -6,7 +6,7 @@ simulation:
   use_real_time: False
   time_step: 0.025
   headless: False
-  detailed_model: True
+  detailed_model: False
   dynamic: False
   episodes: 100
   n_buildings: 15

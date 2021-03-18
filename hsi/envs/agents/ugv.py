@@ -126,13 +126,13 @@ class UgV(object):
         position : array
             The position to which the vehicle should be moved.
         """
-        for i in [2, 3, 4, 5]:
-            self.physics_client.setJointMotorControl2(
-                self.object,
-                i,
-                self.physics_client.VELOCITY_CONTROL,
-                targetVelocity=100,
-                force=20)
+        # for i in [2, 3, 4, 5]:
+        #     self.physics_client.setJointMotorControl2(
+        #         self.object,
+        #         i,
+        #         self.physics_client.VELOCITY_CONTROL,
+        #         targetVelocity=100,
+        #         force=20)
         self.current_pos, _ = self.get_pos_and_orientation()
         position[2] = 0.0  # ground clearance
         self.physics_client.changeConstraint(self.constraint, position)

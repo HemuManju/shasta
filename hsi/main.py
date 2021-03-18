@@ -11,11 +11,11 @@ from utils import skip_run
 config_path = Path(__file__).parents[1] / 'hsi/config/simulation_config.yml'
 config = yaml.load(open(str(config_path)), Loader=yaml.SafeLoader)
 
-with skip_run('skip', 'Test New Framework') as check, check():
+with skip_run('run', 'Test New Framework') as check, check():
 
     default_blue_actions = blue_team_actions(config)
 
-    config['simulation']['map_to_use'] = 'buffalo-medium'
+    # config['simulation']['map_to_use'] = 'buffalo-medium'
     env = EnhanceEnv(config)
     env.step(default_blue_actions)
 

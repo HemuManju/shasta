@@ -2,8 +2,8 @@ from .primitive_manager import PrimitiveManager
 
 
 class ActionManager(object):
-    def __init__(self, state_manager, physics_client):
-        self.config = state_manager.config
+    def __init__(self, state_manager, physics_client, platoon_config):
+        self.config = platoon_config
         self.state_manager = state_manager
 
         # Setup the platoons
@@ -20,13 +20,13 @@ class ActionManager(object):
             which is platoon 1 of type uav
         """
         self.uav_platoons = {}  # A container for platoons
-        for i in range(self.config['simulation']['n_uav_platoons']):
+        for i in range(len(self.config['uav_platoon']['n_vehicles'])):
             key = 'uav_p_' + str(i + 1)
             self.uav_platoons[key] = PrimitiveManager(self.state_manager,
                                                       physics_client)
 
         self.ugv_platoons = {}
-        for i in range(self.config['simulation']['n_ugv_platoons']):
+        for i in range(len(self.config['ugv_platoon']['n_vehicles'])):
             key = 'ugv_p_' + str(i + 1)
             self.ugv_platoons[key] = PrimitiveManager(self.state_manager,
                                                       physics_client)
@@ -51,7 +51,7 @@ class ActionManager(object):
         """
 
         attribute = {}
-        for i in range(self.config['simulation']['n_uav_platoons']):
+        for i in range(len(self.config['uav_platoon']['n_vehicles'])):
             platoon_key = 'uav_p_' + str(i + 1)
             if attributes:
                 attribute[platoon_key] = {
@@ -61,7 +61,7 @@ class ActionManager(object):
             else:
                 attribute[platoon_key] = vars(
                     self.uav_platoons[platoon_key])['action']
-        for i in range(self.config['simulation']['n_uav_platoons']):
+        for i in range(len(self.config['ugv_platoon']['n_vehicles'])):
             platoon_key = 'ugv_p_' + str(i + 1)
             if attributes:
                 attribute[platoon_key] = {
