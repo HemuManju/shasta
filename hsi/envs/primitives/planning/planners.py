@@ -3,6 +3,8 @@ import pandas as pd
 import networkx as nx
 import osmnx as ox
 
+import matplotlib.pyplot as plt
+
 
 class PathPlanning():
     """Path planner based on the skeleton of the image.

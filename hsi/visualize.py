@@ -6,6 +6,9 @@ import pandas as pd
 import seaborn as sns
 import deepdish as dd
 
+import networkx as nx
+import osmnx as ox
+
 config_path = Path(__file__).parents[1] / 'hsi/config/simulation_config.yml'
 config = yaml.load(open(str(config_path)), Loader=yaml.SafeLoader)
 
@@ -92,9 +95,6 @@ def plot_cpu_memory_profile(config):
     plt.show()
 
 
-plot_cpu_memory_profile(config)
-
-
 def describe_helper(series):
     splits = str(series.describe()[['mean', 'std', 'max']]).split()
     keys, values = "", ""
@@ -142,4 +142,14 @@ def plot_time_delays(config):
     plt.show()
 
 
-plot_time_delays(config)
+def plot_nodes(config):
+    read_path = '/'.join([
+        config['urdf_data_path'], config['simulation']['map_to_use'], 'map.osm'
+    ])
+    G = ox.graph_from_xml(read_path, simplify=True, bidirectional='walk')
+    G = nx.convert_node_labels_to_integers(G)
+    fig, ax = ox.plot_graph(G, show=False)
+    for i, node in enumerate(G.nodes):
+        ax.annotate(str(i), (G.nodes[i]['x'], G.nodes[i]['y']), c='w')
+    plt.tight_layout()
+    plt.show()

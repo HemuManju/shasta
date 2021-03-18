@@ -21,6 +21,7 @@ simulation:
   n_uav_platoons: 3
   n_ugv_platoons: 3
   map_to_use: 'buffalo-medium'
+  show_nodes: True
 
 ##---------------------------------------------------------------------##
 experiment:

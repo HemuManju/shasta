@@ -62,10 +62,10 @@ class UaV(object):
             [0, 0, 0], [0, 0, 0], self.init_pos, self.init_orientation)
 
         # Change color depending on team type
-        # if team_type == 'blue':  # Change the color
-        #     self.physics_client.changeVisualShape(self.object,
-        #                                           -1,
-        #                                           rgbaColor=[0, 0, 1, 1])
+        if team_type == 'blue':  # Change the color
+            self.physics_client.changeVisualShape(self.object,
+                                                  -1,
+                                                  rgbaColor=[0, 0, 1, 1])
         return None
 
     def get_pos_and_orientation(self):
