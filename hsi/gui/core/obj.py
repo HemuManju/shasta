@@ -51,6 +51,12 @@ class Obj():
             y = -50 + 3 * np.sin(t[i])
             self.spheres.append(Sphere(x, y=y, z=5.0, color=(0, 0, 1, 0)))
 
+        t = np.linspace(0, 2 * np.pi, 8)
+        for i in range(8):
+            x = -20 + 5 * np.cos(t[i])
+            y = -30 + 5 * np.sin(t[i])
+            self.spheres.append(Sphere(x, y=y, z=5.0, color=(0, 1, 0, 0)))
+
         # Drawing
         self.w = 0
         self.h = 0

@@ -2,6 +2,7 @@ import pyglet
 import pyglet.gl as gl
 
 import ctypes
+
 lightfv = ctypes.c_float * 4
 
 
@@ -10,7 +11,7 @@ class ViewPort(object):
         self._b_box = ax.get_position()
 
         # For mac the graphiscs need to be scaled by 2
-        self._m_scale = 2
+        self._m_scale = 1
 
         # Window size
         self._win_width = ax.window_width * self._m_scale
