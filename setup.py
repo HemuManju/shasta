@@ -34,8 +34,7 @@ setup(
     ],
     package_dir={'offset-game': 'offset-game'},
     include_package_data=True,
-    install_requires=[
-    ],
+    install_requires=[],
     license='MIT',
     zip_safe=False,
     keywords='offset-game',

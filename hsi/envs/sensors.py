@@ -8,7 +8,8 @@ class Sensors(object):
         self.nearplane = 0.01
         self.farplane = 10.0
         self.projection_matrix = self.p.computeProjectionMatrixFOV(
-            self.fov, self.aspect, self.nearplane, self.farplane)
+            self.fov, self.aspect, self.nearplane, self.farplane
+        )
 
         self.upAxisIndex = 1
         return None
@@ -23,13 +24,15 @@ class Sensors(object):
         """
         # Get depth values using the OpenGL renderer
         self.view_matrix = self.p.computeViewMatrixFromYawPitchRoll(
-            target_pos, self.farplane, 0, 90, 0, self.upAxisIndex)
+            target_pos, self.farplane, 0, 90, 0, self.upAxisIndex
+        )
         width, height, rgbImg, depthImg, segImg = self.p.getCameraImage(
             self.width,
             self.height,
             self.view_matrix,
             self.projection_matrix,
-            renderer=self.p.ER_BULLET_HARDWARE_OPENGL)
+            renderer=self.p.ER_BULLET_HARDWARE_OPENGL,
+        )
 
         if image_type == 'seg':
             image = segImg

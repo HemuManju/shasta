@@ -42,8 +42,10 @@ def preprocess():
             pass
 
     files = [
-        'map.osm', 'coordinates.csv', 'environment.urdf',
-        'environment_collision_free.urdf'
+        'map.osm',
+        'coordinates.csv',
+        'environment.urdf',
+        'environment_collision_free.urdf',
     ]
     for file in files:
         move_files(file, parent_folder)

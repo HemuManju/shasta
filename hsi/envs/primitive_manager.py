@@ -33,37 +33,32 @@ class PrimitiveManager(object):
         return None
 
     def execute_primitive(self):
-        """Perform primitive execution
-        """
+        """Perform primitive execution"""
         done = False
         primitives = {
             'planning': self.planning_primitive,
             'formation': self.formation_primitive,
-            'shooting': self.shooting_primitive
+            'shooting': self.shooting_primitive,
         }
-        if self.action['execute'] and self.action[
-                'primitive'] in primitives.keys():
+        if self.action['execute'] and self.action['primitive'] in primitives.keys():
             done = primitives[self.action['primitive']]()
 
         return done
 
     def make_vehicles_idle(self):
-        """Make the vehicles idle
-        """
+        """Make the vehicles idle"""
         for vehicle in self.action['vehicles']:
             vehicle.idle = True
         return None
 
     def make_vehicles_nonidle(self):
-        """Make the vehicles non-idle
-        """
+        """Make the vehicles non-idle"""
         for vehicle in self.action['vehicles']:
             vehicle.idle = False
         return None
 
     def get_centroid(self):
-        """Get the centroid of the vehicles
-        """
+        """Get the centroid of the vehicles"""
         centroid = []
         for vehicle in self.action['vehicles']:
             centroid.append(vehicle.current_pos)
@@ -71,8 +66,7 @@ class PrimitiveManager(object):
         return centroid
 
     def planning_primitive(self):
-        """Performs path planning primitive
-        """
+        """Performs path planning primitive"""
         # Make vehicles non idle
         done_rolling = False
         # self.make_vehicles_nonidle()
@@ -87,14 +81,15 @@ class PrimitiveManager(object):
             if done:
                 self.action['initial_formation'] = False
                 self.path_points = self.planning.find_path(
-                    start=self.action['centroid_pos'],
-                    end=self.action['target_pos'])
+                    start=self.action['centroid_pos'], end=self.action['target_pos']
+                )
                 self.action['next_pos'] = self.path_points[0]
         else:
             self.dt = 0.025
             self.action['centroid_pos'] = self.get_centroid()
-            distance = np.linalg.norm(self.action['centroid_pos'][0:2] -
-                                      self.action['next_pos'][0:2])
+            distance = np.linalg.norm(
+                self.action['centroid_pos'][0:2] - self.action['next_pos'][0:2]
+            )
 
             if len(self.path_points) > 1 and distance < 0.1:
                 self.path_points = np.delete(self.path_points, 0, 0)
@@ -111,15 +106,18 @@ class PrimitiveManager(object):
         return done_rolling
 
     def formation_primitive(self):
-        """Performs formation primitive
-        """
+        """Performs formation primitive"""
         if self.action['primitive'] == 'formation':
             self.action['centroid_pos'] = self.get_centroid()
             self.action['next_pos'] = self.get_centroid()
 
         self.action['vehicles'], done_rolling = self.formation.execute(
-            self.action['vehicles'], self.action['next_pos'],
-            self.action['centroid_pos'], self.dt, 'solid')
+            self.action['vehicles'],
+            self.action['next_pos'],
+            self.action['centroid_pos'],
+            self.dt,
+            'solid',
+        )
 
         for vehicle in self.action['vehicles']:
             vehicle.set_position(vehicle.desired_pos)
@@ -127,16 +125,17 @@ class PrimitiveManager(object):
 
     def plot_path(self):
         for point in self.path_points:
-            a = self.p.createVisualShape(self.p.GEOM_SPHERE,
-                                         radius=1,
-                                         rgbaColor=[1, 0, 0, 1],
-                                         visualFramePosition=point)
+            a = self.p.createVisualShape(
+                self.p.GEOM_SPHERE,
+                radius=1,
+                rgbaColor=[1, 0, 0, 1],
+                visualFramePosition=point,
+            )
 
             self.p.createMultiBody(0, baseVisualShapeIndex=a)
 
     def shooting_primitive(self):
-        """Perform shooting primitive
-        """
+        """Perform shooting primitive"""
 
         # First point of formation
         self.action['centroid_pos'] = self.get_centroid()

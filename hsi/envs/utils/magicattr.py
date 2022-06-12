@@ -16,7 +16,7 @@ _STRING_TYPE = str
 
 
 def get(obj, attr):
-    """ A getattr that supports nested lookups on objects, dicts, lists, and
+    """A getattr that supports nested lookups on objects, dicts, lists, and
     any combination in between.
 
     Parameters
@@ -35,7 +35,7 @@ def get(obj, attr):
 
 
 def set(obj, attr, val):
-    """ A setattr that supports nested lookups on objects, dicts, lists, and
+    """A setattr that supports nested lookups on objects, dicts, lists, and
     any combination in between.
 
     Parameters
@@ -56,7 +56,7 @@ def set(obj, attr, val):
 
 
 def delete(obj, attr):
-    """ A delattr that supports deletion of a nested lookups on objects,
+    """A delattr that supports deletion of a nested lookups on objects,
     dicts, lists, and any combination in between.
 
     Parameters
@@ -74,7 +74,7 @@ def delete(obj, attr):
 
 
 def lookup(obj, attr):
-    """ Like get but instead of returning the final value it returns the
+    """Like get but instead of returning the final value it returns the
     object and action that will be done. This is useful if you need to do
     any final checking (such as type validation) before doing a final setattr
     or delattr.
@@ -108,7 +108,7 @@ def lookup(obj, attr):
 
 
 def _parse(attr):
-    """ Parse and validate an attr string
+    """Parse and validate an attr string
 
     Parameters
     ----------
@@ -125,12 +125,11 @@ def _parse(attr):
     nodes = ast.parse(attr).body
     if not nodes or not isinstance(nodes[0], ast.Expr):
         raise ValueError("Invalid expression: %s" % attr)
-    return reversed(
-        [n for n in ast.walk(nodes[0]) if isinstance(n, _AST_TYPES)])
+    return reversed([n for n in ast.walk(nodes[0]) if isinstance(n, _AST_TYPES)])
 
 
 def _lookup_subscript_value(node):
-    """ Lookup the value of ast node on the object.
+    """Lookup the value of ast node on the object.
 
     Parameters
     ---------
@@ -151,15 +150,17 @@ def _lookup_subscript_value(node):
     elif isinstance(node, ast.Str):
         return node.s
     # Handle negative indexes
-    elif (isinstance(node, ast.UnaryOp) and isinstance(node.op, ast.USub)
-          and isinstance(node.operand, ast.Num)):
+    elif (
+        isinstance(node, ast.UnaryOp)
+        and isinstance(node.op, ast.USub)
+        and isinstance(node.operand, ast.Num)
+    ):
         return -node.operand.n
-    raise NotImplementedError("Subscript node is not supported: "
-                              "%s" % ast.dump(node))
+    raise NotImplementedError("Subscript node is not supported: " "%s" % ast.dump(node))
 
 
 def _lookup(obj, node):
-    """ Lookup the given ast node on the object.
+    """Lookup the given ast node on the object.
 
     Parameters
     ---------

@@ -11,13 +11,22 @@ class BaseEnv(object):
         else:
             options = '--background_color_red=0.90 --background_color_green=0.90 --background_color_blue=0.90'  # noqa
             self.p = bc.BulletClient(connection_mode=p.GUI, options=options)
-            self.p.resetDebugVisualizerCamera(cameraDistance=150,
-                                              cameraYaw=0,
-                                              cameraPitch=-89.999,
-                                              cameraTargetPosition=[0, 30, 0])
 
-            # self.p.getCameraImage(1200, 1200)
+            # This is where you can change the camera position
+            # Add resetDebugVisualizerCamera where the bullet client is instantiated and
+            # change parameters accordingly
+            self.p.resetDebugVisualizerCamera(
+                cameraDistance=150,
+                cameraYaw=0,
+                cameraPitch=-89.999,
+                cameraTargetPosition=[0, 30, 0],
+            )
+
+            # This will turn of side panels off in the visualizer
             self.p.configureDebugVisualizer(self.p.COV_ENABLE_GUI, 0)
+
+            ## Other visualization settings
+            # self.p.getCameraImage(1200, 1200)
             # self.p.configureDebugVisualizer(shadowMapWorldSize=10)
             # self.p.configureDebugVisualizer(lightPosition=[0, 0, 500])
 
@@ -28,7 +37,8 @@ class BaseEnv(object):
         self.p.setPhysicsEngineParameter(
             fixedTimeStep=config['simulation']['time_step'] / 10,
             numSubSteps=1,
-            numSolverIterations=5)
+            numSolverIterations=5,
+        )
         return None
 
     def base_env_step(self):

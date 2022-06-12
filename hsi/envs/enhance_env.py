@@ -17,21 +17,28 @@ class EnhanceEnv(BaseEnv):
 
         # Load the environment
         if self.config['simulation']['detailed_model']:
-            path = '/'.join([
-                self.config['urdf_data_path'],
-                self.config['simulation']['map_to_use'],
-                'environment_collision_free.urdf'
-            ])
+            path = '/'.join(
+                [
+                    self.config['urdf_data_path'],
+                    self.config['simulation']['map_to_use'],
+                    'environment_collision_free.urdf',
+                ]
+            )
         else:
-            path = '/'.join([
-                self.config['urdf_data_path'],
-                self.config['simulation']['map_to_use'],
-                'environment_collision_free.urdf'
-            ])
-        self.p.loadURDF(path, [0, 0, 0],
-                        self.p.getQuaternionFromEuler([np.pi / 2, 0, 0]),
-                        flags=self.p.URDF_USE_MATERIAL_COLORS_FROM_MTL,
-                        useFixedBase=True)
+            path = '/'.join(
+                [
+                    self.config['urdf_data_path'],
+                    self.config['simulation']['map_to_use'],
+                    'environment_collision_free.urdf',
+                ]
+            )
+        self.p.loadURDF(
+            path,
+            [0, 0, 0],
+            self.p.getQuaternionFromEuler([np.pi / 2, 0, 0]),
+            flags=self.p.URDF_USE_MATERIAL_COLORS_FROM_MTL,
+            useFixedBase=True,
+        )
 
         # Initial step of blue and red team
         self._initial_team_setup()
@@ -62,7 +69,8 @@ class EnhanceEnv(BaseEnv):
 
         # Perform action allocation for blue and red team respectively
         self.blue_team.action_manager.perform_action_allocation(
-            blue_actions['uav'], blue_actions['ugv'])
+            blue_actions['uav'], blue_actions['ugv']
+        )
 
         step_time = []
 
@@ -86,11 +94,10 @@ class EnhanceEnv(BaseEnv):
             # Perform a step in simulation to update
             self.base_env_step()
             step_time.append(time.time() - action_time)
-            pos = self.blue_team.state_manager.uav[2].current_pos
+            pos = self.blue_team.state_manager.uav[6].current_pos
             pos[2] = pos[2] + 5
 
-            key_pos = np.dot([42.88599, -78.8755, 1],
-                             self.blue_team.state_manager.A)
+            key_pos = np.dot([42.88599, -78.8755, 1], self.blue_team.state_manager.A)
             key_pos[2] = pos[2]
             distance = np.linalg.norm(pos - key_pos)
 
@@ -98,12 +105,13 @@ class EnhanceEnv(BaseEnv):
                 self.p.startStateLogging(
                     loggingType=self.p.STATE_LOGGING_VIDEO_MP4,
                     fileName='testing.mp4',
-                    physicsClientId=self.p._client)
+                    physicsClientId=self.p._client,
+                )
                 entered = True
                 running = False
 
             if entered and distance > 80:
-                pos = self.blue_team.state_manager.ugv[2].current_pos
+                pos = self.blue_team.state_manager.ugv[6].current_pos
                 pos[2] = pos[2] + 5
 
             if time.time() - t > 200:
@@ -115,10 +123,13 @@ class EnhanceEnv(BaseEnv):
                 #         physicsClientId=self.p._client)
                 #     running = False
 
-            # self.p.resetDebugVisualizerCamera(cameraDistance=50,
-            #                                   cameraYaw=75,
-            #                                   cameraPitch=-50,
-            #                                   cameraTargetPosition=pos)
+            ## Change the camera position according the drone position
+            self.p.resetDebugVisualizerCamera(
+                cameraDistance=50,
+                cameraYaw=75,
+                cameraPitch=-50,
+                cameraTargetPosition=pos,
+            )
 
             # self.sensors.get_camera_image([0, 0, 10], image_type='rgb')
 
@@ -126,12 +137,11 @@ class EnhanceEnv(BaseEnv):
         return 1 / np.mean(step_time)
 
     def get_reward(self):
-        """Update reward of all the agents
-        """
+        """Update reward of all the agents"""
         # Calculate the reward
-        total_reward = self.reward.mission_reward(self.state_manager.ugv,
-                                                  self.state_manager.uav,
-                                                  self.config)
+        total_reward = self.reward.mission_reward(
+            self.state_manager.ugv, self.state_manager.uav, self.config
+        )
         for vehicle in self.state_manager.uav:
             vehicle.reward = total_reward
 

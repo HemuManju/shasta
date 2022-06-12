@@ -1,4 +1,4 @@
-class User():
+class User:
     def __init__(self, scenes):
         self.w = 0
         self.h = 0

@@ -29,13 +29,11 @@ class BlueTeam(object):
         self.state_manager = StateManager(self.current_time, self.config)
         uav, ugv, config = self._initial_uxv_setup(physics_client)
         self.state_manager._initial_uxv(uav, ugv)  # Append the UxV
-        self.action_manager = ActionManager(self.state_manager, physics_client,
-                                            config)
+        self.action_manager = ActionManager(self.state_manager, physics_client, config)
 
     def _initial_uxv_setup(self, physics_client):
         # Read the configuration of platoons
-        read_path = Path(
-            __file__).parents[2] / 'config/blue_team_config_baseline.yml'
+        read_path = Path(__file__).parents[2] / 'config/blue_team_config_baseline.yml'
         config = yaml.load(open(str(read_path)), Loader=yaml.SafeLoader)
 
         # TODO:
@@ -61,8 +59,10 @@ class BlueTeam(object):
             positions = get_initial_positions(cartesian_pos, 10, n_vehicles)
             for j, position in enumerate(positions):
                 ugv.append(
-                    UgV(physics_client, position, init_orient, i, j,
-                        self.config, 'blue'))
+                    UgV(
+                        physics_client, position, init_orient, i, j, self.config, 'blue'
+                    )
+                )
 
         for i, node in enumerate(config['uav_platoon']['initial_pos']):
             lat = self.state_manager.node_info(node)['y']
@@ -74,8 +74,10 @@ class BlueTeam(object):
             positions = get_initial_positions(cartesian_pos, 10, n_vehicles)
             for j, position in enumerate(positions):
                 uav.append(
-                    UaV(physics_client, position, init_orient, i, j,
-                        self.config, 'blue'))
+                    UaV(
+                        physics_client, position, init_orient, i, j, self.config, 'blue'
+                    )
+                )
 
         return uav, ugv, config
 
@@ -96,8 +98,7 @@ class BlueTeam(object):
         return self.action_manager.get_actions(attributes)
 
     def execute(self):
-        """Take a step in the environement
-        """
+        """Take a step in the environement"""
         # Execute the actions
         done_rolling_actions = self.action_manager.primitive_execution()
         return done_rolling_actions

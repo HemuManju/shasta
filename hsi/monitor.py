@@ -12,8 +12,7 @@ from pathlib import Path
 import collections
 
 from envs.enhance_env import EnhanceEnv
-from default_actions.default_actions import (blue_team_actions,
-                                             red_team_actions)
+from default_actions.default_actions import blue_team_actions, red_team_actions
 
 config_path = Path(__file__).parents[1] / 'hsi/config/simulation_config.yml'
 config = yaml.load(open(str(config_path)), Loader=yaml.SafeLoader)
@@ -46,7 +45,7 @@ def convert_memory_size(nbytes):
 
 
 @ray.remote
-class State():
+class State:
     def __init__(self):
         self.task_done = False
 
@@ -78,25 +77,29 @@ class Actor(object):
         # Action 1
         # Change the end position
         blue_actions = change_target_position(
-            default_blue_actions, target_position=[42.888361, -78.880011, 1])
+            default_blue_actions, target_position=[42.888361, -78.880011, 1]
+        )
         speed_up = env.step(blue_actions, default_red_actions)
 
         # Action 2
         # Change the end position
         blue_actions = change_target_position(
-            default_blue_actions, target_position=[42.887369, -78.878633, 1])
+            default_blue_actions, target_position=[42.887369, -78.878633, 1]
+        )
         speed_up = env.step(blue_actions, default_red_actions)
 
         # Action 3
         # Change the end position
         blue_actions = change_target_position(
-            default_blue_actions, target_position=[42.889052, -78.875661, 1])
+            default_blue_actions, target_position=[42.889052, -78.875661, 1]
+        )
         speed_up = env.step(blue_actions, default_red_actions)
 
         # Action 4
         # Change the end position
         blue_actions = change_target_position(
-            default_blue_actions, target_position=[42.887040, -78.881616, 1])
+            default_blue_actions, target_position=[42.887040, -78.881616, 1]
+        )
         speed_up = env.step(blue_actions, default_red_actions)
 
         self.state.task_complete.remote()
@@ -117,8 +120,9 @@ class Profiler(object):
         while current_time <= 20:
             current_time = time.time() - start_time
             cpu.append(
-                currentProcess.cpu_percent(interval=0.5) /
-                psutil.cpu_count(logical=False))
+                currentProcess.cpu_percent(interval=0.5)
+                / psutil.cpu_count(logical=False)
+            )
             memory_bytes = currentProcess.memory_info()[0]
             memory.append(convert_memory_size(memory_bytes)[0])
             memory_percent.append(currentProcess.memory_percent())
@@ -140,11 +144,8 @@ def cpu_memory_profile(config):
     actor_pid = ray.get(actor.get_pid.remote())
 
     # Run all the clients in parallel
-    out = ray.get(
-        [profiler.profile.remote(actor_pid),
-         actor.run.remote(config)])
-    cpu, memory, memory_percent, speed_up = out[0][0], out[0][1], out[0][
-        2], out[1]
+    out = ray.get([profiler.profile.remote(actor_pid), actor.run.remote(config)])
+    cpu, memory, memory_percent, speed_up = out[0][0], out[0][1], out[0][2], out[1]
 
     # Shutdown ray
     ray.shutdown()
@@ -153,10 +154,17 @@ def cpu_memory_profile(config):
 
 
 # Main loop
-results = pd.DataFrame(columns=[
-    'world_size', 'uav + ugv', 'headless', 'cpu', 'memory', 'memory_percent',
-    'speed_up'
-])
+results = pd.DataFrame(
+    columns=[
+        'world_size',
+        'uav + ugv',
+        'headless',
+        'cpu',
+        'memory',
+        'memory_percent',
+        'speed_up',
+    ]
+)
 model_sizes = ['small', 'medium', 'large']
 platoon_sizes = [60, 90, 120, 150, 180, 210]
 headless = [False, True]
@@ -170,8 +178,13 @@ for model_size in model_sizes:
             # Run the profiling
             cpu, memory, memory_percent, speed_up = cpu_memory_profile(config)
             results.loc[run] = [
-                model_size, platoon_size, item, cpu, memory, memory_percent,
-                speed_up
+                model_size,
+                platoon_size,
+                item,
+                cpu,
+                memory,
+                memory_percent,
+                speed_up,
             ]
             run += 1
             print(results)

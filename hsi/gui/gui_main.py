@@ -47,10 +47,13 @@ class MainGUI(pyglet.window.Window):
         ax = get_layout(width, height, show=False)
 
         # Obj path
-        path = '/'.join([
-            config['urdf_data_path'], config['simulation']['map_to_use'],
-            'meshes/map.obj'
-        ])
+        path = '/'.join(
+            [
+                config['urdf_data_path'],
+                config['simulation']['map_to_use'],
+                'meshes/map.obj',
+            ]
+        )
 
         self.main = Obj(ax['main'], path)
         self.panels = []
@@ -62,10 +65,17 @@ class MainGUI(pyglet.window.Window):
         self.enemy_info = Text(ax['info'])
         self.control = ImageView(ax['cont'])
 
-        self.user = User([
-            self.main, self.panels[0], self.panels[1], self.panels[2],
-            self.panels[3], self.panels[4], self.panels[5]
-        ])
+        self.user = User(
+            [
+                self.main,
+                self.panels[0],
+                self.panels[1],
+                self.panels[2],
+                self.panels[3],
+                self.panels[4],
+                self.panels[5],
+            ]
+        )
         self.alive = True
         return None
 

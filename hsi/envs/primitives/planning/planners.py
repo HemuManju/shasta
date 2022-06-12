@@ -4,18 +4,16 @@ import networkx as nx
 import osmnx as ox
 
 
-class PathPlanning():
+class PathPlanning:
     """Path planner based on the skeleton of the image.
     Generates a spline path
     """
+
     def __init__(self, config):
-        read_path = '/'.join([
-            config['urdf_data_path'], config['simulation']['map_to_use'],
-            'map.osm'
-        ])
-        self.G = ox.graph_from_xml(read_path,
-                                   simplify=True,
-                                   bidirectional='walk')
+        read_path = '/'.join(
+            [config['urdf_data_path'], config['simulation']['map_to_use'], 'map.osm']
+        )
+        self.G = ox.graph_from_xml(read_path, simplify=True, bidirectional='walk')
         self.A = self.find_homogenous_affine_transformation(config)
         return None
 
@@ -33,10 +31,13 @@ class PathPlanning():
         A : array
             A numpy array such that source = A*target
         """
-        read_path = '/'.join([
-            config['urdf_data_path'], config['simulation']['map_to_use'],
-            'coordinates.csv'
-        ])
+        read_path = '/'.join(
+            [
+                config['urdf_data_path'],
+                config['simulation']['map_to_use'],
+                'coordinates.csv',
+            ]
+        )
         points = pd.read_csv(read_path)
         target = points[['x', 'z']].values
         source = points[['lat', 'lon']].values
@@ -136,8 +137,7 @@ class PathPlanning():
         route = nx.shortest_path(self.G, start, end, weight='length')
         for u, v in zip(route[:-1], route[1:]):
             # if there are parallel edges, select the shortest in length
-            data = min(self.G.get_edge_data(u, v).values(),
-                       key=lambda d: d["length"])
+            data = min(self.G.get_edge_data(u, v).values(), key=lambda d: d["length"])
             if "geometry" in data:
                 # if geometry attribute exists, add all its coords to list
                 xs, ys = data["geometry"].xy
@@ -152,7 +152,8 @@ class PathPlanning():
         lat_lon = np.array((x, y)).T
         refined_points = self.linear_refine_implicit(lat_lon, n=n_splits)
         refined_points = np.hstack(
-            (refined_points, np.ones((refined_points.shape[0], 1))))
+            (refined_points, np.ones((refined_points.shape[0], 1)))
+        )
 
         # Exchange x and y as they are reversed in pybullet
         refined_points[:, [1, 0]] = refined_points[:, [0, 1]]

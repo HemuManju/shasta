@@ -5,10 +5,18 @@ import pybullet_data
 
 
 class UgV(object):
-    """This the base class for single UGV robot
-    """
-    def __init__(self, physics_client, init_pos, init_orientation, platoon_id,
-                 robot_id, config, team_type):
+    """This the base class for single UGV robot"""
+
+    def __init__(
+        self,
+        physics_client,
+        init_pos,
+        init_orientation,
+        platoon_id,
+        robot_id,
+        config,
+        team_type,
+    ):
 
         # Physics client
         self.physics_client = physics_client
@@ -46,45 +54,47 @@ class UgV(object):
         return None
 
     def _initial_setup(self, team_type):
-        """Initial step of objects and constraints
-        """
+        """Initial step of objects and constraints"""
         # Load the mesh
-        path = '/'.join(
-            ['data/assets', 'vehicles', 'ground_vehicle_abstract.urdf'])
-        self.physics_client.setAdditionalSearchPath(
-            pybullet_data.getDataPath())
+        path = '/'.join(['data/assets', 'vehicles', 'ground_vehicle_abstract.urdf'])
+        self.physics_client.setAdditionalSearchPath(pybullet_data.getDataPath())
 
         # self.object = self.physics_client.loadURDF("husky/husky.urdf",
         #                                            self.init_pos,
         #                                            self.init_orientation,
         #                                            globalScaling=5)
-        self.object = self.physics_client.loadURDF(path, self.init_pos,
-                                                   self.init_orientation)
+        self.object = self.physics_client.loadURDF(
+            path, self.init_pos, self.init_orientation
+        )
         # Constraint
-        init_orient = self.physics_client.getQuaternionFromEuler(
-            [0, 0, -np.pi])
+        init_orient = self.physics_client.getQuaternionFromEuler([0, 0, -np.pi])
         self.constraint = self.physics_client.createConstraint(
-            self.object, -1, -1, -1, self.physics_client.JOINT_FIXED,
-            [0, 0, 0], [0, 0, 0], self.init_pos, init_orient)
+            self.object,
+            -1,
+            -1,
+            -1,
+            self.physics_client.JOINT_FIXED,
+            [0, 0, 0],
+            [0, 0, 0],
+            self.init_pos,
+            init_orient,
+        )
 
         # Change color depending on team type
         if team_type == 'blue':  # Change the color
-            self.physics_client.changeVisualShape(self.object,
-                                                  -1,
-                                                  rgbaColor=[0, 0, 1, 1])
+            self.physics_client.changeVisualShape(
+                self.object, -1, rgbaColor=[0, 0, 1, 1]
+            )
         return None
 
     def get_pos_and_orientation(self):
-        """Returns the position and orientation (as Yaw angle) of the robot.
-        """
-        pos, rot = self.physics_client.getBasePositionAndOrientation(
-            self.object)
+        """Returns the position and orientation (as Yaw angle) of the robot."""
+        pos, rot = self.physics_client.getBasePositionAndOrientation(self.object)
         euler = self.physics_client.getEulerFromQuaternion(rot)
         return np.array(pos), euler
 
     def reset(self):
-        """Moves the robot back to its initial position
-        """
+        """Moves the robot back to its initial position"""
         self.physics_client.changeConstraint(self.constraint, self.init_pos)
         self.current_pos = self.init_pos
         self.desired_pos = self.init_pos

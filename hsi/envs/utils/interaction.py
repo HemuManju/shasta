@@ -19,18 +19,18 @@ def findkeys(node, kv):
 def check_perimeter(blue_team_pos, red_team_pos, config):
     """This function checks if the blue team are near red teams using the centroid
 
-        Parameters
-        ----------
-        red_team_pos : list
-            A dictionary containing the states of the red team
-        blue_team_pos : list
-            A dictionary containing the states of the blue team
+    Parameters
+    ----------
+    red_team_pos : list
+        A dictionary containing the states of the red team
+    blue_team_pos : list
+        A dictionary containing the states of the blue team
 
-        Returns
-        -------
-        array
-            A array mask containing which blue teams are near to red teams
-        """
+    Returns
+    -------
+    array
+        A array mask containing which blue teams are near to red teams
+    """
     distance = cdist(blue_team_pos, red_team_pos)
     threshold = config['experiment']['attack_distance']
     indices = np.argwhere(distance < threshold)

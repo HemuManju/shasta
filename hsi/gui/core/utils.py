@@ -2,6 +2,7 @@ import pyglet
 import pyglet.gl as gl
 
 import ctypes
+
 lightfv = ctypes.c_float * 4
 
 
@@ -26,9 +27,15 @@ class ViewPort(object):
         gl.glLoadIdentity()
 
         # Set projection
-        gl.glOrtho(-self.width / (2), self.width / (2), -self.height / (2),
-                   self.height / (2), -1000, 1000)
-        gl.glLightfv(gl.GL_LIGHT0, gl.GL_POSITION, lightfv(1.0, 1., 1.0, 0.0))
+        gl.glOrtho(
+            -self.width / (2),
+            self.width / (2),
+            -self.height / (2),
+            self.height / (2),
+            -1000,
+            1000,
+        )
+        gl.glLightfv(gl.GL_LIGHT0, gl.GL_POSITION, lightfv(1.0, 1.0, 1.0, 0.0))
         return None
 
     def setup_bounding_box(self):
@@ -48,8 +55,8 @@ class ViewPort(object):
         return None
 
     def is_inside(self, x, y):
-        if (self.x0 / self._m_scale < x and x < self.x1 / self._m_scale):
-            if (self.y0 / self._m_scale < y and y < self.y1 / self._m_scale):
+        if self.x0 / self._m_scale < x and x < self.x1 / self._m_scale:
+            if self.y0 / self._m_scale < y and y < self.y1 / self._m_scale:
                 return True
         return False
 
@@ -62,18 +69,13 @@ class ViewPort(object):
 
 def create_window(width, height):
     try:
-        config = pyglet.gl.Config(sample_buffers=1,
-                                  samples=4,
-                                  depth_size=24,
-                                  double_buffer=True)
-        window = pyglet.window.Window(config=config,
-                                      width=width,
-                                      height=height)
+        config = pyglet.gl.Config(
+            sample_buffers=1, samples=4, depth_size=24, double_buffer=True
+        )
+        window = pyglet.window.Window(config=config, width=width, height=height)
     except pyglet.window.NoSuchConfigException:
         config = pyglet.gl.Config(double_buffer=True)
-        window = pyglet.window.Window(config=config,
-                                      width=width,
-                                      height=height)
+        window = pyglet.window.Window(config=config, width=width, height=height)
 
     @window.event
     def on_key_press(symbol, modifiers):

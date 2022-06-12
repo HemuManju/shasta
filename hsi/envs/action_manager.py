@@ -12,24 +12,26 @@ class ActionManager(object):
 
     def _init_platoons_setup(self, physics_client):
         """Initial setup of platoons with primitive execution class.
-            Each platoon name is given as uxv_p_* where * is the platoon number
-            and x is either 'a' or 'g' depending on platoon type.
-            The containers used for platoons are dict where key is uxv_p_*
+        Each platoon name is given as uxv_p_* where * is the platoon number
+        and x is either 'a' or 'g' depending on platoon type.
+        The containers used for platoons are dict where key is uxv_p_*
 
-            As an example one of the keys is 'uav_p_1'
-            which is platoon 1 of type uav
+        As an example one of the keys is 'uav_p_1'
+        which is platoon 1 of type uav
         """
         self.uav_platoons = {}  # A container for platoons
         for i in range(len(self.config['uav_platoon']['n_vehicles'])):
             key = 'uav_p_' + str(i + 1)
-            self.uav_platoons[key] = PrimitiveManager(self.state_manager,
-                                                      physics_client)
+            self.uav_platoons[key] = PrimitiveManager(
+                self.state_manager, physics_client
+            )
 
         self.ugv_platoons = {}
         for i in range(len(self.config['ugv_platoon']['n_vehicles'])):
             key = 'ugv_p_' + str(i + 1)
-            self.ugv_platoons[key] = PrimitiveManager(self.state_manager,
-                                                      physics_client)
+            self.ugv_platoons[key] = PrimitiveManager(
+                self.state_manager, physics_client
+            )
         return None
 
     def get_actions(self, attributes=None):
@@ -59,8 +61,7 @@ class ActionManager(object):
                     for attr in attributes
                 }
             else:
-                attribute[platoon_key] = vars(
-                    self.uav_platoons[platoon_key])['action']
+                attribute[platoon_key] = vars(self.uav_platoons[platoon_key])['action']
         for i in range(len(self.config['ugv_platoon']['n_vehicles'])):
             platoon_key = 'ugv_p_' + str(i + 1)
             if attributes:
@@ -69,8 +70,7 @@ class ActionManager(object):
                     for attr in attributes
                 }
             else:
-                attribute[platoon_key] = vars(
-                    self.ugv_platoons[platoon_key])['action']
+                attribute[platoon_key] = vars(self.ugv_platoons[platoon_key])['action']
         return attribute
 
     def get_allocated_vehicle(self, n_vehicles, vehicles_type):
@@ -115,13 +115,13 @@ class ActionManager(object):
     def perform_action_allocation(self, actions_uav, actions_ugv):
         """Perfroms action allocation and
 
-            Parameters
-            ----------
-            actions_uav : dict
-                UAV decoded actions
-            actions_ugv : dict
-                UGV decoded actions
-            """
+        Parameters
+        ----------
+        actions_uav : dict
+            UAV decoded actions
+        actions_ugv : dict
+            UGV decoded actions
+        """
         # UAV Actions
         for key in actions_uav:
             n_vehicles = actions_uav[key]['n_vehicles']
@@ -132,7 +132,8 @@ class ActionManager(object):
             else:
                 # Perform vehicle allocation
                 vehicles_id, vehicles = self.get_allocated_vehicle(
-                    n_vehicles, vehicles_type='uav')
+                    n_vehicles, vehicles_type='uav'
+                )
 
                 # Update actions
                 actions_uav[key]['vehicles_id'] = vehicles_id
@@ -151,7 +152,8 @@ class ActionManager(object):
             else:
                 # Perform vehicle allocation
                 vehicles_id, vehicles = self.get_allocated_vehicle(
-                    n_vehicles, vehicles_type='ugv')
+                    n_vehicles, vehicles_type='ugv'
+                )
 
                 # Update actions
                 actions_ugv[key]['vehicles_id'] = vehicles_id

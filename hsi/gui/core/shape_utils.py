@@ -3,25 +3,23 @@ import math
 from pyglet import gl
 
 import ctypes
+
 lightfv = ctypes.c_float * 4
 
 
 def create_window(width, height, resize=False):
     try:
-        config = pyglet.gl.Config(sample_buffers=1,
-                                  samples=4,
-                                  depth_size=24,
-                                  double_buffer=True)
-        window = pyglet.window.Window(config=config,
-                                      width=width,
-                                      height=height,
-                                      resizable=resize)
+        config = pyglet.gl.Config(
+            sample_buffers=1, samples=4, depth_size=24, double_buffer=True
+        )
+        window = pyglet.window.Window(
+            config=config, width=width, height=height, resizable=resize
+        )
     except pyglet.window.NoSuchConfigException:
         config = pyglet.gl.Config(double_buffer=True)
-        window = pyglet.window.Window(config=config,
-                                      width=width,
-                                      height=height,
-                                      resizable=resize)
+        window = pyglet.window.Window(
+            config=config, width=width, height=height, resizable=resize
+        )
 
     @window.event
     def on_key_press(symbol, modifiers):
@@ -36,6 +34,7 @@ class Point2d(object):
     """
     Represents a point in 2 dimensions.
     """
+
     def __init__(self, x=0, y=0):
         self.x = x
         self.y = y
@@ -45,6 +44,7 @@ class BaseObject(object):
     """
     Represents an item in the virtual world.
     """
+
     def __init__(self, color):
         self.tx = self.ty = self.tz = 0
         self.rx = self.ry = self.rz = 0
@@ -85,6 +85,7 @@ class Rectangle(BaseObject):
     """
     Represents a rectangle in the virtual world.
     """
+
     def __init__(self, x, y, width, height, color):
         super(Rectangle, self).__init__(color)
         self.x = x
@@ -143,6 +144,7 @@ class Circle(BaseObject):
     """
     Represents a circle in the virtual world.
     """
+
     def __init__(self, x, y, radius, color):
         super(Circle, self).__init__(color)
         self.x = x
@@ -169,6 +171,7 @@ class Cube(BaseObject):
     """
     Represents a circle in the virtual world.
     """
+
     def __init__(self, x, y, radius, color):
         super(Sphere, self).__init__(color)
         self.x = x
@@ -190,6 +193,7 @@ class Sphere(BaseObject):
     """
     Represents a circle in the virtual world.
     """
+
     def __init__(self, x, y, z=50, radius=1, color=(0, 0, 1, 0)):
         super(Sphere, self).__init__(color)
         self.x = x

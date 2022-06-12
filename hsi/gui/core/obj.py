@@ -9,10 +9,11 @@ from .shape_utils import Sphere
 from .utils import ViewPort
 
 import ctypes
+
 lightfv = ctypes.c_float * 4
 
 
-class Obj():
+class Obj:
     def __init__(self, ax, obj_path):
         # Setup viewport
         self.rect = ViewPort(ax)
@@ -157,9 +158,26 @@ class Obj():
                 z = 500
                 gl.glLineWidth(5)
                 self.vertex_list = pyglet.graphics.vertex_list(
-                    4, ('v3f', (x, y, z, x + self.w, y, z, x + self.w,
-                                y - self.h, z, x, y - self.h, z)),
-                    ('c3B', (0, 0, 255, 0, 0, 255, 0, 0, 255, 0, 0, 255)))
+                    4,
+                    (
+                        'v3f',
+                        (
+                            x,
+                            y,
+                            z,
+                            x + self.w,
+                            y,
+                            z,
+                            x + self.w,
+                            y - self.h,
+                            z,
+                            x,
+                            y - self.h,
+                            z,
+                        ),
+                    ),
+                    ('c3B', (0, 0, 255, 0, 0, 255, 0, 0, 255, 0, 0, 255)),
+                )
 
         else:
             self.active = False

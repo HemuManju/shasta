@@ -4,10 +4,18 @@ from ..sensors import Sensors
 
 
 class UaV(object):
-    """This the base class for single UGV robot
-    """
-    def __init__(self, physics_client, init_pos, init_orientation, platoon_id,
-                 robot_id, config, team_type):
+    """This the base class for single UGV robot"""
+
+    def __init__(
+        self,
+        physics_client,
+        init_pos,
+        init_orientation,
+        platoon_id,
+        robot_id,
+        config,
+        team_type,
+    ):
 
         # Physics client
         self.physics_client = physics_client
@@ -41,25 +49,31 @@ class UaV(object):
         return None
 
     def _initial_setup(self, team_type):
-        """Initial step of objects and constraints
-        """
+        """Initial step of objects and constraints"""
         # Load the mesh
         if self.config['simulation']['detailed_model']:
-            path = '/'.join(
-                ['data/assets', 'vehicles', 'arial_vehicle_detailed.urdf'])
+            path = '/'.join(['data/assets', 'vehicles', 'arial_vehicle_detailed.urdf'])
         else:
-            path = '/'.join(
-                ['data/assets', 'vehicles', 'arial_vehicle_abstract.urdf'])
+            path = '/'.join(['data/assets', 'vehicles', 'arial_vehicle_abstract.urdf'])
         self.object = self.physics_client.loadURDF(
             path,
             self.init_pos,
             self.init_orientation,
-            flags=self.physics_client.URDF_USE_MATERIAL_COLORS_FROM_MTL)
+            flags=self.physics_client.URDF_USE_MATERIAL_COLORS_FROM_MTL,
+        )
 
         # Constraint
         self.constraint = self.physics_client.createConstraint(
-            self.object, -1, -1, -1, self.physics_client.JOINT_FIXED,
-            [0, 0, 0], [0, 0, 0], self.init_pos, self.init_orientation)
+            self.object,
+            -1,
+            -1,
+            -1,
+            self.physics_client.JOINT_FIXED,
+            [0, 0, 0],
+            [0, 0, 0],
+            self.init_pos,
+            self.init_orientation,
+        )
 
         # Change color depending on team type
         # if team_type == 'blue':  # Change the color
@@ -69,16 +83,13 @@ class UaV(object):
         return None
 
     def get_pos_and_orientation(self):
-        """Returns the position and orientation (as Yaw angle) of the robot.
-        """
-        pos, rot = self.physics_client.getBasePositionAndOrientation(
-            self.object)
+        """Returns the position and orientation (as Yaw angle) of the robot."""
+        pos, rot = self.physics_client.getBasePositionAndOrientation(self.object)
         euler = self.physics_client.getEulerFromQuaternion(rot)
         return np.array(pos), euler
 
     def reset(self):
-        """Moves the robot back to its initial position
-        """
+        """Moves the robot back to its initial position"""
         self.physics_client.changeConstraint(self.constraint, self.init_pos)
         self.current_pos = self.init_pos
         self.desired_pos = self.init_pos
@@ -120,13 +131,13 @@ class UaV(object):
         position : array
             The position to which the vehicle should be moved.
         """
-        # for i in range(4):
-        #     self.physics_client.setJointMotorControl2(
-        #         self.object,
-        #         i,
-        #         self.physics_client.VELOCITY_CONTROL,
-        #         targetVelocity=100,
-        #         force=20)
+        for i in range(4):
+            self.physics_client.setJointMotorControl2(
+                self.object,
+                i,
+                self.physics_client.VELOCITY_CONTROL,
+                targetVelocity=100,
+                force=20)
 
         self.current_pos, _ = self.get_pos_and_orientation()
         position[2] = 10.0

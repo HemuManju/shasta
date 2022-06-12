@@ -6,7 +6,7 @@ import pandas as pd
 import networkx as nx
 
 
-class StateManager():
+class StateManager:
     def __init__(self, current_time, config):
         super(StateManager, self).__init__()
         # Need to specify some parameters
@@ -28,8 +28,7 @@ class StateManager():
         return None
 
     def _initial_mission_setup(self):
-        """Perform initial setup such as progress, reward, grid map etc.
-        """
+        """Perform initial setup such as progress, reward, grid map etc."""
         self.goal = self.config['simulation']['goal_node']
         self.progress_reward = self.config['reward']['progress_reward']
         self.indoor_reward = 2 * self.progress_reward
@@ -37,21 +36,26 @@ class StateManager():
         return None
 
     def _affine_transformation_and_graph(self):
-        """Performs initial conversion of the lat lon to cartesian
-        """
+        """Performs initial conversion of the lat lon to cartesian"""
         # Graph
-        read_path = '/'.join([
-            self.config['urdf_data_path'],
-            self.config['simulation']['map_to_use'], 'map.osm'
-        ])
+        read_path = '/'.join(
+            [
+                self.config['urdf_data_path'],
+                self.config['simulation']['map_to_use'],
+                'map.osm',
+            ]
+        )
         G = ox.graph_from_xml(read_path, simplify=True, bidirectional='walk')
         self.G = nx.convert_node_labels_to_integers(G)
 
         # Transformation matrix
-        read_path = '/'.join([
-            self.config['urdf_data_path'],
-            self.config['simulation']['map_to_use'], 'coordinates.csv'
-        ])
+        read_path = '/'.join(
+            [
+                self.config['urdf_data_path'],
+                self.config['simulation']['map_to_use'],
+                'coordinates.csv',
+            ]
+        )
         points = pd.read_csv(read_path)
         target = points[['x', 'z']].values
         source = points[['lat', 'lon']].values
@@ -64,21 +68,26 @@ class StateManager():
         return None
 
     def _initial_buildings_setup(self):
-        """Perfrom initial building setup.
-        """
-        read_path = '/'.join([
-            self.config['urdf_data_path'],
-            self.config['simulation']['map_to_use'], 'buildings.csv'
-        ])
+        """Perfrom initial building setup."""
+        read_path = '/'.join(
+            [
+                self.config['urdf_data_path'],
+                self.config['simulation']['map_to_use'],
+                'buildings.csv',
+            ]
+        )
 
         # Check if building information is already generated
         if Path(read_path).is_file():
             buildings = pd.read_csv(read_path)
         else:
-            read_path = '/'.join([
-                self.config['urdf_data_path'],
-                self.config['simulation']['map_to_use'], 'map.osm'
-            ])
+            read_path = '/'.join(
+                [
+                    self.config['urdf_data_path'],
+                    self.config['simulation']['map_to_use'],
+                    'map.osm',
+                ]
+            )
             G = ox.graph_from_xml(read_path)
             # TODO: This method doesn't work if the building info is not there in OSM
             nodes, streets = ox.graph_to_gdfs(G)
@@ -101,10 +110,13 @@ class StateManager():
             buildings['id'] = np.arange(len(buildings_proj))
 
             # Save the building info
-            save_path = read_path = '/'.join([
-                self.config['urdf_data_path'],
-                self.config['simulation']['map_to_use'], 'buildings.csv'
-            ])
+            save_path = read_path = '/'.join(
+                [
+                    self.config['urdf_data_path'],
+                    self.config['simulation']['map_to_use'],
+                    'buildings.csv',
+                ]
+            )
             buildings.to_csv(save_path, index=False)
 
         self.buildings = buildings
@@ -133,7 +145,8 @@ class StateManager():
             info['area'] = building_info['area']
             info['height'] = building_info['height']
             info['n_defence_perimeter'] = building_info['perimeter'] / (
-                self.config['ugv']['defense_radius'] * 2)
+                self.config['ugv']['defense_radius'] * 2
+            )
 
             self.target.append(info)
 
@@ -154,18 +167,18 @@ class StateManager():
 
     def building_info(self, idx):
         """Get the information about a building such as perimeter,
-            position, number of floors.
+        position, number of floors.
 
-            Parameters
-            ----------
-            id : int
-                Building ID
+        Parameters
+        ----------
+        id : int
+            Building ID
 
-            Returns
-            -------
-            dict
-                A dictionary containing all the information about the building.
-            """
+        Returns
+        -------
+        dict
+            A dictionary containing all the information about the building.
+        """
         return self.buildings.loc[self.buildings['id'] == idx]
 
     def get_image(self, platoon_id, platoon_type, vehicle_id, image_type):
@@ -190,11 +203,13 @@ class StateManager():
         if platoon_type == 'uav':
             platoon_key = 'uav_p_' + str(platoon_id)
             image = self.uav_platoons[platoon_key].get_camera_image(
-                vehicle_id, image_type)
+                vehicle_id, image_type
+            )
         else:
             platoon_key = 'ugv_p_' + str(platoon_id)
             image = self.ugv_platoons[platoon_key].get_camera_image(
-                vehicle_id, image_type)
+                vehicle_id, image_type
+            )
         return image
 
     def get_states(self):

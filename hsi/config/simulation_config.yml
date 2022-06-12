@@ -6,7 +6,7 @@ simulation:
   use_real_time: False
   time_step: 0.025
   headless: False
-  detailed_model: False
+  detailed_model: True
   dynamic: False
   episodes: 100
   n_buildings: 15
@@ -20,7 +20,7 @@ simulation:
   n_ugv_clusters: 3
   n_uav_platoons: 3
   n_ugv_platoons: 3
-  map_to_use: 'buffalo-medium'
+  map_to_use: 'new-york'
 
 ##---------------------------------------------------------------------##
 experiment:
